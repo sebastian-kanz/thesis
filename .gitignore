@@ -1,0 +1,10 @@
+﻿
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.lol
+*.xml
+*.synctex.gz
+.vscode/ 
