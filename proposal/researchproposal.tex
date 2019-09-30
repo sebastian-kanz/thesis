@@ -51,7 +51,7 @@
         %  5. make people curious about your work
         %  6. use current buzzwords if possilbe (but do it right)
         %  7. not use too many buzzwords :-)
-        insert title here
+        Directed acyclic graphs as backbone solution for IOT applications
         % ##########################################
         \\  \Large{\paperSubTitle{\lang}}} % don't touch this line
 
@@ -60,7 +60,7 @@
         % # Your name goes here
         % ######
         % wWll, that should be obvious, right?
-        Firstname Lastname
+        Sebastian Kanz
         % ##########################################
         }
 
@@ -94,6 +94,7 @@
 
         \end{abstract}
 
+        \newpage
 
         \sectionQuestions{\lang}
         \sectionQuestionsDescription{\lang}
@@ -152,7 +153,7 @@
                 %  - describe the benefit of having the problem resolved
                 According to XY there will be more than 30 billion IOT devices by 2025 in many areas of our everyday lives.
                 The concept of IOT is still more theoretical although some usecases are already developed.
-                To accomplish the full potential of the IOT sector a suitable backbone solution must be provided.
+                To accomplish the full potential of the IOT concept a suitable backbone solution must be provided.
                 Different vendors and service providers need a common plattform for connecting their devices, services, buiness logic as well as their customers and a suitable payment solution.
 
                 % ##########################################
@@ -180,12 +181,10 @@
                 %  - if none of your ideas did not produce any usable solution, state
                 %    so - these attempts are also results! By documenting them, it may
                 %    prevent others from trying them as well.
-                A set of pre-selected DLT solutions seem to be suitable for most of the above mentioned IOT usecases.
-                Not only because they fullfill (most) requirements but promote themself as well-fitted for IOT usecases.
-                In this work a selection of DLTs is analyzed for the requirements for specific IOT usecases.
-                As an intermediate result a list of requirements for different IOT usecases is created and the selected DLTs are rated and checked for fulfillment.
-                Finally the top three DLTs are evaluated, implemented in an exemplary IOT usecase. Performance tests verify the eralier created requirements.
-                With this work the reader can evaluate DLT solutions for their suitability to be an IOT backbone solution as well as distiguish between IOT usecases which can benefit from DLTs and those who cannot.
+                A subset of DLT solutions called DAG (directed acyclic graphs) \footnote{According to the current status: IOTA, Hashgraph, Byteball (OByte), Holochain, etc.} seems to be suitable for most of the above mentioned IOT usecases.
+                As an intermediate result the big buzzword IOT is defined, seperated into different categories with their own requirements. The selected DAGs are rated and checked for fulfillment.
+                Finally the top three DAGs are evaluated and implemented in an exemplary IOT usecase. Performance tests verify the eralier created requirements.
+                With this work the reader can evaluate DLT solutions (especially DAGs) for their suitability to be an IOT backbone solution as well as distiguish between IOT usecases which can benefit from DAGs and those who cannot.
                 % answer the questions 'Which IOT usecases are suitable for utilizing DLT technique?', 'Which DLT fits best as an IOT backbone solution?' and ''
 
                 % ##########################################
@@ -215,10 +214,16 @@
                 %  - clearly state the shortcomings of your work
                 %  -- be hones and objective about your own work.
                 %  -- In which cases/scenarios are your results applicable?
-                
-
+                DAGs are suitable as an IOT backbone solution not only because they fullfill (most) of the requirements evaluated for IOT usecases but also promote themself as well-fitted for IOT usecases.
+                Different to blockchain or other DLT solutions they promise high scalability and a greater performance i.e. a high transaction-rate and fast transaction certainty.
+                Their biggest advantage is the asynchroneous processing of newly created transactions as well as the more efficient consensus mechanisms.
+                This work analyzes in detail which properties of DAGs enable their suitability for IOT usecases and which concrete solution implements those properties best.
+                To achive this a theoretical evaluation is executed and afterwards verified by an implementation of a specific IOT usecase adapted for the top three best fitting DAGs.
+                The IOT usecase is selected to represent a specific scope of IOT and does not cover the topic IOT as a whole.
                 % ##########################################
         \end{description}
+
+        \newpage
 
         \sectionInitialTOC{\lang}
         \sectionInitialTOCDescription{\lang}
@@ -238,12 +243,53 @@
         %    (1-3 sentences)
         %
         \begin{enumerate}
-            \item \textbf{Section 1 Name} insert brief description
+            \item \textbf{Section 1 Introduction} This section introduces the reader in the topics IOT and DLT and the challenges of this work.
                     \begin{enumerate}
-                        \item \textbf{Subsection 1 Name} insert brief description
-                        \item \textbf{Subsection 2 Name} insert brief description
+                        \item \textbf{Subsection 1 The future of IOT and its potentail for our everyday lives}
                     \end{enumerate}
-            \item \textbf{Section 2 Name} insert brief description
+            \item \textbf{Section 2 Theoretical fundamentals} This section gives the reader a basic understanding of topics required for this work. It is asumed that the reader has a basic understanding of the general IT-related topics.
+                    \begin{enumerate}
+                        \item \textbf{Subsection 1 Definitions DLT} Definitions of DLT-related things are done here, may containing: Types of Blockchains, Blockchain vs. DLT vs. DAG, Consensus, Smart-Contracts, (Dis-) Advantages
+                        \item \textbf{Subsection 2 Definitions IOT} Definitions of IOT-related things are done here, may containing: Fog / Cloud / Edge, M2M, Usecases, Digital Twins, IIoT, CIoT, Requirements, Hardware, Connectivity
+                        \item \textbf{Subsection 3 }
+                    \end{enumerate}
+            \item \textbf{Section 3 Related Work} This section shows related work and how this work differs from it.
+            \item \textbf{Section 4 Analyzation IOT \& DAG ("DAG-IOT")} This section analyzes the advantages and challenges of IOT and DAG
+                    \begin{enumerate}
+                        \item \textbf{Subsection 1 IOT Usecases} When is an IOT usecase suitable for DLT?
+                        \item \textbf{Subsection 2 IOT usecase requirements} energy consumption, minimal ressource utilization, low bandwidth, etc.
+                        \item \textbf{Subsection 3 (Dis-) Advantages of DAGs for IOT)} scalability, anonymity, security, updating, trust, etc.
+                    \end{enumerate}
+            \item \textbf{Section 5 Exemplary Usecase} An exemplary usecase is developed in this section.
+                    \begin{enumerate}
+                        \item \textbf{Subsection 1 Description}
+                        \item \textbf{Subsection 2 Target audience}
+                        \item \textbf{Subsection 3 Requirements}
+                        \item \textbf{Subsection 4 Design / Architecture}
+                        \item \textbf{Subsection 5 ...}
+                    \end{enumerate}
+            \item \textbf{Section 6 Evaluation} Different DAGs are analyzed and evaluated against the requirements and rated for fulfillment.
+                    \begin{enumerate}
+                        \item \textbf{Subsection 1 IOTA}
+                        \item \textbf{Subsection 2 Hashgraph}
+                        \item \textbf{Subsection 3 Byteball}
+                        \item \textbf{Subsection 4 ...}
+                    \end{enumerate}
+            \item \textbf{Section 7 Implementation} The usecase from section 5 is tested on a subset of the evaluated DAGs from section 6
+                    \begin{enumerate}
+                        \item \textbf{Subsection 1 Architecture}
+                        \item \textbf{Subsection 2 Hardware}
+                        \item \textbf{Subsection 3 Data structures}
+                        \item \textbf{Subsection 4 Libraries}
+                        \item \textbf{Subsection 5 ...}
+                    \end{enumerate}
+            \item \textbf{Section 8 Tests \& Results} In this section the test setup and the results are presented.
+                    \begin{enumerate}
+                        \item \textbf{Subsection 1 Test setup}
+                        \item \textbf{Subsection 2 Loadtests}
+                        \item \textbf{Subsection 3 ...}
+                    \end{enumerate}
+            \item \textbf{Section 9 Conclusion \& Perspective} In this section a conclusion and a perspective are drawn.
         \end{enumerate}
         % ##########################################
 
@@ -265,11 +311,13 @@
         %    your work (1-2 sentences)
         %
         \begin{description}
-        \item[\cite{gruba_how_2017}] insert brief description
-        \item[\cite{zobel_writing_2015}] insert brief description
+          \item[\cite{DBLP:journals/corr/abs-1809-05613}] The authors analyze many blockchain consensus algorithms for their suitability for IOT solutions. The Tangle-consensus algorithm of IOTA seems to fit best as it utilizes a DAG.
+          \item[\cite{iotbds18}] The authors present a decision framework for when to use blockchain technology and when not.
+          \item[\cite{8632193}] The authors analyze DAGs (namely Nxt, IOTA, Orumesh, DagCoin,Byteball, Nano and XDAG, even though some of them are only ERC20-Token) and their advantages over classical blockchain solutions. They do not describe a specific usecase or a concrete application.
         \end{description}
         % ##########################################
 
+        \newpage
 
       \printbibliography
     \end{document}
