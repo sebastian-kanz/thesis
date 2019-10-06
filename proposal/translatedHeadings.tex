@@ -16,6 +16,18 @@
     \ifthenelse{\equal{#1}{de}}{Im Folgenden wird der Kern der Arbeit beschrieben indem vier Kernfragen beantwortet werden.}{}
 }
 
+\newcommand{\sectionThesis}[1]
+{
+    \ifthenelse{\equal{#1}{en}}{\section{Thesis}}{}
+    \ifthenelse{\equal{#1}{de}}{\section{These}}{}
+}
+
+\newcommand{\sectionThesisDescription}[1]
+{
+    \ifthenelse{\equal{#1}{en}}{The thesis analyzed in this work is as follows:}{}
+    \ifthenelse{\equal{#1}{de}}{Die These, die in dieser Arbeit untersucht wird, lautet wie folgt:}{}
+}
+
 \newcommand{\sectionInitialTOC}[1]
 {
     \ifthenelse{\equal{#1}{en}}{\section{Preliminary Table of Contents}}{}
