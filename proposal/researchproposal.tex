@@ -6,7 +6,7 @@
     % # Choose the language for the document by editing below line
     % # de = German
     % # en = English
-    \newcommand{\lang}{en}
+    \newcommand{\lang}{de}
     % ##########################################
 
     \usepackage{babel}
@@ -51,7 +51,7 @@
         %  5. make people curious about your work
         %  6. use current buzzwords if possilbe (but do it right)
         %  7. not use too many buzzwords :-)
-        Distributed ledger technologies as backbone solution for IOT applications
+        Synergie von DLT und IOT: Anforderungsanalyse und praktische Verprobung
         % ##########################################
         \\  \Large{\paperSubTitle{\lang}}} % don't touch this line
 
@@ -99,9 +99,7 @@
 
         \sectionThesis{\lang}
         \sectionThesisDescription{\lang}
-                \begin{center}
-                  'DLTs are suitable for beeing an IOT backbone solution and the non-functional requirements are independant from the actual usecase.'
-                \end{center}
+        'DLT eignet sich als Backbone-Technologie für IOT und die technischen / nicht-funktionalen Anforderungen sind für alle Anwendungsfälle gleich.'
         \sectionQuestions{\lang}
         \sectionQuestionsDescription{\lang}
 
@@ -131,8 +129,8 @@
                 % Please acknowledge: the answer to this question should not cover why the
                 % problem is important or relevant to anyone (e.g. industry). This will
                 % be addressed with the next question.
-                There is no suitable solution for a backbone system for large-scaling, performant and secure IOT usecases where multiple distrusting parties are involved.
-
+		
+		Für hoch-skalierende, performante und sichere IOT-Anwendungen, an der verschiedene, sich untereinander nicht vertrauende Parteien beteiligt sind, existiert derzeit keine geeignete Backbone-Lösung.
                 % ##########################################
 
             \item [\questionTwo{\lang}]
@@ -157,10 +155,7 @@
                 %  -- which conditions need to be fulfilled for the problem to occur?
                 %  -- etc.
                 %  - describe the benefit of having the problem resolved
-                According to Cisco there will be more than 500 billion IOT devices connected to the internet by 2030 in many areas of our everyday lives \footnote{https://www.cisco.com/c/dam/en/us/products/collateral/se/internet-of-things/at-a-glance-c45-731471.pdf}.
-                The concept of IOT is still mostly theoretical although some usecases are already developed.
-                To accomplish the full potential of the IOT concept a suitable backbone solution must be provided.
-                Different vendors and service providers need a common plattform for connecting their devices, services, buiness logic as well as their customers and establish a suitable payment solution.
+		Das große Telekommunikationsunternehmen Cisco progostiziert, dass bis 2030 mehr als 500 Milliarden mit dem Internet verbundene IOT-Geräte in verschiedenen Bereichen unseres alltäglichen Lebens Einzug erhalten haben werden\footnote{https://www.cisco.com/c/dam/en/us/products/collateral/se/internet-of-things/at-a-glance-c45-731471.pdf}. Das Konzept von IOT is nach wie vor sehr theoretisch, obwohl bereits einige Anwendungsfälle erarbeitet wurden. Um das große Potential von IOT vollumfänglich nutzbar zu machen, muss eine passende Backbone-Lösung für solche Anwendungsfälle bereitgestellt werden. Viele verschiedene Hersteller und Service-Provider benötigen eine einheitliche Plattform, auf der sie ihre IOT-Geräte, Services, Geschäftslogiken und vor allem ihre Kunden miteinander vernetzen sowie ein optimales Bezahlsystem zur Verfügung stellen können.
 
                 % ##########################################
 
@@ -187,11 +182,7 @@
                 %  - if none of your ideas did not produce any usable solution, state
                 %    so - these attempts are also results! By documenting them, it may
                 %    prevent others from trying them as well.
-                In this work the common topics 'IOT' and 'DLT' are presented and classified in the OSI-model. The intersection of both topics is shown and how they might benefit from each other.
-                An exemplary IOT usecase is developed and a detailed list of all requirements is defined. In a next step those requirements are recursivley reduced to a subset of fundamental requirements that are relevant for IOT in conjunction with DLTs.
-                Different well-established DLT-solutions are presented and evaluated against the subset of requirements to show if and how they qualify to be a backbone solution for that usecase.
-                The best fitting DLT-solution is implemented as PoC to evaluate the earlier highlighted requirements. It is shown, that the specific DLT-solution is suitable for an IOT-usecase and can serve as a backbone solution.
-                Furthermore it is pointed out that the non-functional requirements for DLT-suitable IOT-usecases are identical - independant from the IOT-usecase itself.
+		In dieser Arbeit werden die Themenbereiche 'DLT' und 'IOT' vorgestellt, klassifiziert und in das OSI-Referenzmodell eingeordnet. Die Synergie beider Bereiche wird herausgearbeitet und es wird dem Leser vorgestellt, wie diese Technologien voneinander profitieren können. Ein beispielhafter IOT-Anwendungsfall wird entwickelt und eine detaillierte Auflistung aller Anforderungen erarbeitet. Im nächsten Schritt werden die die ermittelten Anforderungen schrittweise auf eine Untermenge von fundamentalen Anforderungen reduziert, die relevant für IOT in Verbindung mit DLT sind. Mehrere, am Markt etablierte DLT Anwendungen werden anschließend vorgestellt und auf Basis dieser Untermenge evaluiert. Es wird geprüft, ob und inwieweit sie sich als Backbone-Lösung für den IOT-Anwendungsfall qualifizieren. Die vielversprechendste Lösung wird in einem PoC umgesetzt, um die Anforderungsliste zu evaluieren. Es wird gezeigt, dass die gewählte DLT zielbringend als IOT Backbone-Lösung eingesetzt werden kann. Abschließend wird gezeigt, dass die nicht-funktionalen Anforderungen für DLT-geeignete IOT-Anwendungsfälle, unabhängig vom tatsächlichen Anwendungsfall selbst, stets die gleichen sind.
 
                 % ##########################################
 
@@ -220,10 +211,8 @@
                 %  - clearly state the shortcomings of your work
                 %  -- be hones and objective about your own work.
                 %  -- In which cases/scenarios are your results applicable?
-                This work proves the usability of DLTs as IOT backbone solutions with an exemplary PoC.
-                Only those parts of IOT that are suitable for being implemented on DLTs are analyzed. There are many more IOT patterns that are not fitting with DLT and might be implemented with other technologies.
-                Furthermore the analysis drawn in this work is evaluated with a PoC implementation. Due to restrictions like practicability or time limit not all fundamental requirements needed for an IOT backbone solution could be proven by the PoC.
-
+		
+		Diese Arbeit zeigt die Eignung von verschiedenen DLTs als Backbone-Lösung für IOT-Anwendungsfälle anhand eines beispielhaften PoCs. Es werden nur solche Bereiche von IOT betrachtet, die auch grundsätzlich für die Implementierung auf DLTs geeignet sind. Es gibt darüber hinaus weitere Bereiche, die sich nicht eignen, um auf DLTs umgesetzt zu werden und müssen auf einer anderen technologischen Basis implementiert werden. Des weiteren wird die in dieser Arbeit durchgeführte Analyse anhand eines PoC belegt. Aufgrund von Restriktionen wie der Zeitlimitierung und der praktischen Umsetzbarkeit könnten unter Umständen nicht alle fundamentalen Anforderungen gezeigt werden, die für einen IOT-DLT-Anwendungsfall erfüllt sein müssen.
 
                 % ##########################################
         \end{description}
@@ -249,64 +238,57 @@
         %
         \begin{enumerate}
 
-            \item \textbf{Section 1 Einleitung}
+            \item \textbf{Einleitung}
                     \begin{enumerate}
-                        \item \textbf{Subsection 1 Motivation}
-                        \item \textbf{Subsection 2 Problemstellung}
-                        \item \textbf{Subsection 3 Zielsetzung}
-                        \item \textbf{Subsection 4 Zielgruppe}
-                        \item \textbf{Subsection 5 Verwandte Arbeiten}
-                        \item \textbf{Subsection 6 Aufbau dieser Arbeit}
+                        \item \textbf{Motivation}
+                        \item \textbf{Problemstellung}
+                        \item \textbf{Zielsetzung \& Zielgruppe}
+                        \item \textbf{Verwandte Arbeiten}
+                        \item \textbf{Aufbau dieser Arbeit}
                     \end{enumerate}
-            \item \textbf{Section 2 Theoretische Grundlagen}
+            \item \textbf{Theoretische Grundlagen}
                     \begin{enumerate}
-                        \item \textbf{Subsection 1 Einleitung DLT \& IOT (Referenzen)}
-                        \item \textbf{Subsection 2 Defintionen}
-                        \item \textbf{Subsection 3 Abgrenzung DLT}
-                        \item \textbf{Subsection 4 Abgrenzung IOT}
-                        \item \textbf{Subsection 5 Schnittmenge DLT \& IOT} (Wann eignet sich DLT für IOT und wann IOT für DLT?)
-                        \item \textbf{Subsection 6 OSI-Referenzmodell}
-                        \item \textbf{Subsection 7 Einordung DLT \& IOT ins OSI-Modell} (Blockchain als Kommunikationsprotokoll?)
+                        \item \textbf{DLT}
+                        \item \textbf{IOT}
                     \end{enumerate}
-            \item \textbf{Section 3 ["Name des IOT-Anwendungsfalls"]} (Exemplarischer IOT-Anwendungsfall)
+            \item \textbf{["Name des IOT-Anwendungsfalls"]}
                     \begin{enumerate}
-                        \item \textbf{Subsection 1 Beschreibung}
-                        \item \textbf{Subsection 2 Zielgruppe}
-                        \item \textbf{Subsection 3 Architektur / Aufbau}
-                        \item \textbf{Subsection 4 Einordnung IOT-Umfeld}
-                        \item \textbf{Subsection 5 ...}
+                        \item \textbf{Beschreibung}
+                        \item \textbf{Technische Lösungsskizze}
                     \end{enumerate}
-            \item \textbf{Section 4 Anforderungsanalyse und -evaluierung}
+            \item \textbf{Anforderungen}
                     \begin{enumerate}
-                        \item \textbf{Subsection 1 Anforderungsanalyse IOT-Anwendungsfall}
-                        \item \textbf{Subsection 2 Anforderungsklassifizierung} (Funktionale, Nicht-Funktionale, ...)
-                        \item \textbf{Subsection 3 Anforderungsevaluierung} (Rekursive Reduktion des Untersuchungsraumes / Relevanz DLT-IOT)
+                        \item \textbf{Anforderungsanalyse}
+                        \item \textbf{Anforderungsklassifizierung}
+				\begin{enumerate}
+                        		\item \textbf{Funktionale Anforderungen}
+                        		\item \textbf{Nicht-Funktionale Anforderungen}
+                        		\item \textbf{...}
+                    		\end{enumerate}
+                        \item \textbf{Anforderungsevaluierung} (Rekursive Reduktion des Untersuchungsraumes / Relevanz DLT-IOT)
                     \end{enumerate}
-            \item \textbf{Section 5 Marktübersicht relevanter DLTs}
+            \item \textbf{Auswahl relevanter DLTs}
                     \begin{enumerate}
-                        \item \textbf{Subsection 1 Übersicht}
-                        \item \textbf{Subsection 2 Anforderungserfüllung}
-                        \item \textbf{Subsection 3 Bewertung / Ranking}
+                        \item \textbf{Marktübersicht DLTs}
+                        \item \textbf{Anforderungserfüllung}
+                        \item \textbf{Bewertung, Ranking \& Auswahl}
                     \end{enumerate}
-            \item \textbf{Section 6 Proof-of-Concept}
+            \item \textbf{Umsetzung}
                     \begin{enumerate}
-                        \item \textbf{Subsection 1 Eingesetzte Technologien}
-                        \item \textbf{Subsection 2 Zu untersuchende Anforderungen}
-                        \item \textbf{Subsection 3 Architektur}
-                        \item \textbf{Subsection 4 Tests}
+                        \item \textbf{Auswahl der Anwendungsanforderungen}
+                        \item \textbf{PoC}
+				\begin{enumerate}
+                        		\item \textbf{Implementierung}
+                        		\item \textbf{Testaufbau}
+                        		\item \textbf{...}
+                    		\end{enumerate}
                     \end{enumerate}
-            \item \textbf{Section 7 Diskussion}
+            \item \textbf{Diskussion \& Fazit}
                     \begin{enumerate}
-                        \item \textbf{Subsection 1 DLT: Eignung als IOT-Backbone?}
-                        \item \textbf{Subsection 2 DLT-IOT-Usecase: Technische Anforderungen immer gleich?}
+                        \item \textbf{Wiederaufnahme These Teil 1 – Eignung als IOT-Backbone?}
+                        \item \textbf{Wiederaufnahme These Teil 2 – DLT-IOT-Usecase: Technische Anforderungen immer gleich?}
                     \end{enumerate}
-            \item \textbf{Section 8 Fazit}
-            \item \textbf{Section 9 Ausblick}
-                    \begin{enumerate}
-                        \item \textbf{Mehrwert gegenüber Cloud / Client-Server / ... ?}
-                    \end{enumerate}
-
-
+            \item \textbf{Ausblick}
         \end{enumerate}
         % ##########################################
 
@@ -329,9 +311,6 @@
         %    your work (1-2 sentences)
         %
         \begin{description}
-          \item[\cite{DBLP:journals/corr/abs-1809-05613}] The authors analyze many blockchain consensus algorithms for their suitability for IOT solutions. The Tangle-consensus algorithm of IOTA seems to fit best as it utilizes a DAG.
-          \item[\cite{iotbds18}] The authors present a decision framework for when to use blockchain technology and when not.
-          \item[\cite{8632193}] The authors analyze DAGs (namely Nxt, IOTA, Orumesh, DagCoin,Byteball, Nano and XDAG, even though some of them are only ERC20-Token) and their advantages over classical blockchain solutions. They do not describe a specific usecase or a concrete application.
           \item[work in progress]
         \end{description}
         % ##########################################

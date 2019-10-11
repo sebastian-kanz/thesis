@@ -14,7 +14,7 @@
 \RequirePackage{iflang}
 
 %*******************************************************************************
-% Options 
+% Options
 %*******************************************************************************
 \DeclareOption{exam}{\setboolean{@exam}{true}}
 \DeclareOption{big}{\setboolean{@big}{true}}
@@ -29,7 +29,7 @@
 \ProcessOptions\relax
 
 %*******************************************************************************
-% Commands for EXAM, BIG, ABREV, INDEX, ENGLISH, WIWI and DOUBLESPACING options 
+% Commands for EXAM, BIG, ABREV, INDEX, ENGLISH, WIWI and DOUBLESPACING options
 %*******************************************************************************
 \newcommand{\condBIG}[1]{\ifthenelse{\boolean{@big}}{#1}{}}
 \newcommand{\condEXAM}[1]{\ifthenelse{\boolean{@exam}}{#1}{}}
@@ -61,7 +61,7 @@
 	{\hfill\qed\vspace{2ex}}
 
 %*******************************************************************************
-% Double spacing between lines 
+% Double spacing between lines
 %*******************************************************************************
 \ifthenelse{\boolean{@doublespacing}}{%
     \RequirePackage[]{setspace}
@@ -69,7 +69,7 @@
   {\relax}
 
 %*******************************************************************************
-% Acronyms - TODO: english version 
+% Acronyms - TODO: english version
 %*******************************************************************************
 \ifthenelse{\boolean{@abbrev}}%
 {%
@@ -85,12 +85,12 @@
 }%
 
 %*******************************************************************************
-% Tabularx - Spalten 
+% Tabularx - Spalten
 %*******************************************************************************
 \RequirePackage{tabularx}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}         % zentrierte Spalten mit optimaler Breite
-\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}  % zentrierte Spalten mit Breitenangabe 
-\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}} % rechtsbündig mit Breitenangabe 
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}  % zentrierte Spalten mit Breitenangabe
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}} % rechtsbündig mit Breitenangabe
 
 %*******************************************************************************
 % Indices
@@ -101,7 +101,7 @@
   {\relax}
 
 %*******************************************************************************
-% Colors 
+% Colors
 %*******************************************************************************
 \RequirePackage{color}
 \definecolor{shadecolor}{rgb}{1,1,.8}
@@ -139,3 +139,4 @@
 %*******************************************************
 \RequirePackage{pdfpages}
 \RequirePackage{chngpage}
+\RequirePackage{lipsum}
