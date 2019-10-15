@@ -8,11 +8,11 @@ case "${unameOut}" in
     *)          machine="UNKNOWN:${unameOut}"
 esac
 
-if [${machine} == "Linux"
+if [ $machine == "Linux" ]
 then
     path=$PWD
 else
-   path=$(pwd -W)
+	path=$(pwd -W)
 fi
 
 docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" latexmk -C
