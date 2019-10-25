@@ -1,0 +1,42 @@
+https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8559686
+ISO/IEC/IEEE 29148:2018(E)
+
+5.2.8.3  Examples of the requirements type attribute
+Important examples of the requirements type attribute include:
+—  Functional/Performance. Functional requirements describe the system or system element functions or tasks to be performed by the system. Performance is an attribute of function. A performance requirement alone is an incomplete requirement. Performance is normally expressed quantitatively.NOTE 1   There  can  be  more  than  one  performance  requirement  associated  with  a  single  function, functional requirement or task.
+—    Interface.  Interface  requirements  are  the  definition  of  how  the  system  is  required  to  interact with external systems (external interface), or how system elements within the system, including human elements, interact with each other (internal interface). External interface requirements state characteristics required of the system, software or service at a point or region of connection of the system, software or service to the world outside of the item. They include, as applicable, characteristics such as location, geometry and what the interface is to be able to pass in each direction.
+—    Process  Requirements.  These  are  stakeholder,  usually  acquirer  or  user,  requirements  imposed through the contract or statement of work. Process requirements include: compliance with national, state or local laws, including environmental laws, administrative requirements, acquirer/supplier relationship requirements and specific work directives. Process requirements may also be imposed on a program by corporate policy or practice. System or system element implementation process requirements,  such  as  mandating  a  particular  design  method,  are  usually  captured  in  project agreement documentation such as contracts, statements of work and quality plans.
+—    Quality  (Non-Functional)  Requirements. –  Include  a  number  of  the  'ilities'  in  requirements  to include, for example, transportability, survivability, flexibility, portability, reusability, reliability, maintainability and security. The kinds of quality requirements (e.g., "ilities") should be identified prior  to  initiating  the  requirements  activities.  This  should  be  tailored  to  the  system(s)  being developed. As appropriate, measures for the quality requirements should be included as well.
+—    Usability/Quality-in-Use Requirements (for user performance and satisfaction) – Provide the basis for the design and evaluation of systems to meet the user needs. Usability/Quality-in-Use requirements are developed in conjunction with, and form part of, the overall requirements specification of a system.NOTE 2 Additional  guidance  on  software  quality  requirements  can  be  found  in  the  ISO/IEC SQuaRE standards, especially ISO/IEC 25030, and in ISO/IEC 25010.
+—    Human  Factors  Requirements.  –  State  required  characteristics  for  the  outcomes  of  interaction with  human  users  (and  other  stakeholders  affected  by  use)  in  terms  of  safety,  performance, effectiveness,  efficiency,  reliability,  maintainability,  health,  well-being  and  satisfaction.  These include  characteristics  such  as  measures  of  usability,  including  effectiveness,  efficiency  and satisfaction; human reliability; freedom from adverse health effects.
+
+
+
+IIBA - BABOK
+Requirements Classification Schema
+For the purposes of the BABOK® Guide, the following classification schema describes requirements:
+- Business requirements: statements of goals, objectives, and outcomes that describe why a change has been initiated. They can apply to the whole of an enterprise, a business area, or a specific initiative.
+- Stakeholder requirements: describe the needs of stakeholders that must be met in order to achieve the business requirements. They may serve as a bridge between business and solution requirements.
+- Solution requirements: describe the capabilities and qualities of a solution that meets the stakeholder requirements. They provide the appropriate level of detail to allow for the development and implementation of the solution. Solution requirements can be divided into two sub-categories:
+  - functional requirements: describe the capabilities that a solution must have in terms of the behaviour and information that the solution will manage, and
+  - non-functional requirements or quality of service requirements: do not relate directly to the behaviour of functionality of the solution, but rather describe conditions under which a solution must remain effective or qualities that a solution must have.
+- Transition requirements: describe the capabilities that the solution must have and the conditions the solution must meet to facilitate transition from the current state to the future state, but which are not needed once the change is complete. They are differentiated from other requirements types because they are of a temporary nature. Transition requirements address topics such as data conversion, training, and business continuity
+
+PMI - PMBOK (Ergänzungen zu BABOK)
+- Business requirements, which describe the higher-level needs of the organization as a whole, such as the
+business issues or opportunities, and reasons why a project has been undertaken.
+- Stakeholder requirements, which describe needs of a stakeholder or stakeholder group.
+- Solution requirements, which describe features, functions, and characteristics of the product, service,
+or result that will meet the business and stakeholder requirements. Solution requirements are further
+grouped into functional and nonfunctional requirements:
+  - Functional requirements describe the behaviors of the product. Examples include processes,
+data, and interactions with the product.
+  - Nonfunctional requirements supplement functional requirements and describe the environmental
+conditions or qualities required for the product to be effective. Examples include: reliability,
+security, performance, safety, level of service, supportability, retention/purge, etc.
+- Transition requirements describe temporary capabilities, such as data conversion and training
+requirements, needed to transition from the current “as-is” state to the future “to-be” state.
+- Project requirements, which describe the actions, processes, or other conditions the project needs
+to meet.
+- Quality requirements, which capture any condition or criteria needed to validate the successful completion
+of a project deliverable or fulfillment of other project requirements.

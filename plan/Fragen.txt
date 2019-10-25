@@ -1,0 +1,22 @@
+﻿IOTA (DAG), A, B, C eignen sich für IOT, Schlussfolgerung: DAGs eignen sich sehr gut für IOT. Warum?
+
+IOT Transaktion? Aufbau wie Bitcoin-Transaktion oder ganz anders?
+
+Wie groß ist eine Transaktion? Wie viele Daten werden übermittelt?
+Wie viele Daten müssen lokal auf einem IOT-Device vorgehalten werden, um mit der Blockchain kommunizieren zu können?
+
+Wie viele Daten (Attachments) können gesendet werden?
+
+Welche Leistung muss auf einem IOT-Device erbracht werden (PoW,…)?
+
+Offline-Transaktionen möglich bei Verbindungsverlust?
+
+Consensus Vergleich von DAG-based Blockchains und normalen Blockchains
+
+Welche Aspekte verlangsamen Blockchains? (Blöcke können nur sequentiell erzeugt werden. Blöcke nur als Block und nicht einzelne Transaktionen d.h. Aggregieren zum Block kostet Zeit. Mining kostet Zeit. …)
+
+Sidechains?
+
+Blockchain = Linked List? Linked List schlechter als DAG?
+
+Blockchain vs. DAG vs. Hashgraph vs. Holochain?
