@@ -18,6 +18,6 @@ fi
 docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" latexmk -C
 docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" pdflatex "$@"
 docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" bibtex "$@"
-docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" pdflatex "$@"
+#docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" pdflatex "$@"
 docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" pdflatex "$@"
 docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" latexmk -c

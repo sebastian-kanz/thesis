@@ -1,361 +1,277 @@
-%************************************************
-\chapter{Introduction to the ClassicThesis style}\label{ch:classicthesis}
-%************************************************
-The ClassicThesis bundle for \LaTeX\ has two goals:
-\begin{enumerate}
-    \item Provide students with an easy-to-use template for their
-    Master's
-    or PhD thesis. (Though it might also be used by other types of
-    authors
-    for reports, books, etc.)
-    \item Provide a classic, high-quality typographic style that is
-    inspired by \citeauthor{bringhurst:2002}'s ``\emph{The Elements of
-    Typographic Style}'' \citep{bringhurst:2002}.
-    \marginpar{\myTitle \myVersion}
-\end{enumerate}
-The bundle is configured to run with a \emph{full}
-MiK\TeX\ or \TeX Live\footnote{See the file \texttt{LISTOFFILES} for
-needed packages. Furthermore, \texttt{classicthesis}
-works with most other distributions and, thus, with most systems
-\LaTeX\ is available for.}
-installation right away and, therefore, it uses only freely available
-fonts. (Minion fans can easily adjust the style to their needs.)
-
-People interested only in the nice style and not the whole bundle can
-now use the style stand-alone via the file \texttt{classicthesis.sty}.
-This works now also with ``plain'' \LaTeX.
-
-As of version 3.0, \texttt{classicthesis} can also be easily used with
-\mLyX\footnote{\url{http://www.lyx.org}} thanks to Nicholas Mariette
-and Ivo Pletikosić. The \mLyX\ version of this manual will contain
-more information on the details.
-
-This should enable anyone with a basic knowledge of \LaTeXe\ or \mLyX\ to
-produce beautiful documents without too much effort. In the end, this
-is my overall goal: more beautiful documents, especially theses, as I
-am tired of seeing so many ugly ones.
-
-The whole template and the used style is released under the
-\acsfont{GNU} General Public License.
-
-If you like the style then I would appreciate a postcard:
-\begin{center}
-    André Miede \\
-    Detmolder Straße 32 \\
-    31737 Rinteln \\
-    Germany
-\end{center}
-The postcards I received so far are available at:
-\begin{center}
-    \url{http://postcards.miede.de}
-\end{center}
-\marginpar{A well-balanced line width improves the legibility of
-the text. That's what typography is all about, right?}
-So far, many theses, some books, and several other publications have
-been typeset successfully with it. If you are interested in some
-typographic details behind it, enjoy Robert Bringhurst's wonderful book.
-% \citep{bringhurst:2002}.
-
-\paragraph{Important Note:} Some things of this style might look
-unusual at first glance, many people feel so in the beginning.
-However, all things are intentionally designed to be as they are,
-especially these:
-\begin{itemize}
-    \item No bold fonts are used. Italics or spaced small caps do the
-    job quite well.
-    \item The size of the text body is intentionally shaped like it
-    is. It supports both legibility and allows a reasonable amount of
-    information to be on a page. And, no: the lines are not too short.
-    \item The tables intentionally do not use vertical or double
-    rules. See the documentation for the \texttt{booktabs} package for
-    a nice discussion of this topic.\footnote{To be found online at
-    \url{http://mirror.ctan.org/macros/latex/contrib/booktabs/}.}
-    \item And last but not least, to provide the reader with a way
-    easier access to page numbers in the table of contents, the page
-    numbers are right behind the titles. Yes, they are \emph{not}
-    neatly aligned at the right side and they are \emph{not} connected
-    with dots that help the eye to bridge a distance that is not
-    necessary. If you are still not convinced: is your reader
-    interested in the page number or does she want to sum the numbers
-    up?
-\end{itemize}
-Therefore, please do not break the beauty of the style by changing
-these things unless you really know what you are doing! Please.
-
-\paragraph{Yet Another Important Note:} Since \texttt{classicthesis}'
-first release in 2006, many things have changed in the \LaTeX\ world.
-Trying to keep up-to-date, \texttt{classicthesis} grew and evolved
-into many directions, trying to stay (some kind of) stable and be
-compatible with its port to \mLyX. However, there are still many
-remains from older times in the code, many dirty workarounds here and
-there, and several other things I am absolutely not proud of (for
-example my unwise combination of \acsfont{KOMA} and
-\texttt{titlesec} etc.).
-\graffito{An outlook into the future of \texttt{classicthesis}.}
-
-Currently, I am looking into how to completely re-design and
-re-implement \texttt{classicthesis} making it easier to maintain and
-to use. As a general idea, \texttt{classicthesis.sty} should be
-developed and distributed separately from the template bundle itself.
-Excellent spin-offs such as \texttt{arsclassica} could also be
-integrated (with permission by their authors) as format configurations.
-Also, current trends of \texttt{microtype}, \texttt{fontspec}, etc.
-should be included as well. As I am not really into deep
-\LaTeX\ programming,
-I will reach out to the \LaTeX\ community for their expertise and help.
-
-
-\section{Organization}
-A very important factor for successful thesis writing is the
-organization of the material. This template suggests a structure as
-the following:
-\begin{itemize}
-    \marginpar{You can use these margins for summaries of the text
-    body\dots}
-    \item\texttt{Chapters/} is where all the ``real'' content goes in
-    separate files such as \texttt{Chapter01.tex} etc.
-    % \item\texttt{Examples/} is where you store all listings and other
-    % examples you want to use for your text.
-    \item\texttt{FrontBackMatter/} is where all the stuff goes that
-    surrounds the ``real'' content, such as the acknowledgments,
-    dedication, etc.
-    \item\texttt{gfx/} is where you put all the graphics you use in
-    the thesis. Maybe they should be organized into subfolders
-    depending on the chapter they are used in, if you have a lot of
-    graphics.
-    \item\texttt{Bibliography.bib}: the Bib\TeX\ database to organize
-    all the references you might want to cite.
-    \item\texttt{classicthesis.sty}: the style definition to get this
-    awesome look and feel. Does not only work with this thesis template
-    but also on its own (see folder \texttt{Examples}). Bonus: works
-    with both \LaTeX\ and \textsc{pdf}\LaTeX\dots and \mLyX.
-    % \item\texttt{ClassicThesis.tcp} a \TeX nicCenter project file.
-    Great tool and it's free!
-    \item\texttt{ClassicThesis.tex}: the main file of your thesis
-    where all gets bundled together.
-    \item\texttt{classicthesis-config.tex}: a central place to load all
-    nifty packages that are used. % In there, you can also activate
-    % backrefs in order to have information in the bibliography about
-    % where a source was cited in the text (\ie, the page number).
-
-    \emph{Make your changes and adjustments here.} This means that you
-    specify here the options you want to load \texttt{classicthesis.sty}
-    with. You also adjust the title of your thesis, your name, and all
-    similar information here. Refer to \autoref{sec:custom} for more
-    information.
-
-    This had to change as of version 3.0 in order to enable an easy
-    transition from the ``basic'' style to \mLyX.
-\end{itemize}
-In total, this should get you started in no time.
-
-
-\clearpage
-\section{Style Options}\label{sec:options}
-There are a couple of options for \texttt{classicthesis.sty} that
-allow for a bit of freedom concerning the layout:
-\marginpar{\dots or your supervisor might use the margins for some
-    comments of her own while reading.}
-\begin{itemize}
-    \item General:
-        \begin{itemize}
-            \item\texttt{drafting}: prints the date and time at the bottom of
-            each page, so you always know which version you are dealing with.
-            Might come in handy not to give your Prof. that old draft.
-        \end{itemize}
-
-    \item Parts and Chapters:
-        \begin{itemize}
-            \item\texttt{parts}: if you use Part divisions for your document,
-            you should choose this option. (Cannot be used together with
-            \texttt{nochapters}.)
-
-            \item\texttt{linedheaders}: changes the look of the chapter
-            headings a bit by adding a horizontal line above the chapter
-            title. The chapter number will also be moved to the top of the
-            page, above the chapter title.
-        \end{itemize}
-
-    \item Typography:
-        \begin{itemize}
-            \item\texttt{eulerchapternumbers}: use figures from Hermann Zapf's
-            Euler math font for the chapter numbers. By default, old style
-            figures from the Palatino font are used.
-
-            \item\texttt{beramono}: loads Bera Mono as typewriter font.
-            (Default setting is using the standard CM typewriter font.)
-
-            \item\texttt{eulermath}: loads the awesome Euler fonts for math.
-            Pala\-tino is used as default font.
-        \end{itemize}
-
-    \marginpar{Options are enabled via \texttt{option=true}}
-
-    \item Table of Contents:
-        \begin{itemize}
-            \item\texttt{tocaligned}: aligns the whole table of contents on
-            the left side. Some people like that, some don't.
-
-            \item\texttt{dottedtoc}: sets pagenumbers flushed right in the
-            table of contents.
-
-            \item\texttt{manychapters}: if you need more than nine chapters for
-            your document, you might not be happy with the spacing between the
-            chapter number and the chapter title in the Table of Contents.
-            This option allows for additional space in this context.
-            However, it does not look as ``perfect'' if you use
-            \verb|\parts| for structuring your document.
-        \end{itemize}
-
-    \item Floats:
-        \begin{itemize}
-            \item\texttt{listings}: loads the \texttt{listings} package (if not
-            already done) and configures the List of Listings accordingly.
-
-            \item\texttt{floatperchapter}: activates numbering per chapter for
-            all floats such as figures, tables, and listings (if used).
-        \end{itemize}
-
-\end{itemize}
-
-Furthermore, pre-defined margins for different paper sizes are available, \eg, \texttt{a4paper}, \texttt{a5paper}, and \texttt{letterpaper}. These are based on your chosen option of \verb|\documentclass|.
-
-The best way to figure these options out is to try the different
-possibilities and see what you and your supervisor like best.
-
-In order to make things easier, \texttt{classicthesis-config.tex}
-contains some useful commands that might help you.
-
-
-\section{Customization}\label{sec:custom}
-%(As of v3.0, the Classic Thesis Style for \LaTeX{} and \mLyX{} share
-%the same two \texttt{.sty} files.)
-This section will show you some hints how to adapt
-\texttt{classicthesis} to your needs.
-
-The file \texttt{classicthesis.sty}
-contains the core functionality of the style and in most cases will
-be left intact, whereas the file \texttt{classic\-thesis-config.tex}
-is used for some common user customizations.
-
-The first customization you are about to make is to alter the document
-title, author name, and other thesis details. In order to do this, replace
-the data in the following lines of \texttt{classicthesis-config.tex:}%
-\marginpar{Modifications in \texttt{classic\-thesis-config.tex}%
+\chapter{Appendix: Anforderungen}
+\label{ch:appendix:requirements}
+\graffito{
+\small
+Legende\\
+\tiny
+\textcolor{MidnightBlue!75!black}{\ding{110}} Manufacturer\\
+\textcolor{BrickRed!75!black}{\ding{110}} Customer\\
+\textcolor{Aquamarine!75!black}{\ding{110}} Service-Provider\\
+\textcolor{SpringGreen!75!black}{\ding{110}} Supplier\\
+\textcolor{Goldenrod!75!black}{\ding{110}} Platform-Operator\\
+\textcolor{DarkOrchid!75!black}{\ding{110}} Developer\\
 }
 
-\begin{lstlisting}
-    % **************************************************
-    % 2. Personal data and user ad-hoc commands
-    % **************************************************
-    \newcommand{\myTitle}{A Classic Thesis Style\xspace}
-    \newcommand{\mySubtitle}{An Homage to...\xspace}
-\end{lstlisting}
+%%%Manufacturer%%%
 
-Further customization can be made in \texttt{classicthesis-config.tex}
-by choosing the options to \texttt{classicthesis.sty}
-(see~\autoref{sec:options}) in a line that looks like this:
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M1} Geräte vermieten}]
+  \label{req:m1}
+  \glqq Als Manufacturer möchte ich beliebig viele meiner Geräte an beliebig viele Kunden vermieten um Umsatz zu machen. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M1.1]
+    Die Platform muss so skalieren, sodass mehrere hunderttausend Geräte, einige tausend Kunden sowie Supplier und Service-Provider im unteren zweistelligen Bereich auf der Platform agieren können.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M1.2]
+    Die Kommunikation der beteiligten Parteien (Aufträge, Mietverträge, Verbrauch, etc.) muss innerhalb von Minuten bzw. innerhalb von Stunden übermittelt werden.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-\begin{lstlisting}
-  \PassOptionsToPackage{
-    drafting=true,    % print version information on the bottom of the pages
-    tocaligned=false, % the left column of the toc will be aligned (no indentation)
-    dottedtoc=false,  % page numbers in ToC flushed right
-    parts=true,       % use part division
-    eulerchapternumbers=true, % use AMS Euler for chapter font (otherwise Palatino)
-    linedheaders=false,       % chaper headers will have line above and beneath
-    floatperchapter=true,     % numbering per chapter for all floats (i.e., Figure 1.1)
-    listings=true,    % load listings package and setup LoL
-    subfig=true,      % setup for preloaded subfig package
-    eulermath=false,  % use awesome Euler fonts for mathematical formulae (only with pdfLaTeX)
-    beramono=true,    % toggle a nice monospaced font (w/ bold)
-    minionpro=false   % setup for minion pro font; use minion pro small caps as well (only with pdfLaTeX)
-  }{classicthesis}
-\end{lstlisting}
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M2} Mietanfragen verwalten}]
+  \label{req:m2}
+  \glqq Als Manufacturer möchte ich alle eingehende Mietanfragen verwalten können, um Kunden Mietverträge anzubieten oder die Anfragen abzulehnen. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M2.1]
+    Alle Anfragen müssen gespeichert werden.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M2.2]
+    Mietanfragen müssen genau einem Kunden zugeordnet werden können.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M2.3]
+    Es muss sichergestellt werden, dass die Anfrage auch von dem Kunden selbst kommt.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-Many other customizations in \texttt{classicthesis-config.tex} are
-possible, but you should be careful making changes there, since some
-changes could cause errors.
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M3} Mietverträge verwalten}]
+  \label{req:m3}
+  \glqq Als Manufacturer möchte ich aktuelle Mietverträge einsehen und verwalten können, um die Übersicht über meine Kunden, Verträge und Geräte zu behalten. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M3.1]
+    Mietverträge dürfen nur für den Manufacturer selbst sichtbar sein.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-% Finally, changes can be made in the file \texttt{classicthesis.sty},%
-% \marginpar{Modifications in \texttt{classicthesis.sty}%
-% } although this is mostly not designed for user customization. The
-% main change that might be made here is the text-block size, for example,
-% to get longer lines of text.
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M4} Mietverträge Detailansicht}]
+  \label{req:m4}
+  \glqq Als Manufacturer möchte ich einzelne Verträge detailliert betrachten und den Verbrauch der Geräte einsehen können, um die Verträge anzupassen. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M4.1]
+    Der Manufacturer muss in der Lage sein, die Detailinformationen des Vertrages abzurufen.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M4.2]
+    Der Manufacturer muss in der Lage sein, Verträge zu ändern. Die Änderung befarf der Zustimmung des Customers.
+  \end{tcolorbox}
+\end{tcolorbox}
 
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M5} Benachrichtigung im Fehlerfall}]
+  \label{req:m5}
+  \glqq Als Manufacturer möchte ich, dass mich meine vermieteten Geräte im Fehlerfall benachrichtigen, damit ich den Service-Provider mit der Durchführung des Service beauftragen kann. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M5.1]
+    Die Geräte benötigen eine Verbindung zu der Platform.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M5.2]
+    Die Geräte benötigen Sensoren, um Fehler und Defekte zu detektieren.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-\section{Issues}\label{sec:issues}
-This section will list some information about problems using
-\texttt{classic\-thesis} in general or using it with other packages.
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M6} Abrechnung}]
+  \label{req:m6}
+  \glqq Als Manufacturer benötige ich eine korrekte, nutzungsabhängige und automatische Abrechnung der vermieteten Geräte, die täglich (stündlich) aktualisiert wird, um den Umsatz aufrecht zu erhalten. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M6.1]
+    Die Geräte benötigen Sensoren, um den Verbrauch zu detektieren.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M6.2]
+    Die Geräte müssen die Verbrauchsdaten sammeln und aggregieren und in einem festgelegten Zeitintervall an die Platform melden.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M6.3]
+    Es muss sichergestellt werden, dass die Verbrauchsdaten manipulationssicher von den Geräten selbst an die Platform gesendet werden.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-Beta versions of \texttt{classicthesis} can be found at Bitbucket:
-\begin{center}
-    \url{https://bitbucket.org/amiede/classicthesis/}
-\end{center}
-There, you can also post serious bugs and problems you encounter.
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M7} Service-Provider beauftragen}]
+  \label{req:m7}
+  \glqq Als Manufacturer möchte ich aus einer Liste verfügbarer Service-Provider auswählen und diese beauftragen können, um meine vermieteten Geräte zu warten und zu reparieren. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M7.1]
+    Es muss eine Auflistung aller verfügbarer Service-Provider existieren.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M7.2]
+    Eine Beauftragung eines Service-Providers bedarf dessen Zustimmung.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M7.3]
+    Die Beauftragung muss alle benötigen Informationen über das Gerät, die Bezahlung, den Standort und den Defekt enthalten.
+  \end{tcolorbox}
+\end{tcolorbox}
 
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M8} Service-Aufträge einsehen}]
+  \label{req:m8}
+  \glqq Als Manufacturer möchte ich den Status und die Kosten aktuell laufender Service-Aufträge einsehen können, um einen Überblick über meine offenden Aufträge behalten zu können. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M8.1]
+    This is a description.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-\section{Future Work}
-So far, this is a quite stable version that served a couple of people
-well during their thesis time. However, some things are still not as
-they should be. Proper documentation in the standard format is still
-missing. In the long run, the style should probably be published
-separately, with the template bundle being only an application of the
-style. Alas, there is no time for that at the moment\dots it could be
-a nice task for a small group of \LaTeX nicians.
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M9} Lierferungen beauftragen}]
+  \label{req:m9}
+  \glqq Als Manufacturer möchte ich aus einer Liste verfügbarer Supplier auswählen und diese beauftragen können, um meine vermieteten Geräte auszuliefern. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M9.1]
+    Es muss eine Auflistung aller verfügbarer Supplier existieren.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M9.2]
+    Eine Lieferanfrage muss vom Supplier zunächst bestätigt werden; die Anfrage muss alle relevanten Informationen wie Standorte, Gerätemaße, etc. enthalten.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-Please do not send me email with questions concerning \LaTeX\ or the
-template, as I do not have time for an answer. But if you have
-comments, suggestions, or improvements for the style or the template
-in general, do not hesitate to write them on that postcard of yours.
+\begin{tcolorbox}[colback=white,colframe=MidnightBlue!50!black, colbacktitle=MidnightBlue!75!black,title=\textbf{\underline{M10} Lieferaufträge einsehen}]
+  \label{req:m10}
+  \glqq Als Manufacturer möchte ich den Status und die Kosten aktuell laufender Lieferaufträge einsehen können, um einen Überblick über meine offenen Aufträge behalten zu können. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task M10.1]
+    This is a description.
+  \end{tcolorbox}
+\end{tcolorbox}
 
+%%%Customer%%%
 
-\section{Beyond a Thesis}
-The layout of \texttt{classicthesis.sty} can be easily used without the
-framework of this template. A few examples where it was used to typeset
-an article, a book or a curriculum vitae can be found in the folder
-\texttt{Examples}. The examples have been tested with
-\texttt{latex} and \texttt{pdflatex} and are easy to compile. To
-encourage you even more, PDFs built from the sources can be found in the
-same folder.
+\begin{tcolorbox}[colback=white,colframe=BrickRed!50!black, colbacktitle=BrickRed!75!black,title=\textbf{\underline{C1} Ansicht verfügbarer Geräte}]
+  \label{req:c1}
+  \glqq Als Customer möchte ich verfügbare Haushaltsgeräte angezeigt bekommen, um das passende Gerät mieten zu können. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C1.1]
+    Es muss eine Auflistung aller verfügbarer (mietbarer) Geräte existieren.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C1.2]
+    Es muss sichergestellt werden, dass sich das verfügbare Gerät in keinem Mietverhältnis befindet.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C1.3]
+    Es müssen alle für den Customer relevaten Informationen über das Gerät vorhanden und einsehbar sein.
+  \end{tcolorbox}
+\end{tcolorbox}
 
+\begin{tcolorbox}[colback=white,colframe=BrickRed!50!black, colbacktitle=BrickRed!75!black,title=\textbf{\underline{C2} Überblick Mietverträge}]
+  \label{req:c2}
+  \glqq Als Customer möchte ich meine laufenden Mietverträge einsehen können, um den Überblick über meine aktuellen Kosten und Verbrauch behalten zu können. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C2.1]
+    Es muss sichergestellt werden, dass der Customer nur seine eigenen Mietverträge einsehen kann.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C2.2]
+    Der Verbrauch und die Kosten (über einen Zeitraum X) müssen gespeichert und aufsummiert dargestellt werden.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-\section{License}
-\paragraph{GNU General Public License:} This program is free software;
-you can redistribute it and/or modify
-it under the terms of the \acsfont{GNU} General Public License as
-published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+\begin{tcolorbox}[colback=white,colframe=BrickRed!50!black, colbacktitle=BrickRed!75!black,title=\textbf{\underline{C3} Anpassung Mietvertrag}]
+  \label{req:c3}
+  \glqq Als Customer möchte ich einen laufenden Mietverträge bearbeiten können, um diesen kündigen oder weitere Geräte hinzubuchen zu können. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C3.1]
+    Es muss sichergestellt werden, dass ein Customer nur seine eigenen Verträge einsehen und bearbeiten kann.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C3.2]
+    Ein Customer muss sich als er selbst authentifizieren können.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-This program is distributed in the hope that it will be useful,
-but \emph{without any warranty}; without even the implied warranty of
-\emph{merchant\-ability} or \emph{fitness for a particular purpose}.
-See the
-\acsfont{GNU} General Public License for more details.
+\begin{tcolorbox}[colback=white,colframe=BrickRed!50!black, colbacktitle=BrickRed!75!black,title=\textbf{\underline{C4} Geräte warten}]
+  \label{req:c4}
+  \glqq Als Customer möchte ich die gemieteten Geräte reinigen und warten können, um dafür vom Hersteller eine Gutschrift auf mein Vertragskonto zu erhalten. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C4.1]
+    Das Gerät muss die Reinigung / Wartung durch den Customer detektieren können.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C4.2]
+    Es muss sichergestellt werden, dass eine Reinigung / Reparatur dem Gerät bzw. dessen Sensoren nicht vorgespielt werden kann.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C4.1]
+    Der Customer muss vom Gerät eindeutig identifiziert werden können.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C4.2]
+    Die Reinigung / Wartung muss an die Plattform übertragen werden und gemäß des Vertrages abgerechnet werden.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-You should have received a copy of the \acsfont{GNU} General
-Public License
-along with this program; see the file \texttt{COPYING}.  If not,
-write to
-the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-Boston, MA 02111-1307, USA.
+\begin{tcolorbox}[colback=white,colframe=BrickRed!50!black, colbacktitle=BrickRed!75!black,title=\textbf{\underline{C5} Mietvertragsangebot prüfen}]
+  \label{req:c5}
+  \glqq Als Customer möchte ich angebotene Mietverträge prüfen können, um diese zu akzeptieren oder abzulehnen. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task C5.1]
+    Der Abschluss eines Mietvertrages bedarf der Bestätigung durch den Customer.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-\paragraph{classichthesis Authors' note:} There have been some discussions about the GPL's implications on using \texttt{classicthesis} for theses etc. Details can be found here:
-\begin{center}
-  \url{https://bitbucket.org/amiede/classicthesis/issues/123/}
-\end{center}
+%%%Service-Provider%%%
 
-We chose (and currently stick with) the GPL because we would not like to compete with proprietary modified versions of our own work. However, the whole template is free as free beer and free speech. We will not demand the sources for theses, books, CVs, etc. that were created using \texttt{classicthesis}.
+\begin{tcolorbox}[colback=white,colframe=Aquamarine!50!black, colbacktitle=Aquamarine!75!black,title=\textbf{\underline{SP1} Ansicht verfügbarer Service-Aufträge}]
+  \label{req:sp1}
+  \glqq Als Service-Provider möchte ich alle verfügbaren Service-Aufträge überblicken können, um die passenden Aufträge auszuwählen. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task SP1.1]
+    Es wird eine Auflistung aller Service-Aufträge benötigt.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task SP1.2]
+    Service-Aufträge können nur durch Service-Provider eingesehen und ausgewählt werden.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task SP1.2]
+    Service-Aufträge können an einen speziellen Service-Provider oder aber an alle vorhandenen Service-Provider gestellt werden. Es muss sichergestellt werden, dass ein Service-Provider nicht die Aufträge anderer Service-Provider einsehen kann.
+  \end{tcolorbox}
+\end{tcolorbox}
 
-Postcards are still highly appreciated.
+\begin{tcolorbox}[colback=white,colframe=Aquamarine!50!black, colbacktitle=Aquamarine!75!black,title=\textbf{\underline{SP1} Ansicht angenommener Service-Aufträge}]
+  \label{req:sp2}
+  \glqq Als Service-Provider möchte ich eine Auflistung aller meiner angenommenen Service-Aufträge einsehen können, um den Überblick über meine Auftragsalge zu behalten. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task SP1.1]
+    Ein Service-Auftrag muss einem Service-Provider eindeutig zugeordnet werden können.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task SP1.1]
+    Es wird eine Auflistung aller aktiven Service-Aufträge eines Service-Providers benötigt.
+  \end{tcolorbox}
+\end{tcolorbox}
 
+\begin{tcolorbox}[colback=white,colframe=Aquamarine!50!black, colbacktitle=Aquamarine!75!black,title=\textbf{\underline{SP1} Service-Aufträge abschließen}]
+  \label{req:sp3}
+  \glqq Als Service-Provider möchte ich nach der Durchführung der Wartung diese mit meinem Smartphone am Gerät bestätigen, um den Service-Auftrag abzuschließen. \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task SP1.1]
+    Das Gerät benötigt eine Schittstelle zum Smartphone (z.B. NFC), um mit dem Service-Provider über dessen Smartphone kommunizieren zu können.
+  \end{tcolorbox}
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task SP1.1]
+    Es wird eine App benötigt, mit der der Service-Provider seine Identität und die durchgeführte Wartung am Gerät bestätigen kann.
+  \end{tcolorbox}
+\end{tcolorbox}
 
+%%%Supplier%%%
 
+\begin{tcolorbox}[colback=white,colframe=SpringGreen!50!black, colbacktitle=SpringGreen!75!black,title=\textbf{\underline{SU1} Supplier XYZ}]
+  \label{req:su1}
+  \glqq Als Supplier... \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task SU1.1]
+    This is a description.
+  \end{tcolorbox}
+\end{tcolorbox}
 
+%%%Platform-Operator%%%
 
-%*****************************************
-%*****************************************
-%*****************************************
-%*****************************************
-%*****************************************
+\begin{tcolorbox}[colback=white,colframe=Goldenrod!50!black, colbacktitle=Goldenrod!75!black,title=\textbf{\underline{P1} Platform-Operator XYZ}]
+  \label{req:p1}
+  \glqq Als Platform-Operator... \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task P1.1]
+    This is a description.
+  \end{tcolorbox}
+\end{tcolorbox}
+
+%%%Developer%%%
+
+\begin{tcolorbox}[colback=white,colframe=DarkOrchid!50!black, colbacktitle=DarkOrchid!75!black,title=\textbf{\underline{D1} Developer XYZ}]
+  \label{req:p1}
+  \glqq Als Developer... \grqq
+  \tcblower
+  \begin{tcolorbox}[colback=white,colframe=white!50!black, colbacktitle=white!75!black,title=Task P1.1]
+    This is a description.
+  \end{tcolorbox}
+\end{tcolorbox}
