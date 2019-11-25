@@ -1,6 +1,6 @@
 \chapter{Anforderungen}
 \label{ch:requirements}
-In diesem Kapitel werden die Anforderungen für den im vorherigen Kapitel aufgezeigten Anwendungsfall aufgestellt. Dazu werden zunächst einige Standards vorgestellt, wie Anforderungen klassifiziert und eingeordnet werden können. Diese Standards werden anschließend in einem Modell zusammengeführt und auf die konkreten Anforderungen angewandt. Abschließend werden alle typisierten Anforderungen auf \ac{DLT}-Relevanz geprüft und schrittweise reduziert, um letztlich diejenigen Anforderungen und deren Gruppierungen zu identifizieren, die für die Umsetzung auf einer \ac{DLT}-basierten Lösung entscheidend sind.
+In diesem Kapitel werden die Anforderungen für den im vorherigen Kapitel aufgezeigten Anwendungsfall aufgestellt. Dazu werden zunächst einige Standards vorgestellt, wie Anforderungen klassifiziert und eingeordnet werden können. Diese Standards werden anschließend in einem angepassten Modell zusammengeführt und auf die konkreten Anforderungen angewandt. Abschließend werden alle typisierten Anforderungen auf \ac{DLT}-Relevanz geprüft und schrittweise reduziert, um letztlich diejenigen Anforderungen sowie deren Klassen zu identifizieren, die für die Umsetzung auf einer \ac{DLT}-basierten Lösung entscheidend sind.
 
 %
 % Section: Standards und Normen
@@ -25,7 +25,7 @@ Das Schaubild \ref{fig:chapter05:requirements} zeigt die unterschiedlichen Norme
  \label{fig:chapter05:requirements}
 \end{figure}
 
-Grundsätzlich unterscheiden die vorgestellten Ansätze zur Anforderungsklassifizierung in zwei Sichtweisen: \ac{PMBOK} und \ac{BABOK} unterscheiden Anforderungen nach Abstraktionslevel während \ac{SWEBOK}, \ac{SEBOK} und ISO29148 nach der Perspektive der Stakeholder gruppieren. Das Schaubild \ref{fig:chapter05:requirements_grouping} stellt diesen Zusammenhang grafisch dar.
+Grundsätzlich unterscheiden die vorgestellten Ansätze zur Anforderungsklassifizierung in zwei Sichtweisen: \ac{PMBOK} und \ac{BABOK} unterscheiden Anforderungen nach Abstraktionslevel während \ac{SWEBOK}, \ac{SEBOK} und ISO29148 primär nach der Perspektive der Stakeholder gruppieren. Das Schaubild \ref{fig:chapter05:requirements_grouping} stellt diesen Zusammenhang grafisch dar.
 
 \begin{figure}[htbp]
  \centering
@@ -37,7 +37,7 @@ Grundsätzlich unterscheiden die vorgestellten Ansätze zur Anforderungsklassifi
 \section{Ableitung eines Klassifizierungsmodells}
 \label{sec:requirements:model}
 
-Zur Anforderungsklassifizierung in dieser Arbeit werden die Vorteile mehrerer Ansätze kombiniert. Anforderungen werden stufenweise in Unterklassen unterteilt. Dabei wurde sich der Klassifizierung des \cite{SWEBOK}, \cite{PMBOK} bzw. \cite{BABOK} und \cite{ISO25010} bedient und die folgende Einordnung erstellt:
+In dieser Arbeit werden die Vorteile mehrerer Ansätze zur Anforderungsklassifizierung kombiniert, indem Anforderungen stufenweise in Unterklassen unterteilt werden. Dabei wurde sich der Klassifizierung des \cite{SWEBOK}, \cite{PMBOK} bzw. \cite{BABOK} und \cite{ISO25010} bedient und die folgende Einordnung erstellt:
 
 \begin{description}
   \item[System Anforderungen] Anforderungen dieser Klasse beziehen sich auf das Gesamtsystem als solches.\\
@@ -45,16 +45,16 @@ Zur Anforderungsklassifizierung in dieser Arbeit werden die Vorteile mehrerer An
   \item[Software Anforderungen] Anforderungen dieser Klasse beziehen sich auf die Softwarekomponente des Gesamtsystems.\\
   Leitfrage: \glqq ? \grqq
   \item[Business Anforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben Anforderungen, die sich an das Geschäftsmodell hinter dem Gesamtsystem richten. Zu dieser Klasse gehören Anforderungen, die sich mit dem Mehrwert für die Organisation beschäftigen und den Nutzen des Gesamtsystems für die Organisation beschreiben.\\
-  Leitfrage: \glqq Welche Geschäftsfälle gibt es und wie werden diese abgedeckt? \grqq
-  \item[Stakeholder Anforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben Anforderungen, die die Interessen der beteiligten Stakeholder widerspiegeln.\\
+  Leitfrage: \glqq Welche Geschäftsfälle gibt es und wie werden diese abgedeckt? Welche Richtlinien und Vorgaben müssen beachtet werden? \grqq
+  \item[Stakeholder Anforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben Anforderungen, die die Interessen der beteiligten Stakeholder widerspiegeln und sich keiner anderen Klasse zuordnen lassen.\\
   Leitfrage: \glqq Was muss das Gesamtsystem aus Sicht von [Stakeholder] können? \grqq
-  \item[Transitionsanforderungen] Anforderungen, die zu dieser Klasse zugeordnet werden können, sind eine Unterklasse der System-Anforderungen und beschreiben den Übergang vom IST-Zustand des Systems in den SOLL-Zustand.\\
+  \item[Transitionsanforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben den Übergang vom IST-Zustand des Systems in den SOLL-Zustand. Beispiele hierfür sind benötigte Anwenderschulungen oder Datenkonvertierungen.\\
   Leitfrage: \glqq Was muss gegeben sein, damit sich das Gesamtsystem von Zustand A nach Zustand B überführen lässt? \grqq
-  \item[Projekt Anforderungen] Diese Anforderungen sind ebenfalls eine Unterklasse der System-Anforderungen und beschreiben die Rahmenbedingungen an das Entwicklungsprojekt.\\
+  \item[Projekt Anforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben die Rahmenbedingungen an das Entwicklungsprojekt. Beispiele hierfür können die Projektsprache und etwaige Dokumentationsrichtlinien sein.\\
   Leitfrage: \glqq Welche Rahmenbedingungen sind dem Entwicklungsprojekt gegeben? \grqq
-  \item[Qualitätsanforderungen] Als Unterklasse der System-Anforderungen beschreiben die Qualitätsanforderungen die Qualitätsansprüche an das System und die Entwicklung und definieren die Akzeptanzkriterien wie die \ac{DoR} bzw. die \ac{DoD}.\\
+  \item[Qualitätsanforderungen] Als Unterklasse der System-Anforderungen beschreiben die Qualitätsanforderungen die Qualitätsansprüche an das System und die Entwicklung und definieren Akzeptanzkriterien ähnlich zu  \ac{DoR} bzw. \ac{DoD}.\\
   Leitfrage: \glqq Welche Qualitätsansprüche werden an das Gesamtsystem gestellt? \grqq
-  \item[Nicht-funktionale Anforderungen] Diese Anforderungen werden gemäß \ac{ISO}-Norm 25010 zur Software-Qualität definiert und sind Teil der Software-Anforderungen. Es wird beschrieben, wie die Software die gestellten Anforderungen erfüllen soll. Dazu zählen zum Beispiel die Performanz, die Kompatibilität und die Benutzbarkeit.\\
+  \item[Nicht-funktionale Anforderungen] Diese Anforderungen werden gemäß \ac{ISO}-Norm 25010 zur Software-Qualität definiert und sind Teil der Software-Anforderungen. Es wird die Art und Weise beschrieben, wie die Software die gestellten Anforderungen erfüllen soll. Dazu zählen zum Beispiel die Performanz, die Kompatibilität und die Benutzbarkeit. Eine ausführliche Auflistung aller Klassen unter dem Sammelbegriff der nicht-funktionalen Anforderungen sowie die genauen Definitionen der Begriffe kann unter \cite{ISO25010} eingesehen werden. \\
   Leitfrage: \glqq Wie gut muss die Software etwas können? \grqq
   \item[Funktionale Anforderungen] Diese Unterklasse der Software-Anforderungen beschreibt, was das Software-System leisten muss und welche Aufgaben es erfüllen muss.\\
   Leitfrage: \glqq Was muss die Software können? \grqq
@@ -76,16 +76,17 @@ Die Abbildung \ref{fig:chapter05:requirements_hierarchy} fasst die Anforderungst
 %
 \section{Anforderungsanalyse}
 \label{sec:requirements:analysis}
-In diesem Abschnitt werden die Anforderungen zu dem in Kapitel \ref{ch:iot_usecase} vorgestellten Anwendungsfall ermittelt. Dazu werdern zunächst alle beteiligten Stakeholder identifiziert und kurz beschrieben. Anschließend werden aus der jeweiligen Perspektive heraus die Anforderungen ermittelt.
+In diesem Abschnitt werden die Anforderungen zu dem in Kapitel \ref{ch:iot_usecase} vorgestellten Anwendungsfall ermittelt. Dazu werden zunächst alle beteiligten Stakeholder identifiziert und kurz beschrieben. Anschließend werden aus der jeweiligen Perspektive heraus User-Stories gebildet und die daraus abgeleiteten Tasks aufgelistet. Eine detaillierte Beschreibung aller daraus resultierenden Anforderungen sowie die genaue Zuordnung zu den User-Stories sind im Anhang \ref{ch:appendix:requirements} zu finden.\\
 
+Die Rollen Hersteller, Kunde, Service-Dienstleister und Lieferant wurden bereits unter \ref{description:chapter04:stakeholder} beschrieben. Die folgende Auflistung zeigt weitere Rollen, die über die bereits genannten hinausgehen:
 \begin{description}
-  \item[Manufacturer] Insert dummy text here.
-  \item[Customer] Insert dummy text here.
-  \item[Service-Provider] Insert dummy text here.
-  \item[Supplier] Insert dummy text here.
-  \item[Platform Operator] Insert dummy text here.
-  \item[Developer] Insert dummy text here.
+  \item[Plattform-Betreiber] Der Plattform-Betreiber ist verantwortlich für den Betrieb der Plattform und ist hauptsächlich an einem stabilen System und interessiert.
+  \item[IT-Security-Beauftragter] Für den IT-Security-Beauftragten stehen aller sicherheitsrelevanten Themen im Fokus. Dazu zählen insbesondere Verschlüsselung, Datensicherheit und Datenschutz sowie die Authentizität von Daten.
+  \item[Business-Developer] Der Business-Developer beschäftigt sich mit der Unternehmensentwicklung und hat Anforderungen an das Geschäftsmodell, die Wirtschaftlichkeit und die Zielerreichung des Gesamtsystems.
+  \item[System-Architekt] Für den Software-Architekten stehen alle Fragen rund um die IT-Architektur der Plattform im Vordergrund. Dazu zählen \ac{API}s, Modularisierung und der generelle Aufbau der Software.
 \end{description}
+
+
 
 %
 % Section: Anforderungsklassifizierung
@@ -112,21 +113,9 @@ Die zuvor ermittelten Anforderungen werden nach dem Klassifizierungsschema aus A
     \label{tab:requirements_classify}
 \end{table}
 
-\subsection{Funktionale Anforderungen}
-\label{subsec:requirements:classification:functional}
-\lipsum[1-1]
-
-\subsection{Nicht-Funktionale Anforderungen}
-\label{subsec:requirements:classification:nonfunctional}
-\lipsum[1-1]
-
-\subsection{... Anforderungen}
-\label{subsec:requirements:classification:other}
-\lipsum[1-1]
-
 %
 % Section: Anforderungsevaluierung
 %
 \section{Anforderungsevaluierung}
 \label{sec:requirements:evaluation}
-\lipsum[1-1]
+Schrittweises Reduzieren der Anforderungen um DLT-relevante Anforderungen zu identifizieren...
