@@ -1,6 +1,6 @@
 \chapter{Anforderungen}
 \label{ch:requirements}
-In diesem Kapitel werden die Anforderungen für den im vorherigen Kapitel aufgezeigten Anwendungsfall aufgestellt. Dazu werden zunächst einige Standards vorgestellt, wie Anforderungen klassifiziert und eingeordnet werden können. Diese Standards werden anschließend in einem angepassten Modell zusammengeführt und auf die konkreten Anforderungen angewandt. Abschließend werden alle typisierten Anforderungen auf \ac{DLT}-Relevanz geprüft und schrittweise reduziert, um letztlich diejenigen Anforderungen sowie deren Klassen zu identifizieren, die für die Umsetzung auf einer \ac{DLT}-basierten Lösung entscheidend sind.
+In diesem Kapitel werden die Anforderungen für den im vorherigen Kapitel aufgezeigten Anwendungsfall aufgestellt. Ziel ist es, die \ac{DLT}-relevanten Anforderungen zu identifizieren, um dadurch im nächsten Kapitel eine geeignete \ac{DLT}-Lösung für das Backend-System zu finden. Dazu werden zunächst einige Standards vorgestellt, wie Anforderungen klassifiziert und eingeordnet werden können. Diese Standards werden anschließend in einem angepassten Modell zusammengeführt und auf die konkreten Anforderungen angewandt. Die Klassifizierung dient als Werkzeug zur Einteilung der unübersichtlichen Gesamtmenge der Anforderungen und soll die weitere Identifikation \ac{DLT}-relevanter Anforderungen vereinfachen. Als Zwischenergebnis existieren verschiedene Anforderungsklassen, die auf \ac{DLT}-Relevanz geprüft werden. Durch schrittweises Ausschließen und Reduzieren der Anforderungsklassen werden jene Klassen identifiziert, die für die Umsetzung auf einer \ac{DLT}-basierten Lösung entscheidend sind.
 
 %
 % Section: Standards und Normen
@@ -10,11 +10,11 @@ In diesem Kapitel werden die Anforderungen für den im vorherigen Kapitel aufgez
 In diesem Abschnitt werden die verwendeten Standards und Normen aufgelistet und kurz beschrieben:
 \begin{description}
   \item[BABOK] Das \ac{BABOK} wird vom \ac{IIBA} herausgegeben und stellt einen Leitfaden für die Business-Analyse dar, genauere Informationen können \cite{BABOK} entnommen werden. Es unterteilt in sogenannte Knowledge-Areas und vermittelt Techniken und Kompetenzen im Umfeld der Business-Analyse. Anforderungen werden im \ac{BABOK} nach Abstraktionsebene gruppiert: Die Business-Ebene, die Anforderungen abstrakt aus Sicht der gesamten Organisation betrachtet, die Stakeholder-Ebene, die die Anforderungen aus Sicht der verschiedenen Stakeholder beschreibt und die Solution-Ebene, die in funktionale und nicht-funktionale Anforderungen unterscheidet. Darüber hinaus gibt es eine Transition-Ebene, die temporäre Übergangsanforderungen zwischen dem Ausgangs- und dem Zielzustand des Gesamtsystems beschreibt.
-  \item[PMBOK]  Das \ac{PMBOK} wird vom \ac{PMI} herausgegeben und ist der State-of-the-Art Standard im Bereich Projektmanagement, siehe \cite{PMBOK}. Das Werk teilt seine Sektionen ebenfalls wie das \ac{BABOK} in sogenannte Knowledge-Areas ein und kennt die gleiche Gruppierung im Bereich Anforderungsmanagement. Neben der Einteilung in Business, Stakeholder, Solution und Transition kennt das \ac{PMBOK} noch Quality und Project Anforderungen.
-  \item[SWEBOK] \cite{SWEBOK} \ac{SWEBOK}
-  \item[SEBOK] \cite{SEBOK} \ac{SEBOK}
-  \item[ISO29148] \cite{ISO29148} \ac{ISO} 29148
-  \item[ISO25010] \cite{ISO25010} \ac{ISO} 25010
+  \item[PMBOK]  Das \ac{PMBOK} wird vom \ac{PMI} herausgegeben und ist der State-of-the-Art Standard im Bereich Projektmanagement, siehe \cite{PMBOK}. Das Werk teilt seine Sektionen ebenfalls wie das \ac{BABOK} in sogenannte Knowledge-Areas ein und kennt die gleiche Gruppierung im Bereich Anforderungsmanagement. Neben der Einteilung in Business, Stakeholder, Solution und Transition Anforderungen kennt das \ac{PMBOK} noch Quality und Project Anforderungen.
+  \item[SWEBOK] Das \ac{SWEBOK} wurde von der \ac{IEEE} erstellt und stellt ein Standardwerk aus dem Bereich Software-Engineering dar, genauere Informationen können \cite{SWEBOK} entnommen werden. Anforderungen werden in System- und Software-Anforderungen unterteilt. Letztere werden untergliedert in Funktionale, Nicht-Funktionale, Produkt und Prozess Anforderungen.
+  \item[SEBOK] Das \ac{SEBOK} wurde unter Anderem von der IEEE erstellt und stellt ein Standardwerk aus dem Bereich System-Engineering dar, genauere Informationen können \cite{SEBOK} entnommen werden. Anforderungen werden sehr detailliert unterteilt, unter Anderem in die Klassen Functional, Usability, Interface, Performance, Policies and Regulations, etc.
+  \item[ISO29148] Die Norm 29148 der \ac{ISO} beschreibt das Anforderungs-Engineering \ac{ISO} als Teilbereich des Software-Engineering, genauere Informationen können \cite{ISO29148} entnommen werden. Anforderungen werden ähnlich wie beim \ac{SEBOK} untergliedert in Functional, Usability, Interface. Darüber hinaus kennt die Norm Human Factors und Process Anforderungen.
+  \item[ISO25010] Die Norm 25010 der \ac{ISO} beschreibt Qualitätskriterien eines Software-Produktes, siehe \cite{ISO25010}. Die Kriterien Performance-Efficiency, Compatibility, Usability, Reliability, Security, Maintainability, Portability sowie deren Unterkriterien werden zur detaillierten Beschreibung von Nicht-Funktionalen Anforderungen eingesetzt.
 \end{description}
 Das Schaubild \ref{fig:chapter05:requirements} zeigt die unterschiedlichen Normen und Standards grafisch auf und stellt die verschiedenen Anforderungsgruppierungen zueinander in Beziehung.
 
@@ -36,25 +36,22 @@ Grundsätzlich unterscheiden die vorgestellten Ansätze zur Anforderungsklassifi
 
 \section{Ableitung eines Klassifizierungsmodells}
 \label{sec:requirements:model}
-
-In dieser Arbeit werden die Vorteile mehrerer Ansätze zur Anforderungsklassifizierung kombiniert, indem Anforderungen stufenweise in Unterklassen unterteilt werden. Dabei wurde sich der Klassifizierung des \cite{SWEBOK}, \cite{PMBOK} bzw. \cite{BABOK} und \cite{ISO25010} bedient und die folgende Einordnung erstellt:
+Die Vorteile mehrerer der vorgstellten Ansätze zur Anforderungsklassifizierung können kombiniert werden, indem Anforderungen stufenweise in Unterklassen unterteilt werden. Dabei wird sich der Klassifizierung des \cite{SWEBOK}, \cite{PMBOK} bzw. \cite{BABOK} und \cite{ISO25010} bedient und die folgende Einordnung erstellt:
 
 \begin{description}
   \item[System Anforderungen] Anforderungen dieser Klasse beziehen sich auf das Gesamtsystem als solches.\\
-  Leitfrage: \glqq ? \grqq
   \item[Software Anforderungen] Anforderungen dieser Klasse beziehen sich auf die Softwarekomponente des Gesamtsystems.\\
-  Leitfrage: \glqq ? \grqq
-  \item[Business Anforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben Anforderungen, die sich an das Geschäftsmodell hinter dem Gesamtsystem richten. Zu dieser Klasse gehören Anforderungen, die sich mit dem Mehrwert für die Organisation beschäftigen und den Nutzen des Gesamtsystems für die Organisation beschreiben.\\
+  \item[Business Anforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben Anforderungen, die sich an das Geschäftsmodell hinter dem Gesamtsystem richten. Der Scherpunkt liegt auf dem Mehrwert für die Organisation und dem damit verbundenen Nutzen des Gesamtsystems.\\
   Leitfrage: \glqq Welche Geschäftsfälle gibt es und wie werden diese abgedeckt? Welche Richtlinien und Vorgaben müssen beachtet werden? \grqq
   \item[Stakeholder Anforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben Anforderungen, die die Interessen der beteiligten Stakeholder widerspiegeln und sich keiner anderen Klasse zuordnen lassen.\\
   Leitfrage: \glqq Was muss das Gesamtsystem aus Sicht von [Stakeholder] können? \grqq
   \item[Transitionsanforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben den Übergang vom IST-Zustand des Systems in den SOLL-Zustand. Beispiele hierfür sind benötigte Anwenderschulungen oder Datenkonvertierungen.\\
-  Leitfrage: \glqq Was muss gegeben sein, damit sich das Gesamtsystem von Zustand A nach Zustand B überführen lässt? \grqq
-  \item[Projekt Anforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben die Rahmenbedingungen an das Entwicklungsprojekt. Beispiele hierfür können die Projektsprache und etwaige Dokumentationsrichtlinien sein.\\
+  Leitfrage: \glqq Was muss gegeben sein, damit sich das Gesamtsystem von Zustand A in den Zustand B überführen lässt? \grqq
+  \item[Projekt Anforderungen] Diese Anforderungen gehören zu der Klasse der System-Anforderungen und beschreiben die Rahmenbedingungen an das Entwicklungsprojekt. Beispiele hierfür können die Projektsprache und Dokumentationsrichtlinien sein.\\
   Leitfrage: \glqq Welche Rahmenbedingungen sind dem Entwicklungsprojekt gegeben? \grqq
-  \item[Qualitätsanforderungen] Als Unterklasse der System-Anforderungen beschreiben die Qualitätsanforderungen die Qualitätsansprüche an das System und die Entwicklung und definieren Akzeptanzkriterien ähnlich zu  \ac{DoR} bzw. \ac{DoD}.\\
+  \item[Qualitätsanforderungen] Als Unterklasse der System-Anforderungen beschreiben die Qualitätsanforderungen die Qualitätsansprüche an das System und die Entwicklung und definieren Akzeptanzkriterien ähnlich zu \ac{DoR} bzw. \ac{DoD}.\\
   Leitfrage: \glqq Welche Qualitätsansprüche werden an das Gesamtsystem gestellt? \grqq
-  \item[Nicht-funktionale Anforderungen] Diese Anforderungen werden gemäß \ac{ISO}-Norm 25010 zur Software-Qualität definiert und sind Teil der Software-Anforderungen. Es wird die Art und Weise beschrieben, wie die Software die gestellten Anforderungen erfüllen soll. Dazu zählen zum Beispiel die Performanz, die Kompatibilität und die Benutzbarkeit. Eine ausführliche Auflistung aller Klassen unter dem Sammelbegriff der nicht-funktionalen Anforderungen sowie die genauen Definitionen der Begriffe kann unter \cite{ISO25010} eingesehen werden. \\
+  \item[Nicht-funktionale Anforderungen] Diese Anforderungen werden gemäß \ac{ISO}-Norm 25010 zur Software-Qualität definiert und sind Teil der Software-Anforderungen. Dazu zählen zum Beispiel die Performanz, die Kompatibilität und die Benutzbarkeit. Eine ausführliche Auflistung aller Klassen unter dem Sammelbegriff der nicht-funktionalen Anforderungen sowie die genauen Definitionen der Begriffe kann unter \cite{ISO25010} eingesehen werden.\\
   Leitfrage: \glqq Wie gut muss die Software etwas können? \grqq
   \item[Funktionale Anforderungen] Diese Unterklasse der Software-Anforderungen beschreibt, was das Software-System leisten muss und welche Aufgaben es erfüllen muss.\\
   Leitfrage: \glqq Was muss die Software können? \grqq
@@ -62,7 +59,7 @@ In dieser Arbeit werden die Vorteile mehrerer Ansätze zur Anforderungsklassifiz
   Leitfrage: \glqq Was ist beim Entwickeln der Software zu beachten? \grqq
   \end{description}
 
-Die Abbildung \ref{fig:chapter05:requirements_hierarchy} fasst die Anforderungstypen zusammen und stellt sie hierarchisch strukturiert dar. Es wird deutlich, dass das entwickelte Modell beide Sichtweisen (vgl. Abbildung \ref{fig:chapter05:requirements_grouping}) aufgreift. Auf Seite der System-Anforderungen werden verschiedene Abstraktionslevel wie zum Beispiel die Business-Anforderungen und die Stakeholder-Anforderungen unterschieden. Auf der Seite heben die Stakeholder-Anforderungen die Interessen der Beteiligten hervor und betrachten die Anforderungen zusammen mit den Software-Requirements aus unterschiedlichen Perspektiven.
+Die Abbildung \ref{fig:chapter05:requirements_hierarchy} fasst die Anforderungstypen zusammen und stellt sie hierarchisch strukturiert dar. Es wird deutlich, dass das entwickelte Modell beide Sichtweisen (vgl. Abbildung \ref{fig:chapter05:requirements_grouping}) aufgreift. Auf Seite der System-Anforderungen werden verschiedene Abstraktionslevel wie zum Beispiel die Business-Anforderungen und die Stakeholder-Anforderungen unterschieden. Stakeholder-Anforderungen wiederum spiegeln die Interessen der Beteiligten wider und betrachten die Anforderungen zusammen mit den Software-Anforderungen aus unterschiedlichen Perspektiven.
 
 \begin{figure}[htbp]
  \centering
@@ -78,44 +75,162 @@ Die Abbildung \ref{fig:chapter05:requirements_hierarchy} fasst die Anforderungst
 \label{sec:requirements:analysis}
 In diesem Abschnitt werden die Anforderungen zu dem in Kapitel \ref{ch:iot_usecase} vorgestellten Anwendungsfall ermittelt. Dazu werden zunächst alle beteiligten Stakeholder identifiziert und kurz beschrieben. Anschließend werden aus der jeweiligen Perspektive heraus User-Stories gebildet und die daraus abgeleiteten Tasks aufgelistet. Eine detaillierte Beschreibung aller daraus resultierenden Anforderungen sowie die genaue Zuordnung zu den User-Stories sind im Anhang \ref{ch:appendix:requirements} zu finden.\\
 
-Die Rollen Hersteller, Kunde, Service-Dienstleister und Lieferant wurden bereits unter \ref{description:chapter04:stakeholder} beschrieben. Die folgende Auflistung zeigt weitere Rollen, die über die bereits genannten hinausgehen:
+Die Rollen Hersteller, Kunde, Service-Dienstleister und Lieferant wurden bereits unter \ref{description:chapter04:stakeholder} beschrieben. Die folgende Auflistung zeigt weitere Anforderungsrollen, die über die bereits genannten hinausgehen:
 \begin{description}
-  \item[Plattform-Betreiber] Der Plattform-Betreiber ist verantwortlich für den Betrieb der Plattform und ist hauptsächlich an einem stabilen System und interessiert.
+  \item[Plattform-Betreiber] Der Plattform-Betreiber ist verantwortlich für den Betrieb der Plattform und ist hauptsächlich an einem stabilen System und einer einfachen Wartung der Software interessiert.
   \item[IT-Security-Beauftragter] Für den IT-Security-Beauftragten stehen aller sicherheitsrelevanten Themen im Fokus. Dazu zählen insbesondere Verschlüsselung, Datensicherheit und Datenschutz sowie die Authentizität von Daten.
   \item[Business-Developer] Der Business-Developer beschäftigt sich mit der Unternehmensentwicklung und hat Anforderungen an das Geschäftsmodell, die Wirtschaftlichkeit und die Zielerreichung des Gesamtsystems.
   \item[System-Architekt] Für den Software-Architekten stehen alle Fragen rund um die IT-Architektur der Plattform im Vordergrund. Dazu zählen \ac{API}s, Modularisierung und der generelle Aufbau der Software.
 \end{description}
 
+Um konkrete Anforderungen zu erstellen, werden Userstories aus der Perspektive jedes Stakeholders erarbeitet. Userstories beschreiben eine Funktionalität des Systems, welche aus Sicht der jeweiligen Rolle benötigt wird, um ein bestimmtes Ziel zu erreichen oder einen bestimmten Zweck zu erfüllen. Somit haben alle Userstories die einheitliche Grundstruktur: \glqq Als [Rolle] möchte ich [Funktion], um [Ziel / Zweck]. \grqq Zu jeder User-Story werden Tasks beschrieben, die die User-Stories in logische Teile untergliedern. Im letzten Schritt werden diese Tasks feingranular in Anforderungen unterteilt. Die Klassifizierung wird anschließend nach dem erarbeiteten Modell aus \ref{sec:requirements:model} durchgeführt.\\
+
+Die erste Userstory (A1) fasst grundlegende Tätigkeiten über das Agieren auf der Plattform als Akteur (Hersteller, Kunde, Service-Dienstleister, Lieferant, Endgerät) zusammen. Dies beinhaltet sämtliche Interaktionen und Bedingungen, die für alle Akteure gleich sind. Die Userstory A1 beinhaltet vier Tasks:
+\begin{itemize}
+  \item Die Zugangsberechtigung zur Plattform ist in fünf Anforderungen untergliedert, vier davon sind als \textit{Funktionale Anforderungen} klassifiziert und eine als \textit{Security Anforderung}.
+  \item Die Kommunikation zwischen Rollen ist durch fünf Anforderungen definiert und beinhaltet eine \textit{Funktionale Anforderung}, drei \textit{Security Anforderungen} und eine \textit{Performance-Efficiency Anforderung}.
+  \item Die Vertragsgestaltung ist in in elf Tasks untergleidert, zwei davon sind \textit{Security Anforderungen} und neun \textit{Funktionale Anforderungen}.
+  \item Grafische Oberflächen, die alle Akteure zur Interaktion mit der Plattform benötigen, sind in zwei \textit{Funktionale Anforderungen} unterteilt.
+\end{itemize}
+
+Die Userstories M1 bis M3 sind aus Sicht eines Manufacturers beschrieben:
+\begin{itemize}
+  \item Userstory M1 beschreibt die Vermietung von Endgeräten und beinhaltet zwei Tasks mit insgesamt sechs Anforderungen. Fünf der sechs Anforderungen sind \textit{Funktionale Anforderungen}, eine wurde als \textit{Portability Anforderung} klassifiziert.
+  \item Userstory M2 beschreibt das Erzeugen von Verträgen und beinhaltet einen Task mit drei Anforderungen, welche alle der Klasse der \textit{Funktionalen Anforderungen} zugeordnet wurden.
+  \item Userstory M3 beschreibt die Abrechnung von Verträgen und beinhaltet zwei Tasks mit insgesamt drei Anforderungen, wobei eine Anforderung als \textit{Funktionale Anforderung}, eine als \textit{Performance-Efficiency Anforderung} und eine als \textit{Security Anforderung} bestimmt wurden.
+\end{itemize}
+
+Die Userstories C1 bis C3 sind aus Sicht des Customers beschrieben:
+\begin{itemize}
+  \item Userstory C1 beschreibt die Ansicht verfügbarer Geräte, also eine Oberfläche, die dem Customer bereitgestellt werden muss, auf der er alle zur Miete verfügbaren Geräte gelistet bekommt. Diese Userstory beinhaltet zwei Tasks mit insgesamt zwei \textit{Funktionalen Anforderungen}.
+  \item Userstory C2 beschreibt die Wartung und Reinigung der Geräte durch den Customer und beinhaltet vier Tasks mit insgesamt sechs Anforderungen. Dabei handelt es sich um vier \textit{Funktionale Anforderungen}, eine \textit{Security Anforderung} und eine \textit{Performance-Efficiency Anforderung}.
+  \item Userstory C3 beschreibt die Bedienbarkeit aus Nutzersicht und beinhaltet zwei Tasks mit insgesamt drei Anforderungen. Dabei handelt es sich um eine \textit{Transition Anforderung} und zwei \textit{Usability Anforderungen}.
+\end{itemize}
+
+Die Userstories SP1 und SP2 sind aus Sicht des Service-Providers beschrieben:
+\begin{itemize}
+  \item Userstory SP1 beschreibt das Anbieten eigener Service-Dienstleistungen auf der Plattform mit einem Task und zwei \textit{Funktionalen Anforderungen}.
+  \item Userstory SP2 beschreibt das Abschließen von Service-Aufträgen nach getätigtem Service an den Geräten vor Ort und ist unterteilt in zwei Tasks mit je zwei \textit{Funktionalen Anforderungen}.
+\end{itemize}
+
+Die Userstories SEC1 bis SEC3 sind aus Sicht des Security-Beauftragten beschrieben:
+\begin{itemize}
+  \item Userstory SEC1 beschreibt die sichere Zahlungsabwicklung und ist in zwei Tasks mit insgesamt fünf Anforderungen unterteilt. Dabei handelt es sich um zwei \textit{Funktionale Anforderungen} und drei \textit{Security Anforderungen}.
+  \item Userstory SEC2 beschreibt die sichere Kommunikation mittels signierter Nachrichten und untergliedert sich in zwei Tasks mit insgesamt zwei \textit{Quality Anforderungen}.
+  \item Userstory SEC3 beschreibt die Manipulationssicherheit und ist in zwei Tasks mit insgesamt drei \textit{Security Anforderungen} unterteilt.
+\end{itemize}
 
 
-%
-% Section: Anforderungsklassifizierung
-%
-\section{Anforderungsklassifizierung}
-\label{sec:requirements:classification}
-Die zuvor ermittelten Anforderungen werden nach dem Klassifizierungsschema aus Abschnitt \ref{sec:requirements:model} gruppiert. Die Tabelle \ref{tab:requirements_classify} stellt die Einordnung übersichtlich dar.
+Die Userstories BD1 bis BD4 sind aus Sicht des Business-Developers beschrieben:
+\begin{itemize}
+  \item Userstory BD1 beschreibt das Geschäftsmodell und beinhaltet zwei Tasks mit insgesamt sechs Anforderungen, wobei fünf davon als \textit{Funktionale Anforderungen} und eine als \textit{Business Anforderung} klassifiziert wurden.
+  \item Userstory BD2 beschreibt den Zugang von Geschäftspartnern zu der Plattform und ist in zwei Tasks mit insgesamt drei Anforderungen untergliedert. Diese wurden als \textit{Business Anforderung}, \textit{Transition Anforderung} und \textit{Stakeholder Anforderung}.
+  \item Userstory BD3 beschreibt die Plattform als Hersteller-übergreifend und ist in drei Tasks mit insgesamt drei Anforderungen unterteilt. Dabei wurde eine Anforderung als \textit{Business Anforderung} und zwei als \textit{Compatibility Anforderungen} klassifiziert.
+  \item Userstory BD4 beschreibt die Abrechnungsmodelle der Plattform und ist in einen Task mit zwei Anforderungen unterteilt. Dabei handelt es sich um eine \textit{Business Anforderung} und einer \textit{Maintainability Anforderung}.
+\end{itemize}
 
-\begin{table}[h]
-    \myfloatalign
-    \begin{tabularx}{\textwidth}{Xll} \toprule
-        \tableheadline{labitur bonorum pri no} & \tableheadline{que vista}
-        & \tableheadline{human} \\ \midrule
-        fastidii ea ius & germano &  demonstratea \\
-        suscipit instructior & titulo & personas \\
-        %postulant quo & westeuropee & sanctificatec \\
-        \midrule
-        quaestio philosophia & facto & demonstrated \\
-        %autem vulputate ex & parola & romanic \\
-        %usu mucius iisque & studio & sanctificatef \\
-        \bottomrule
-    \end{tabularx}
-    \caption[Autem usu id]{Autem usu id.}
-    \label{tab:requirements_classify}
-\end{table}
+Die Userstories SA1 und SA2 sind aus Sicht des System-Architekten beschrieben:
+\begin{itemize}
+  \item Userstory SA1 beschreibt die einfache Einbindung der Plattform in bestehende Infrastruktur und ist in einen Task mit einer \textit{Process Anforderung} unterteilt.
+  \item Userstory SA2 beschreibt die Robustheit des Gesamtsystems bei Ausfällen und ist in zwei Tasks mit je zwei Anforderungen unterteilt. Dabei handelt es sich um zwei \textit{Security Anforderungen} und zwei \textit{Reliability Anforderungen}.
+\end{itemize}
+
+Die Userstory P1 ist aus Sicht des Plattform-Betreibers beschrieben:
+\begin{itemize}
+  \item Userstory P1 beschreibt die automatisierte Bereitstellung der Software und ist in zwei Tasks mit je einer Anforderung untergliedert. Diese sind als \textit{Maintainability Anforderung} und als \textit{Portability Anforderung} klassifiziert.
+\end{itemize}
+
+Insgesamt wurden 19 Userstories beschrieben, die in 39 Tasks unterteilt wurden. Die 83 daraus resultierenden Anforderungen wurden klassifiziert, sodass sich 9 Level-1 \textit{System Anforderungen} und 74 Level-1 \textit{Software Anforderungen} ergaben. Für jede Level-2 Klasse als Unterklasse der \textit{System Anforderungen} wurden Anforderungen ermittelt bis auf die Klasse der Projekt-Anforderungen. Im Rahmen dieser Arbeit wird ein \ac{PoC} entwickelt, womit diese Arbeit aus Sicht der Anforderungserstellung als Entwicklungsprojekt angesehen werden kann. Rahmenbedingungen wie die zeitliche Begrenzung des Projektes oder dass es sich um einen \ac{PoC} und nicht um ein ausgereiftes Produkt handelt könnten als Projekt-Anforderungen definiert werden. Da dies aber keine konkrete Auswirkung auf den Anwendungsfall als solchen hat, wird an dieser Stelle auf diese Klasse verzichtet. Bei der Entwicklung eines marktreifen Produktes ist diese Klasse allerdings zu beachten.\\
+Auf Seiten der Software-Anforderungen wurden alle Level-2 Klassen bis auf die \textit{Functionality-Suitability Anforderungen} abgedeckt. Dies liegt daran, dass diese Kategorie als einzige der \ac{ISO}-25010 Klassen zu der Klasse der Funktionalen Anforderungen gehört wird und damit implizit enthalten ist.
 
 %
 % Section: Anforderungsevaluierung
 %
 \section{Anforderungsevaluierung}
 \label{sec:requirements:evaluation}
-Schrittweises Reduzieren der Anforderungen um DLT-relevante Anforderungen zu identifizieren...
+Die Anforderungsevaluierung hat zum Ziel, die im vorherigen Abschnitt beschriebenen und klassifizierten Anforderungen schrittweise zu reduzieren, um die \ac{DLT}-relevanten Anforderungen zu identifizieren. Dabei handelt es sich um Anforderungen, die relevant für eine technische Umsetzung auf Basis einer \ac{DLT}-Lösung sind.\\
+
+\subsection{System Anforderungen}
+\label{subsec:requirements:evaluation:system}
+Die erste Level-2 Subklasse der \textit{System Anforderungen} ist die Klasse der \textit{Quality Anforderungen}. Diese Klasse definiert die Qualitätskriterien, die die Plattform erfüllen muss. Anforderungen dieser Klasse fungieren oft als Enabler für weitere Anforderungen anderer Klassen. Für den beschriebenen IOT-Anwendungsfall wurden zwei Anforderungen identifiziert, die dieser Klasse zuzuordnen (Anforderungen SEC2.1.1, SEC2.2.1) und Teil der Userstory SEC2 sind. Sie beschreiben, dass die Verwendung von HTTPS bzw. SSL/TLS ein vorgeschriebenes Qualitätskriterium ist. Darüber hinaus müssen Passwortregeln hinterlegbar sein, um die Sicherheit der auf der Plattform verwendeten Passwörter zu gewährleisten. Es wird deutlich, dass die Anforderungen dieser Klasse primär Rahmenbedingungen darstellen und keine direkten Auswirkungen auf die technische Basis haben. Diese Qualitätsansprüche, die mit den genannten Anforderungen einhergehen, haben keine Auswirkung auf eine mögliche Umsetzung der Plattform durch eine \ac{DLT}-Lösung. Damit werden die Anforderungen im weiteren Verlauf nicht tiefergehend betrachtet.\\
+
+Die zweite Level-2 Subklasse der \textit{System Anforderungen} ist die Klasse der \textit{Project Anforderungen}, die Rahmenbedingungen an das Projekt beschreiben. Die Entwicklung des \ac{PoC} im Rahmen dieser Arbeit stellt ein solches Entwicklungsprojekt dar, ist allerdings für die Betrachtung in diesem Kontext hinsichtlich \ac{DLT}-Relevanz nicht weiter zu berücksichtigen. Somit werden die \textit{Project Anforderungen} nicht in die weitere Analayse miteinbezogen.\\
+
+Die dritte Level-2 Subklasse der \textit{System Anforderungen} ist die Klasse der \textit{Business Anforderungen}, die die Geschäftsfälle und -anforderungen von einer abstrakteren Perspektive betrachten. Im Fokus stehen die Bedürfnisse und Rahmenbedingungen des Unternehmens, welches die Plattform beauftragt hat. Im Rahmen des IOT-Anwendungsfalls wurden vier Anforderungen dieser Klasse identifiziert (Anforderungen BD1.1.1, BD2.1.1, BD3.1.1 und BD4.2.1); betroffen sind die Userstories BD1 bis BD4. Die Anforderungen decken das Abrechnungsmodell Pay-As-You-Use ab und beschäftigen sich mit der aktuellen und zukünftigen geschäftlichen Ausrichtung der Plattform. Dies hat keine Auswirkungen auf die technische Basis, die die zugrundeliegende Plattform verwendet: Es handelt sich um keine Technologie-entscheidende Anforderung. Anforderung BD4.2.1 beschreibt, dass ein Abrechnungsmodell (konkret: Pay-As-You-Use) in einem Vertrag abgebildet wird. Diese Anforderung ist \ac{DLT}-relevant: Zum einen impliziert diese Anforderung, dass eine zugrundeliegende \ac{DLT}-Plattform in der Lage ist, Verträge abzubilden. Im Umfeld von \ac{DLT}s redet man Smart-Contracts: Code, der auf onchain ausgeführt wird und eine Vertragslogik widerspiegeln kann. Zum anderen muss gewährleistet sein, dass die Smart-Contract Implementierung mächtig genug ist, damit das Abrechnungsmodell Pay-As-You-Use dort codiert werden kann. Diese Anforderung muss in die weitere Analyse miteinbezogen werden.\\
+
+Die vierte Level-2 Subklasse der \textit{System Anforderungen} ist die Klasse der \textit{Stakeholder Anforderungen}, welche Anforderungen speziell aus der Sicht einzelner Stakeholder beschreiben, die mit anderen Klassen noch nicht abgedeckt werden konnten. Im Kontext des Anwendungsfalls wurde eine Anforderung identifiziert (BD2.2.1), die dieser Klasse zuzuordnen ist und zur Userstory BD2 gehört. Es wird der Onboarding-Prozess eines Geschäftspartners beschrieben, indem dieser als Partner identifiziert werden muss. Dieser Prozess muss entsprechend der Anforderungen gestaltet werden, womit es sich um eine abstrakte Beschreibung dessen, wie ein Prozess auszusehen hat, handelt. Es werden keine technischen Details gefordert, wodurch keine Abhängigkeiten zu der technischen Umsetzung der Plattform entstehen. Damit ist diese Klasse für die weitere Analyse nicht relevant und kann vernachlässigt werden.\\
+
+Die fünfte Level-2 Subklasse der \textit{System Anforderungen} ist die Klasse der \textit{Transition Anforderungen}, die sämtliche Anforderungen von einem IST-Zustand (zeitlich vor der Einführung der Plattform) in einen SOLL-Zustand (zeitlich nach Einführung der Plattform) kapseln. Zwei Anforderungen (Anforderungen C3.1.1 und BD2.1.2) wurden identifiziert, die dieser Klasse zuzuordnen und Teil der Userstories C3 und BD2 sind. Es handelt sich in dem vorliegenden Kontext um Anforderungen, die die schnelle Erlernbarkeit durch den Benutzer sowie die Schulung von Mitarbeitern zur Nutzung der Plattform beschreiben und somit die \ac{UX} in den Vordergrund stellen. Da es sich in diesem Fall um Aufbau, Verständlichkeit und Benutzbarkeit einer grafischen Oberfläche (Schnittstelle zum Benutzer) handelt, kann diese Klasse im weiteren Verlauf der Analyse vernachlässigt werden.\\
+
+\subsection{Software Anforderungen}
+\label{subsec:requirements:evaluation:software}
+Anforderungen dieser Level-1 Klasse stellen den Großteil aller Anforderungen dar. In einem realistischen Entwicklungsprojekt sind die individuellen Rahmenbedingungen, Qualitätskriterien, Business-Richtlinien und Integrationsrichtlinien des jeweiligen Unternehmens zu beachten. Die in dieser Arbeit aufgestellten System-Anforderungen decken nur die grundlegendsten Anforderungen dieser Kategorie ab. Die \textit{Software Anforderungen}, die in diesem Abschnitt evaluiert werden, sind unabhängig von den \textit{System Anforderungen} stets dieselben.\\
+
+Die erste Level-2 Subklasse der \textit{Software Anforderungen} sind die \textit{Process Anforderungen}, die Anforderungen an den Entwicklungsprozess der Software stellen. Für den vorliegenden IOT-Anwendungsfall wurde eine Anforderungen (Anforderungen SA1.1.1) ermittelt, die zu der Userstory SA1 gehört. Während der Entwicklung ist darauf zu achten, dass die Modularität der Softwarekomponenten gewahrt bleibt, damit diese später unabhängig voneinander bereitgestellt und gewartet werden können. Dies hat keine Auswirkung auf die Umsetzung auf Basis einer \ac{DLT}-Lösung. Im Allgemeinen haben Anforderungen dieser Klasse einerseits eine technische Relevanz, da sie zum Beispiel einzusetzende Technologien für Schnittstellen beschränken oder die Art und Weise definieren, wie Software entwickelt werden soll. Andererseits kann jede Software durch den Einsatz einer geeigneten Middleware miteinander verbunden werden, sollten vorhandene Schnittstellen und Softwarekomponenten nicht Standard-konform oder kompatibel sein. Somit können die Anforderungen dieser Klasse ebenfalls vernachlässigt werden.\\
+
+Die zweite Level-2 Subklasse der \textit{Software Anforderungen} sind die \textit{Funktionalen Anforderungen}, die beschreiben, welche Funktionalität die Plattform anbieten muss. Für den vorliegenden IOT-Anwendungsfall wurden 45 solcher Anforderungen ermittelt, die insgesamt zehn Userstories betreffen. Um die Übersichtlichkeit zu bewahren, wurde diese Klasse in verschiedene, logische Abschnitte gegliedert. Diese wurden nach der inhaltlichen Thematik der Anforderungen definiert und folgen keiner speziellen Klassifizierung.
+
+\begin{description}
+  \item[GUI] 12 der 45 Anforderungen dieser Klasse betreffen direkt oder indirekt die grafische Darstellung für den Benutzer. Es handelt sich hierbei lediglich um das Frontend, welches Daten aufbereitet darstellt und Schaltflächen zur Interaktion mit dem Backend bereitstellt. Somit werden die Anforderungen dieser Klasse für weiterführende Analysen nicht beachtet. Konkret handelt es sich um die Anforderungen A1.1.4, A1.3.4, A1.4.1, A1.4.2, M2.1.1, M2.1.2, M2.1.3, C1.1.1, C1.2.1, SP1.1.1, SP1.1.2 und SP2.2.1.
+  \item[Endgerät] 14 der 45 Anforderungen beziehen sich auf Funktionalitäten, die das Endgerät bereitstellen muss, um auf der Plattform vermietet werden zu können. Dabei geht es primär um die Konnektivität zu der Plattform, die Funktionsweise der verbauten Sensoren sowie der Kommunikation mit dem Customer und dem Service-Provider. Die Engeräte fungieren in ihrer Rolle als Peripherie und können unterschiedlicher Art sein. Es kann sich um Haushaltsgeräte aller Art handeln - von der Kaffeemaschine bis zur Waschmaschine - lediglich die Schnittstellen nach Außen sind klar definiert. Es wird deutlich, dass die Anforderungen an die Geräte unabhängig von der technischen Umsetzung der Plattform sind und keinen Einfluss auf deren Umsetzung haben. An dieser Stelle sei an die Möglichkeit einer Middleware erinnert, die die Integration verschiedener Geräte übenehmen könnte, sofern die Geräte inkompatibel zur Plattform wären. Eine Möglichkeit wäre die Verwendung eines lokalen Gateways, dass die Daten der Geräte konvertiert und an die Plattform übermittelt. Standardmäßig sollten die Geräte die Kommunikation mit der Plattform bereits Hersteller-seitig gewährleisten. (Anforderungen M1.1.1, M1.2.4, M3.1.1, C2.1.1, C2.1.2, C2.3.1, C2.4.1, SP2.1.1, SP2.1.2 und SP2.2.2)
+  \item[Kommunikation] Drei der 45 Anforderungen beziehen sich auf die Kommunikation zwischen Akteuren auf der Plattform (Anforderungen A1.2.1, A1.3.1 und A1.3.3). Anforderung A1.3.1 beschreibt die Kommunikation über Verträge, die die Akteure der Plattform miteinander abschließen können. Im Kontext einer \ac{DLT}-Lösung bedeutet das, dass die Plattform in der Lage sein muss, einen Vertrag abzubilden (siehe Business Anforderungen oben). Diese Anforderung hat eine \ac{DLT}-Relevanz und muss in der weiteren Analyse betrachtet werden. Die übrig gebliebenen zwei Anforderungen beschreiben die allgemeinere Aspekte der Kommunikation auf der Plattform und können vernachlässigt werden.
+  \item[Finanzen] Sieben der 45 Anforderungen (A1.3.11, SEC1.1.1, SEC1.1.3, SEC1.2.1, SEC1.2.2, BD1.1.2, BD1.1.3, BD1.2.1 und BD4.2.1) beschreiben den Geldfluss zwischen Akteuren aufgrund ihrer vertraglichen Vereinbarungen. Geldtransfers werden geloggt und vor Ausführung überprüft. Diese Anforderungen sind für eine Umsetzung auf einer \ac{DLT}-Lösung nicht relevant, da sie lediglich die Richtung und Menge des Geldflusses sowie Rahmenbedingungen an Geldtransfers festlegen. Damit allerdings erbrachte Leistungen kostenpflichtig gemäß des Abrechnungsmodells abgerechnet werden können, muss die Plattform zum einen das Abrechnungsmodell implementieren und zum anderen ein digitales Zahlungsmittel bereitstellen. Ersteres kann auf einer \ac{DLT}-Lösung mittels Smart-Contracts umgesetzt werden. Zweiteres bedarf einer internen Währung, um Leistungen in Echtzeit nach Verbrauch abzurechnen. Damit sind diese zwei Anforderungen relevant und müssen in der weiteren Analyse beachtet werden.
+  \item[Rollenmanagement] Drei der 49 Anforderungen (A1.1.2, A1.1.3 und A1.1.5) definieren das Rollenmanagement und den Zugang zu der Plattform mittels Registrierung und Anmeldung. Letzteres stellt keine Relevanz dar, da es sich um eine standardmäßige Zugangsbeschränkung handelt und nicht abhängig von der Backend-Lösung ist. Im Gegensatz dazu werden Rollen in den Verträgen genutzt, um Berechtigungen der Akteure zu prüfen. Es handelt sich um Informationen, die von Verträgen auf der Plattform einsehbar sein müssen. Content- oder allgemeiner Informationsprovider, die Informationen auf einer \ac{DLT}-Umgebung bereitstellen, nennt man Oracles (siehe Kapitel XYZ). Damit liegt hier eine Relevanz in Bezug auf die Umsetzung auf Basis einer \ac{DLT}-Lösung vor und muss im weiteren Verlauf beachtet werden.
+  \item[Vertragskonstrukt] Sechs der 49 Anforderungen (A1.3.2, A1.3.6, A1.3.7, A1.3.8, A1.3.10 und BD1.2.4) beschreiben das Vertragskonstrukt: Eigenschaften wie Individualität und Zugriffsregelung haben keinen Einfluss auf die technische Lösung, wohingegen die Komplexität und Editierbarkeit (drei Anforderungen) große Relevanz haben. Zum einen muss die Implementierung eines Vertrages mittels Smart-Contracts auch komplexe Konstrukte abbilden können. Zum anderen sind Smart-Contracts - sind sie einemal in der \ac{DLT} gespeichert - unveränderbar und können als solches nicht überarbeitet werden. Die zugrundeliegende \ac{DLT}-Technologie muss also einen entsprechenden Mechanismus anbieten, um Smart-Contracts zu warten und zu aktualisieren. Darüber hinaus handelt es sich bei den Verträgen, die mittels Smart-Contracts abgebildet werden sollen, um rechtskräftige Miet- und Serviceverträge. Demnach müssen die Implementierungen rechtssicher und rechtskonform abgebildet werden können. Diese Punkte sind bei der Wahl der \ac{DLT}-Lösung zu beachten.
+\end{description}
+
+
+Die dritte Level-2 Subklasse der \textit{Software Anforderungen} unter dem Sammelbegriff der \textit{Nicht-Funktionalen Anforderungen} heißt \textit{Kompatibilität} (Compatibility). Für den vorliegenden IOT-Anwendungsfall wurden zwei solcher Anforderungen ermittelt (BD3.2.1, BD3.3.1,), welche die Userstory BD3 betreffen. Die Kompatibilität stellt die Fähigkeit des Gesamtsystems dar, Informationen mit anderen System auszutauschen und sich eine Umgebung mit anderen Systemen zu teilen. Es handelt sich hierbei um Anforderungen, die im Kontext des \ac{IOT}-Anwendungsfalls keine Relevanz für die Wahl der technischen Basis haben. Sollten Systeme nicht kompatibel sein, so könnte im Zweifelsfall eine Middleware für die Übersetzung bzw. die Kompatibilität sorgen. Somit werden die Anforderungen dieser Klasse für die weitere Analyse nicht weiter beachtet.
+
+
+Die vierte Level-2 Subklasse der \textit{Software Anforderungen} unter dem Sammelbegriff der \textit{Nicht-Funktionalen Anforderungen} heißt \textit{Wartbarkeit} (Maintainability). Anforderungen dieser Klasse stellen die Fähigkeit des Gesamtsystems dar, effizient wartbar zu sein um z.B. die Funktionalität zu erweitern und zu verbessern. Konkret im Kontext des \ac{IOT}-Anwendungsfalls beziehen sich die Anforderungen BD4.2.2 und P1.1.1 der zwei Userstories BD4 und P1 auf den Aufbau der Software: Einzelne Module können separat gewartet werden und die Testabdeckung ist hoch genug, damit die Wartung einzelner Module keine unerwünschten Nebeneffekt mit sich führt. Es handelt sich also um generische Anforderungen, die keinen Bezug auf die technische Umsetzung haben und daher keine \ac{DLT}-Relevanz besitzen. Somit wird diese Anforderungsklasse im weiteren Verlauf nicht weiter berücksichtigt.
+
+
+Die fünfte Level-2 Subklasse der \textit{Software Anforderungen} unter dem Sammelbegriff der \textit{Nicht-Funktionalen Anforderungen} heißt \textit{Performance-Effizienz} (Performance-Efficiency) und beschreibt die Leistung des Gesamtsystems in Bezug auf die zur Verfügung stehenden Ressourcen. Die Anforderungen dieser Klasse (A1.2.2, M3.2.1 und C2.4.2) im konkreten Anwendungsfall betreffen drei Userstories (A1, M3 und C2) und beschreiben alle das zeitliche Verhalten von übermittelten Daten: Die Kommunikation zwischen Akteuren, Geräten und Verträgen auf der Plattform wird sofort übermittelt. Es werden keine Daten zurückgehalten, aggregiert oder zeitverzögert übermittelt. Diese Anforderungen treffen keine Aussage über die Verarbeitungsdauer der Daten und haben damit keine Relevanz in Bezug auf die Wahl der technischen Basis. Somit werden die Anforderungen dieser Klasse für die weitere Analyse ignoriert.
+
+
+Die sechste Level-2 Subklasse der \textit{Software Anforderungen} unter dem Sammelbegriff der \textit{Nicht-Funktionalen Anforderungen} heißt \textit{Portabilität} (Portability) und beschreibt die Fähigkeit des Gesamtsystems von einer Hardware bzw. Umgebung in einer andere migriert zu werden. In diesem Kontext existiert eine Anforderung (P1.2.1) der Userstory P1, welche die automatisierte Installation und Bereistellung der Software definiert. Es ist deutlich, dass es sich hierbei um keine Technologie-entscheidende Anforderung handelt. Demnach wird diese Anforderungsklasse in der weiteren Analyse nicht beachtet.
+
+
+Die siebte Level-2 Subklasse der \textit{Software Anforderungen} unter dem Sammelbegriff der \textit{Nicht-Funktionalen Anforderungen} heißt \textit{Ausfallsicherheit} (Reliability) und beschreibt wie gut ein System unter bestimmten Bedingungen die geforderten Funktionalitäten durchführen kann. Anfoderung SA2.2.2 beschreibt, dass die Plattform keinen \ac{SPoF} besitzen darf. Dies beschreibt eine generelle Eigenschaft und ist im Kontext eines dezentralen Systems wie es \ac{DLT} ist nicht weiter von Relevanz. Daneben fordert Anforderung SA2.2.1, dass die Plattform in der Lage ist, bis zu 10.000 Endgeräte zu verarbeiten, ohne Einbußen in der Funktionalität oder der Geschwindigkeit der Verarbeitung. Diese Anfoderung muss bei der Wahl der zugrundeliegenden \ac{DLT}-Lösung beachtet werden, da hierbei die Performanz und Verfügbarkeit des beeinträchtigt wird.
+
+
+Die achte Level-2 Subklasse der \textit{Software Anforderungen} unter dem Sammelbegriff der \textit{Nicht-Funktionalen Anforderungen} heißt \textit{Sicherheit} (Security) und befasst sich mit der Thematik rund um Software- und Datensicherheit. Diese Klasse beinhaltet 16 Anforderungen (A1.1.1, A1.2.3, A1.2.4, A1.2.5, A1.3.5, A1.3.9, M3.2.2, C2.2.1, SEC1.1.2, SEC1.2.1, SEC1.2.2, SEC3.1.1, SEC3.1.2, SEC3.2.1, SA2.1.1 und SA2.1.2) aus sechs Userstories (A1, M3, C2, SEC1, SEC3 und SA2). Anhand der hohen Anzahl ist die Wichtigkeit dieser Klasse zu sehen. Die vorliegenden Anforderungen lassen sich grob ob vier Subkategorien untergliedern: Verantwortlichkeit, Authentizität, Vertraulichkeit und Integrität. Verantwortlichkeit beinhaltet fünf Anforderungen, die unter Anderem die eindeutige Identifikation der Akteure sowie die Protokollierung von Aktivitäten und deren Zuordnung zu Accounts beschreiben. Während es sich bei dem Großteil um allgemeine Richtlinien handelt und dieser nicht von der konkreten technischen Umsetzung abhängig ist, so ist die generelle Identifikation von großer Relevanz für die Umsetzung auf Basis einer \ac{DLT}-Lösung. Um einem Account (im Kontext von \ac{DLT} eher Wallet) eine natürliche Person oder ein Unternehmen eindeutig zuordnen zu können, bedarf es einer informativen Instanz, die auf der Plattform agiert und diese Informationen bereitstellt. Eine mögliche Umsetzung im Kontext \c{DLT} wäre die Implementierung eines entsprechenden Oracles, welches Personen und Unternehmen einer Wallet zuordnet und umgekehrt.\\
+Die nächste Subkategorie - Authentizität - beinhaltet eine Anforderung, die die Zugriffsbeschränkung zu der Wallets (Konten) beschreibt. Da Wallets auf einer \ac{DLT} durch eine Kombination aus einem öffentlichen und einem privaten Schlüssel sind und der private der PIN-Nummer eines Kontos entspricht, besteht eine implizite Zugriffsbeschränkung; es liegt hierbei keine \ac{DLT}-Relevanz vor.\\
+Der Inhalt von Nachrichten zwischen Akteuren sowie der Vertragsinhalt abgeschlossener Verträge unterliegt der Vertraulichkeit, darf also nur von beteiligten bzw. berechtigten Akteuren eingesehen werden. Da Transaktionen auf \ac{DLT}-Lösungen generell öffentlich einsehbar sind liegt hier eine \ac{DLT}-Relevanz vor: Es muss dafür gesorgt werden, dass der Inhalt von Transaktionen und Smart-Contracts vertraulich behandelt werden kann.\\
+Die Subkategorie Integrität hat den größten Anteil: Insgesamt acht Anforderungen wurden für den vorliegenden Anwendungsfall ermittelt, wobei Dateninkonsistenzen, Datenverlust und Manipulationssicherheit im Fokus stehen. Diese Eigenschaften entsprechen in etwa dem, was einen Distributed Ledger ausmacht, und sind deshalb zunächst einmal nicht weiter relevant in Bezug auf die Umsetzung mittels eines \ac{DLT}. Die Abbildung eines Vertrags muss allerdings so gestaltet werden, dass der Vertragsgegenstand nicht manipuluiert werden kann. Dies ist bei der Implementierung des Vertrags zu beachten und hat demnach eine Auswirkung auf die \ac{DLT}-Relevanz und muss in der weiteren Analyse beachtet werden.
+
+
+Die neunte Level-2 Subklasse der \textit{Software Anforderungen} unter dem Sammelbegriff der \textit{Nicht-Funktionalen Anforderungen} heißt \textit{Benutzbarkeit} (Usability) und befasst sich mit dem Thema \ac{UX}. Diese Klasse beinhaltet zwei Anforderungen (C3.1.2 und C3.2.1) der Userstory C3 und besitzt keine \ac{DLT}-Relevanz, da es um die Schnittstelle zum Endbenutzer geht und nicht um die technologische Basis der Plattform. Somit wird diese Klasse im weiteren Vorgehen nicht beachtet.
+
+
+In den vorherigen Abschnitten wurden alle \ac{DLT}-relevanten Anforderungen der verschiedenen Klassen identifiziert. Die nachfolgende Tabelle fasst diese zusammen.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[]
+\begin{tabu} to \textwidth {XX[3]XX}
+\toprule
+\textbf{ID} & \textbf{Inhalt} & \textbf{Level-1} & \textbf{Level-2} \\ \midrule
+A1.1.1 & Jeder Akteur auf der Plattform kann eindeutig identifiziert werden. & Software & Security \\
+A1.1.3 & Ein Akteur agiert immer mit einer bestimmten Rolle auf der Plattform: Manufacturer, Customer, Supplier, Service-Provider oder Gerät. Ein Akteur kann mehrere Rollen haben. & Software & Functional \\
+A1.1.5 & Ein Akteur hat eine (mehrere) verifizierte Rolle(n). & Software & Functional \\
+A1.2.5 & Akteure können nur den Inhalt ihrer eigenen Nachrichten einsehen. & Software & Security \\
+A1.3.1 & Akteure schließen Verträge über die Plattform ab. & Software & Functional \\
+A1.3.2 & Verträge sind rechtlich bindend. & Software & Functional \\
+A1.3.5 & Der Vertragsgegenstand kann nicht durch Dritte manipuliert werden. & Software & Security \\
+A1.3.7 & Akteure können komplexe Vertragskonstrukte umsetzen. Verträge haben einen Status. Diese können "Aktiv", "In Erzeugung" oder "Inaktiv" sein. & Software & Functional \\
+A1.3.8 & Akteure können ihre Verträge im Nachhinein ändern. & Software & Functional \\
+A1.3.9 & Akteure können nur ihre eigenen Verträge ändern. & Software & Security \\
+A1.3.10 & Eine Vertragsänderung bedarf der Zustimmung aller beteiligten Akteure. & Software & Functional \\
+A1.3.11 & Erbrachte Leistungen werden kostenpflichtig verrechnet. & Software & Functional \\
+BD4.2.1 & Ein Abrechnungsmodell wird in einem Vertrag abgebildet. & System & Business \\
+SA2.2.1 & Die Plattform ist in der Lage, die Kommunikation und Datenverarbeitung bei bis zu 100.000 Endgeräten durchzuführen. & Software & Reliability \\ \bottomrule
+\end{tabu}
+\caption{DLT-relevante Anforderungen}
+\label{tab:dlt_relevant}
+\end{table}
+
+Im Laufe der Untersuchung auf \ac{DLT}-Relevanz wurde deutlich, dass die Einteilung nach Anforderungsklassen nur einen geringen Beitrag zur Identifikation der relevanten Anforderungen beitragen konnte. Selbst die Einteilung in verschiedene Themenbereiche konnte nur einen geringen Mehrwert liefern, indem die Übersichtlichkeit - trotz der hohen Anzahl an Anforderungen - gewahrt werden konnte. Gründe und Auswirkungen dafür werden später im Kapitel XYZ aufgezeigt und diskutiert.
+
+\textcolor{red}{\textbf{DLT-relevante Anforderungen übersetzen in DLT-Sprache. Was muss ein DLT können, um in Frage zu kommen?}}

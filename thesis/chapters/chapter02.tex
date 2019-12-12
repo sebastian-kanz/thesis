@@ -1,17 +1,127 @@
 \chapter{Theoretische Grundlagen}
 \label{ch:fundamentals}
-\lipsum[1-1]
+Dieses Kapitel stellt dem Leser benötigtes Basiswissen zur Verfügung. Es wird ein grundlegendes Wissen zu den Themenbereichen \ac{DLT} und \ac{IOT} vermittelt und auf weitere Informationsquellen verwiesen, welche tiefergehende Informationen bereitstellen.
 
 %
 % Section: DLT
 %
 \section{DLT}
 \label{sec:fundamentals:dlt}
-\lipsum[1-1]
+Die Begriffe Blockchain und Distributed Ledger Technology (kurz: \ac{DLT}) werden häufig synonym verwendet, wobei es sich bei Blockchain um eine Unterklasse von \ac{DLT} handelt. Beide bestehen aus einem dezentralen Netzwerk von Knoten, die Daten dezentral speichern, einen Konsens-Mechanismus zur Synchronisierung einsetzen und asymmetrische Verschlüsselungsverfahren zur Integrität und Absicherung des Systems nutzen. Hauptbestandteil eines Distributed Ledgers ist der Ledger selbst (deutsch: Kassenbuch), der eine Historie aller erfolgten Transaktionen speichert. Eine Transaktion beinhaltet einen Sender, einen Empfänger und eine Anzahl Einheiten, die versendet werden sollen. Je nach Implementierung können weitere Inhalte dazukommen.\\
+Die Blockchain als Unterklasse der \ac{DLT}s hat ihren Namen aufgrund der Beschaffenheit des Ledgers: Transaktionen werden in sogenannten Blöcken gruppiert und gespeichert. Jeder Block hat eine Referent auf den vorherigen Block, indem er dessen kryptografisch berechneten Hashwert speichert. Damit ergibt sich eine einfach verkettete Liste (Chain) von Blöcken (Block), die den gesamten Ledger repräsentiert. Ein Block wird von einem oder mehreren Knoten, die am Blockchain-Netzwerk teilnehmen, erzeugt und mittels eines Konsensalgorithmus durch alle beteiligten Knoten vor Manipulation geschützt. Eine Auflistung mehrere bekannter Konsensmechanismen ist der Tabelle \textbf{ABC} zu entnehmen.\\% https://link.springer.com/chapter/10.1007/978-3-030-14533-0_10
+\textbf{\textcolor{red}{ausführlicher}}
+
+
+\subsection{Taxonomie von Blockchains}
+\label{subsec:fundamentals:dlt:taxonomy}
+Blockchains können klassifiziert werden, indem man die Sichtbarkeit von Informationen sowie die aktive Teilnahme von Netzwerkknoten am Konsensmechanismus betrachtet. Ist die Blockchain öffentlich erreichbar und können Transaktionen und Blöcke von beliebigen Knoten eingesehen werden, so handelt es sich um eine öffentliche (Public) Blockchain. Ist der Zugang zum Blockchain-Netzwerk beschränkt und können nur berechtigte Knoten Transaktionen und Blöcke einsehen, so spricht man von einer privaten (Private) Blockchain. Darüber hinaus lassen sich Blockchains über die Teilnahme am Konsensalgorithmus, also der Entscheidung, welche Transaktionen in die Blockchain übernommen werden, klassifizieren: Ist jeder Netzwerkknoten, der die Blockchain erreichen und damit Informationen einsehen kann (unabhängig von public oder private) in der Lage, am Konsensverfahren teilzunehmen, so spricht man von einer beschränkungslose (Permissionless) Blockchain. Ist das Konsensverfahren auf priviligierte Knoten beschränkt, so handelt es sich um eine zugangsbeschränkte (Permissioned) Blockchain. Die vorgestellte Klassifizierung in Public, Private, Permissioned und Permissionless lassen sich darüber hinaus kombinieren, wodurch es vier mögliche Arten von Blockchains gibt. Tabelle \textbf{XYZ} stellt diese übersichtlich dar und listet dazu einige bekannte Beispiele auf.
+Public Permissionless: Ethereum, Bitcoin\\
+Public Permissioned: EOS, Ripple\\
+Private Permissionless: Holochain\\
+Private Permissioned: Hyperledger Fabric\\
+% https://medium.com/ltonetwork/the-rise-of-private-permissionless-blockchains-part-2-62553256953d
+\cite{8029379}
+Die bekanntesten Vertreter Bitcoin und Ethereum sind öffentliche und beschränkungslose Blockchains, an denen jeder teilnehmen kann und alle Daten öffentlich einsehbar sind. Im Unternehmensumfeld wird häufig auf private Blockchains gesetzt, da hier die Zugangskontrolle zu gegebenenfalls sensiblen Daten gewährleistet wird und keine Geschäftsgeheimnisse nach Außen dringen können. Kooperationen und Zusammenarbeiten zwischen Unternehmen werden oftmals als Permissioned Blockchains umgesetzt, da hier jeder Kooperationspartner einen oder mehrere am Konsensverfahren teilnehmende Knoten besitzt.
+
+
+\subsection{Hash-Funktionen}
+\label{subsec:fundamentals:dlt:hashes}
+\textbf{\textcolor{red}{todo}}
+
+
+
+\subsection{Smart-Contracts}
+\label{subsec:fundamentals:dlt:smartcontracts}
+Ein essentieller Bestandteil vieler Blockchains sind sogenannte Smart-Contracts. Dabei handelt es sich um Software-Code, der auf der Blockchain ("onchain") auf allen Knoten ausgeführt wird und eine Zustandsänderung in Form von ausgehenden Transaktionen zur Folge hat. Smart-Contracts werden meist in einer abgeschirmten Laufzeit-Umgebung (engl.: Runtime-Environment) ausgeführt; im Falle von Ethereum spricht man von der \ac{EVM}. Um auf Daten und Informtionen außerhalb des Blockchain-Netzwerkes zugreifen zu können, können sich Smart-Contract sogenannter Oracle-Services bedienen. Dabei handelt es sich um Informationsanbieter, die zum Beispiel Wetterdaten, Lottozahlen oder Nahverkehrsinformationen an einen Smart-Contract senden, damit dieser, basierend auf den empfangenen Daten, seine Logik ausführen und die Daten verarbeiten kann. Der grundlegende Nachteil von Oracle-Services liegt in der Vertrauensfrage: Während eine Blockchain grundsätzlich mittels Konsensverfahrens die Vertrauensfrage beantwortet, obliegt dem Besitzer bzw. Betreiber eines Oracles die Macht über die Richtigkeit der Daten. Dieser Problematik kann durch den Einsatz mehrerer, mittels eines Konsensverfahrens abgestimmter Oracle-Services entgegengewirkt werden.\\
+Mit Smart-Contracts werden oftmals (allerdings nicht ausschließlich) Verträge wie Kauf- oder Mietverträge umgesetzt. Bei solchen Verträgen ist das jeweils geltende Recht eines Landes zu beachten: Die Form und der Aufbau sowie der abzubildende Inhalt eines Vertrages muss gewissen Normen entsprechen und alle benötigten Informationen enthalten, damit ein Vertrag rechtskräftig ist. Um nun ein solch komplexes Konstrukt mittels Computercode als Smart-Contract abzubilden, müssen einige Punkte beachtet werden, damit die Implementierung rechtlich bindend ist. Nach Deutschem Recht muss ein Vertrag
+\textbf{\textcolor{red}{todo}}
+
+\subsection{Konsensalgorithmen}
+\label{subsec:fundamentals:dlt:consensus}
+Ein Blockchain-Netzwerk ist ein verteiltes System, welches aus vielen einzelnen Knoten besteht. Damit Transaktionen und Daten über das Gesamtsystem hinweg konsistent sind, bedarf es eines Mechanismus, welcher sicherstellt, dass alle Knoten die gleichen Daten halten. Solche Mechanismen werden durch Konsensalgorithmen beschrieben. Es wird ein Protokoll definiert, welches Regeln definiert, wie und welche Daten gespeichert und welche verworfen werden. Im Folgenden werden einige bekannte Konsensverfahren genannt und kurz vorgestellt.
+\begin{description}
+  \item[Proof-of-Work (PoW)]
+  \item[Proof-of-Stake (PoS)]
+  \item[Practical Byzantine Fault Tolerance (PoW)]
+  \item[Proof-of-Authority (PoA)]
+  \item[Delegated-Proof-of-Stake (dPoS)]
+\end{description}
+\textbf{\textcolor{red}{todo}}
+
+
+\subsection{Dezentrale Identitäten}
+\label{subsec:fundamentals:dlt:did}
+Eine Identität zeichnet sich durch eine Menge von Informationen, Daten und Eigenschaften aus, die diese eindeutig identifizieren. Nur der Inhaber einer Identität kann mit dieser auch agieren, da er der einzige ist, der Zugriff auf die geschützten Informationen hat, die das Innehaben einer Identität bestätigen. Diese können zum Beispiel ein Passwort, eine Geburtsurkunde, ein Fingerabruck oder Ähnliches sein.\\
+Eine dezentrale Identität ist eine neuartige Technologie, die es dem Inhaber einer solchen erlaubt, seine Identität digital, dezentral und sicher durch den Einsatz asymmetrischer Verschlüsselung selbst zu verwalten. Sie ist kryptografisch verifizierbar und der Inhaber entscheidet selbst, welche Informationen er teilen möchte und welche nicht. Das \ac{W3C} entwickelt aktuell (Stand: Dezember 2019) einen Industrie-Standard, der zur Verifizierung und Authentifizierung persönlicher Informationen vor Dritten im Web 3.0 eingesetzt werden soll, und sich derzeit in der Version 1.0 befindet \cite{did2019}. Eine dezentrale Identität besteht aus einer \ac{DID}, welche weltweit einzigartig ist, und einem dazugehörigen DID-Dokument, welches Informationen über den beschriebenen Gegenstand enthält. Die folgenden Beispiele zeigen eine \ac{DID} und ein dazugehörige DID-Dokument (entnommen aus \cite{did2019}).
+
+\begin{lstlisting}[caption=Beispiel einer DID,label=listing:did]
+did:example:123456789abcdefghi
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Beispiel eines DID-Dokuments,label=listing:did_document]
+
+{
+  "@context": "https://www.w3.org/ns/did/v1",
+  "id": "did:example:123456789abcdefghi",
+  "authentication": [{
+
+    "id": "did:example:123456789abcdefghi#keys-1",
+    "type": "RsaVerificationKey2018",
+    "controller": "did:example:123456789abcdefghi",
+    "publicKeyPem": "-----BEGIN PUBLIC KEY...END PUBLIC KEY-----\r\n"
+  }],
+  "service": [{
+
+    "id":"did:example:123456789abcdefghi#vcs",
+    "type": "VerifiableCredentialService",
+    "serviceEndpoint": "https://example.com/vc/"
+  }]
+}
+\end{lstlisting}
+
+Durch den Einsatz von Blockchain-Technologie können \ac{DID}s manipulationssicher, hochverfügbar und für jeden zugänglich gespeichert werden. Die \ac{DID} besteht aus drei Teilen: Zunächst dem Schlüsselwort "did", welches beschreibt, dass es sich um eine \ac{DID} handelt. Anschließend folgt die DID-Methode (im Beispiel: "example"), die definiert, wie die \ac{DID} aufzulösen und weitere Informtionen zu dieser Identität zu finden sind. Der letzte Teil ist eine ID ("123456789abcdefghi"), die für jede Methode einzigartig ist und somit eindeutig ermittelt werden kann.\\
+Darüber hinaus existieren sogenannte \ac{VC}, die von vertrauenwürdigen Instanzen einer \ac{DID} ausgestellt werden können. Dabei handelt es sich um verifizierbare Berechtigungsnachweise. Der Aussteller bescheinigt dem Empfänger eine bestimmte Eigenschaft und stellt einen Service-Endpoint zur Verfügung, an dem ein Dritter diesen \ac{VC} verifizieren kann. So kann zum Beispiel eine Universität mit ihrer eigenen \ac{DID} "did:hda:123456789abcdefghi" einem Student "did:example:sebastiankanz" ein \ac{VC} ausstellen, welches dem Student bescheinigt, aktuell an der Universität eingeschrieben zu sein. Möchte sich der Student nun an der Universitätsbibliothek authentifizieren, so kann er dort das \ac{VC} der Universität vorzeigen und bekommt Zugriff auf die Bibliotheksausleihe. Die Bibliothek kann das \ac{VC} verifizieren, indem es unter der Methode "hda" und "example" die Universität und den Student identifiziert und anschließend die Signaturen überprüft.
+
+\subsection{Blockchain im Kontext des OSI-Referenzmodells}
+\label{subsec:fundamentals:dlt:osi}
+Das \ac{OSI} Modell gilt seit Mitte der 80er-Jahre als Standard zur Einordnung von Netzwerkprotokollen. Es wurde von der \ac{ISO} entwickelt und besteht aus sieben Schichten \cite{OSI1980}:
+\begin{description}
+  \item[Physical Layer]
+  \item[Data Link Layer]
+  \item[Network Layer]
+  \item[Transport Layer]
+  \item[Session Layer]
+  \item[Presentation Layer]
+  \item[Application Layer]
+\end{description}
+
+Da es sich bei \ac{DLT} - wie der Name bereits sagt - um ein verteiltes System handelt, welches über ein Netzwerk kommuniziert, liegt es nahe, eine Einordnung in das \ac{OSI} Modell durchzuführen. Dazu werden die verschiedenen Bestandteile eines \ac{DLT}s den einzelnen Schichten des \ac{OSI} Modells zugeordnet.
+  \cite{osi2014}
+  Vorstellung Blockchain-Modell
+  Zuordnung OSI-Modell zu Blockchain-Modell
+  Definition Protokoll, Definition Kommunikationsprotokoll, Begründung warum Blockchain Kommunikationsprotokoll ist
+  \textbf{\textcolor{red}{todo}}
+
+Eine Blockchain ist ein verteiltes System und besteht aus einem \ac{P2P} Netzwerk der beteiligten Blockchain-Knoten.
+
+Ein Kommunikationsprotokoll ist nach
+Beispiel HTTP
 
 %
 % Section: IOT
 %
 \section{IOT}
 \label{sec:fundamentals:iot}
-\lipsum[1-1]
+\textbf{\textcolor{red}{todo}}
+IOT - Industrial IOT, Consumer IOT
+
+
+\subsection{Digitaler Zwilling}
+\label{subsec:fundamentals:iot:digitaltwins}
+\textbf{\textcolor{red}{todo}}
+
+
+\subsection{Anwendungsbereiche im Kontext DLT}
+\label{subsec:fundamentals:iot:usecases}
+\textbf{\textcolor{red}{todo}}
+IOT-Bereiche mit Anwendungsbeispielen - Echtzeitanwendungen,
