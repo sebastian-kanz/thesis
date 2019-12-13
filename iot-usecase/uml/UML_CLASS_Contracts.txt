@@ -1,0 +1,93 @@
+@startuml
+title Contract / Actor\nClassdiagram
+hide footbox
+
+
+skinparam backgroundColor #EEEBDC
+skinparam ranksep 20
+'skinparam nodesep 200
+skinparam linetype ortho
+skinparam handwritten false
+skinparam shadowing false
+skinparam classAttributeIconSize 0
+skinparam class {
+  BackgroundColor #358a8e
+  ArrowColor slategrey
+  BorderColor #2a5557
+}
+
+
+abstract class Actor {
+- Key pubKey
+- Key privKey
+- DID did
++ signContract()
+}
+
+class Customer {
++ terminateContract()
+- VC isCustomerOnPlatform
+}
+
+class Manufacturer {
+- VC isManufacturerOnPlatform
+
+}
+
+class Service-Provider {
+- VC isServiceProviderOnPlatform
++ service()
+}
+
+class Supplier {
+- VC isServiceProviderOnPlatform
++ supply()
+}
+
+class Device {
+- VC isDeviceOnPlattform
+- VC isDeviceOfManufacturer
+}
+
+
+
+
+class RentalContract {
+  + ServiceContract serviceContract
+  + SupplyContract supplyContract
+  + Manufacturer owner
+  + Customer tenant
+  + checkUsage()
+  + checkService()
+  + transferMoney()
+}
+
+class ServiceContract {
+
+}
+
+class SupplyContract {
+
+}
+
+
+
+Actor <|-- Customer
+Actor <|-- Manufacturer
+Actor <|-- "Service-Provider"
+Actor <|-- Supplier
+
+RentalContract "1" *-- "1" ServiceContract
+RentalContract "1" *-- "1" SupplyContract
+
+Customer "1" -> "0..*" Device: rents >
+
+Manufacturer "1" -> "0..*" Device: owns
+Manufacturer "1" -> "0..*" RentalContract: creates >
+Manufacturer "1" -> "0..*" ServiceContract: creates >
+Manufacturer "1" -> "0..*" SupplyContract: creates >
+
+Customer "1" -> "0..*" RentalContract: signs or terminates >
+"Service-Provider" "1" -> "0..*" ServiceContract: signs >
+Supplier "1" -> "0..*" SupplyContract: signs >
+@enduml

@@ -1,0 +1,56 @@
+@startuml
+title Contract Creation\ntriggered by Customer
+hide footbox
+
+
+skinparam backgroundColor #EEEBDC
+skinparam handwritten false
+skinparam shadowing false
+skinparam sequence {
+  ArrowColor slategrey
+  ActorBorderColor #2a5557
+  LifeLineBorderColor green
+  LifeLineBackgroundColor #2b6569
+  'LifeLineBackgroundColor #A9DCDF
+  ParticipantBorderColor #2a5557
+  ParticipantBackgroundColor #358a8e
+  ParticipantFontName Impact
+  ParticipantFontSize 17
+  ParticipantFontColor #A9DCDF
+  ActorBackgroundColor #358a8e
+  ActorFontColor #358a8e
+  ActorFontSize 17
+  ActorFontName Aapex
+}
+
+actor Customer
+actor Manufacturer
+actor "Service-Provider"
+actor Supplier
+database Blockchain
+
+
+
+Customer -> Manufacturer: send rental request (device)
+activate Manufacturer
+Manufacturer -> Blockchain: create service contract
+Manufacturer -> "Service-Provider": notify
+activate "Service-Provider"
+"Service-Provider" -> "Service-Provider": check service contract
+"Service-Provider" -> Blockchain: sign service contract
+"Service-Provider" -> Manufacturer: notify
+
+Manufacturer -> Blockchain: create supply contract
+Manufacturer -> Supplier: notify
+activate Supplier
+Supplier -> Supplier: check supply contract
+Supplier -> Blockchain: sign supply contract
+Supplier -> Manufacturer: notify
+
+Manufacturer -> Manufacturer: create rental contract
+Manufacturer -> Blockchain: append service and supply contract
+Manufacturer -> Customer: notify
+
+
+Customer -> Blockchain: sign rental contract
+@enduml

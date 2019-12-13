@@ -1,0 +1,57 @@
+@startuml
+title Contract Termination\ntriggered by Customer
+hide footbox
+
+
+skinparam backgroundColor #EEEBDC
+skinparam handwritten false
+skinparam shadowing false
+skinparam sequence {
+  ArrowColor slategrey
+  ActorBorderColor #2a5557
+  LifeLineBorderColor green
+  LifeLineBackgroundColor #2b6569
+  'LifeLineBackgroundColor #A9DCDF
+  ParticipantBorderColor #2a5557
+  ParticipantBackgroundColor #358a8e
+  ParticipantFontName Impact
+  ParticipantFontSize 17
+  ParticipantFontColor #A9DCDF
+  ActorBackgroundColor #358a8e
+  ActorFontColor #358a8e
+  ActorFontSize 17
+  ActorFontName Aapex
+}
+
+actor Customer
+actor Participants
+
+'box "onchain Smart-Contracts" #LightBlue
+participant "Rental Contract" as A
+participant "Service Contract" as B
+participant "Supply Contract" as C
+'end box
+
+
+Customer -> A: terminate contract
+activate A
+A -> A: check contract conditions
+alt conditions error 
+A -> Customer: contract conditions not met
+else conditions ok
+A -> B: terminate service contract
+activate B
+B -> B: terminate contract
+B -> Participants: inform for contract termination
+B -> A: inform for contract termination
+A -> C: terminate supply contract
+activate C
+C -> C: terminate contract
+C -> Participants: inform for contract termination
+C -> A: inform for contract termination
+
+A -> A: terminate contract
+A -> Participants: inform for contract termination
+A -> Customer: inform for contract termination
+end
+@enduml

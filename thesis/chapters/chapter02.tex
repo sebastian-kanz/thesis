@@ -5,11 +5,12 @@ Dieses Kapitel stellt dem Leser benötigtes Basiswissen zur Verfügung. Es wird 
 %
 % Section: DLT
 %
-\section{DLT}
+\section{Distributed Ledger Technologies}
 \label{sec:fundamentals:dlt}
 Die Begriffe Blockchain und Distributed Ledger Technology (kurz: \ac{DLT}) werden häufig synonym verwendet, wobei es sich bei Blockchain um eine Unterklasse von \ac{DLT} handelt. Beide bestehen aus einem dezentralen Netzwerk von Knoten, die Daten dezentral speichern, einen Konsens-Mechanismus zur Synchronisierung einsetzen und asymmetrische Verschlüsselungsverfahren zur Integrität und Absicherung des Systems nutzen. Hauptbestandteil eines Distributed Ledgers ist der Ledger selbst (deutsch: Kassenbuch), der eine Historie aller erfolgten Transaktionen speichert. Eine Transaktion beinhaltet einen Sender, einen Empfänger und eine Anzahl Einheiten, die versendet werden sollen. Je nach Implementierung können weitere Inhalte dazukommen.\\
 Die Blockchain als Unterklasse der \ac{DLT}s hat ihren Namen aufgrund der Beschaffenheit des Ledgers: Transaktionen werden in sogenannten Blöcken gruppiert und gespeichert. Jeder Block hat eine Referent auf den vorherigen Block, indem er dessen kryptografisch berechneten Hashwert speichert. Damit ergibt sich eine einfach verkettete Liste (Chain) von Blöcken (Block), die den gesamten Ledger repräsentiert. Ein Block wird von einem oder mehreren Knoten, die am Blockchain-Netzwerk teilnehmen, erzeugt und mittels eines Konsensalgorithmus durch alle beteiligten Knoten vor Manipulation geschützt. Eine Auflistung mehrere bekannter Konsensmechanismen ist der Tabelle \textbf{ABC} zu entnehmen.\\% https://link.springer.com/chapter/10.1007/978-3-030-14533-0_10
 \textbf{\textcolor{red}{ausführlicher}}
+\textbf{\textcolor{red}{Abgrenzung DLT?}}
 
 
 \subsection{Taxonomie von Blockchains}
@@ -110,15 +111,20 @@ Beispiel HTTP
 %
 % Section: IOT
 %
-\section{IOT}
+\section{Internet of Things}
 \label{sec:fundamentals:iot}
-\textbf{\textcolor{red}{todo}}
-IOT - Industrial IOT, Consumer IOT
+Der Begriff Internet der Dinge - kurz IOT - ist ein Sammelbegriff und bezeichnet die Vernetzung von Gegenständen untereinander (meist über das Internet). Es wird eine autonome \ac{M2M}-Kommunikation ermöglicht, die wiederum den Automatisierungsgrad in dem jeweiligen Einsatzgebiet weiter erhöht. Nach \cite{deloitte2018} lässt sich das Themenfeld \ac{IOT} in zwei Bereiche untergliedern: \ac{CIOT} und \ac{IIOT}. Während \ac{CIOT} Anwendungen im privaten Umfeld sieht - vor allem geht es hier um Smart-Home und den damit verbundenen Applikationen - so fokussiert sich \ac{IIOT} auf den kommerziellen Bereich und versucht Anwendungen im deutlich größeren Stil zu entwickeln: Die Bereiche Automotive, Energie und Supply-Chain sind hierbei einige wichtige Vertreter.\\
 
+\textbf{\textcolor{red}{Warum IOT und DLT?}}
+\cite{SCIOT2016}
+From the manufacturer's side, the current centralized model has a high maintenance cost consider the distribution of software updates to millions of devices for years after they have been long discontinued. From the consumer's side, there is a justified lack of a trust in devices that ``phone home'' in the background and a need for a ``security through transparency'' approach.
+
+Geschuldet durch die Vielfältigkeit der Anwendungsfälle (mehr dazu in Abschnitt \ref{subsec:fundamentals:iot:usecases})
+\textbf{\textcolor{red}{Abgrenzung IOT?}}
 
 \subsection{Digitaler Zwilling}
 \label{subsec:fundamentals:iot:digitaltwins}
-\textbf{\textcolor{red}{todo}}
+Ein digitaler Zwilling (engl. Digital Twin) ist nach \cite{deloitte2018} eine virtuelle Kopie physikalischer Objekte. Diese besteht aus wohl-definierten Datenstrukturen, einem \ac{UI}, welches relevante Daten visualisiert und IT-Komponenten zur Statusaktualisierung und Konnektivität. Digitale Zwillinge werden in IT-automatisierten Prozesse benötigt, die sie als Schnittstelle zwischen physischer Welt und dessen digitalen Pendant fungieren. Der Zustand eines physikalischen Objekts wird in den digitalen Zwilling gespiegelt, welcher wiederum eine digitale Zustandsüberwachung und die Manipulation seines physischen Gegenstücks ermöglicht \cite{deloitte2018}. Der Ansatz von digitalen Zwillingen und die Thematik \ac{IOT} haben gegenseitig enormen Einfluss aufeinander und befähigen einander zu neuen Anwendungsfällen. Diese können unter Anderem die Abbildung von Fabriken und Maschinen in digitale Automatisierungsprozesse sein, indem die Geräte und Teile mit Sensoren, Konnektivität und einer Steuerungslogik ausgestattet werden. Dadurch können Predictive Maintance, Bearfsplanungen und Prozessoptimierungen durchgeführt werden.
 
 
 \subsection{Anwendungsbereiche im Kontext DLT}
