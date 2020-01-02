@@ -1,36 +1,58 @@
 @startuml
+'-----------------Start Title----------------------
+
 title Contract Termination\ntriggered by Customer
+
+'-----------------Start Formatting----------------------
+
 hide footbox
 
+skinparam {
+  backgroundColor #EEEBDC
+  handwritten false
+  shadowing false
+}
 
-skinparam backgroundColor #EEEBDC
-skinparam handwritten false
-skinparam shadowing false
+skinparam database {
+  BorderColor #2a5557
+  BackgroundColor #358a8e
+  FontName Impact
+  FontSize 17
+  FontColor #358a8e
+}
+
 skinparam sequence {
   ArrowColor slategrey
-  ActorBorderColor #2a5557
   LifeLineBorderColor green
   LifeLineBackgroundColor #2b6569
-  'LifeLineBackgroundColor #A9DCDF
-  ParticipantBorderColor #2a5557
-  ParticipantBackgroundColor #358a8e
-  ParticipantFontName Impact
-  ParticipantFontSize 17
-  ParticipantFontColor #A9DCDF
-  ActorBackgroundColor #358a8e
-  ActorFontColor #358a8e
-  ActorFontSize 17
-  ActorFontName Aapex
 }
+
+skinparam actor {
+  BackgroundColor #358a8e
+  BorderColor #2a5557
+  FontColor #358a8e
+  FontSize 17
+  FontName Aapex
+}
+
+skinparam participant {
+  BorderColor #2a5557
+  BackgroundColor #358a8e
+  FontName Impact
+  FontSize 17
+  FontColor #A9DCDF
+}
+
+'-----------------Start Diagram----------------------
+
 
 actor Customer
 actor Participants
 
-'box "onchain Smart-Contracts" #LightBlue
 participant "Rental Contract" as A
 participant "Service Contract" as B
 participant "Supply Contract" as C
-'end box
+
 
 
 Customer -> A: terminate contract
@@ -42,16 +64,19 @@ else conditions ok
 A -> B: terminate service contract
 activate B
 B -> B: terminate contract
-B -> Participants: inform for contract termination
 B -> A: inform for contract termination
+B -> Participants: inform for contract termination
+deactivate B
 A -> C: terminate supply contract
 activate C
 C -> C: terminate contract
-C -> Participants: inform for contract termination
 C -> A: inform for contract termination
+C -> Participants: inform for contract termination
+deactivate C
 
 A -> A: terminate contract
 A -> Participants: inform for contract termination
 A -> Customer: inform for contract termination
+deactivate A
 end
 @enduml

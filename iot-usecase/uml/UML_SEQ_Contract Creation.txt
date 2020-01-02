@@ -1,27 +1,49 @@
 @startuml
+'-----------------Start Title----------------------
+
 title Contract Creation\ntriggered by Customer
+
+'-----------------Start Formatting----------------------
+
 hide footbox
 
+skinparam {
+  backgroundColor #EEEBDC
+  handwritten false
+  shadowing false
+}
 
-skinparam backgroundColor #EEEBDC
-skinparam handwritten false
-skinparam shadowing false
+skinparam database {
+  BorderColor #2a5557
+  BackgroundColor #358a8e
+  FontName Impact
+  FontSize 17
+  FontColor #358a8e
+}
+
 skinparam sequence {
   ArrowColor slategrey
-  ActorBorderColor #2a5557
   LifeLineBorderColor green
   LifeLineBackgroundColor #2b6569
-  'LifeLineBackgroundColor #A9DCDF
-  ParticipantBorderColor #2a5557
-  ParticipantBackgroundColor #358a8e
-  ParticipantFontName Impact
-  ParticipantFontSize 17
-  ParticipantFontColor #A9DCDF
-  ActorBackgroundColor #358a8e
-  ActorFontColor #358a8e
-  ActorFontSize 17
-  ActorFontName Aapex
 }
+
+skinparam actor {
+  BackgroundColor #358a8e
+  BorderColor #2a5557
+  FontColor #358a8e
+  FontSize 17
+  FontName Aapex
+}
+
+skinparam participant {
+  BorderColor #2a5557
+  BackgroundColor #358a8e
+  FontName Impact
+  FontSize 17
+  FontColor #A9DCDF
+}
+
+'-----------------Start Diagram----------------------
 
 actor Customer
 actor Manufacturer
@@ -39,6 +61,7 @@ activate "Service-Provider"
 "Service-Provider" -> "Service-Provider": check service contract
 "Service-Provider" -> Blockchain: sign service contract
 "Service-Provider" -> Manufacturer: notify
+deactivate "Service-Provider" 
 
 Manufacturer -> Blockchain: create supply contract
 Manufacturer -> Supplier: notify
@@ -46,10 +69,12 @@ activate Supplier
 Supplier -> Supplier: check supply contract
 Supplier -> Blockchain: sign supply contract
 Supplier -> Manufacturer: notify
+deactivate Supplier 
 
 Manufacturer -> Manufacturer: create rental contract
 Manufacturer -> Blockchain: append service and supply contract
 Manufacturer -> Customer: notify
+deactivate Manufacturer 
 
 
 Customer -> Blockchain: sign rental contract

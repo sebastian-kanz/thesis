@@ -56,7 +56,7 @@ Jedes Gerät besitzt eine eindeutige Identifikationsnummer und eine eindeutige R
 
 \subsection{Verträge}
 \label{subsec:iot_usecase:solution:contracts}
-Verträge (Mietverträge, Service-Verträge, Lieferverträge) werden von allen beteiligten Parteien digital unterschrieben und im Backend gespeichert. Sie halten verschiedene Informationen, unter Anderem über die Vertragslaufzeit, die Kosten sowie die zu erbringenden Leistungen der Parteien. Der Vertrag beinhaltet Mechanismen zur Begutschriftung und zur Belastung der Konten aller Beteiligten; die folgende Auflistung nennt alle wichtigen Geld-Transfers:
+Verträge (Mietverträge, Service-Verträge, Lieferverträge) werden von allen beteiligten Parteien digital unterschrieben und im Backend gespeichert. Sie halten verschiedene Informationen, unter anderem über die Vertragslaufzeit, die Kosten sowie die zu erbringenden Leistungen der Parteien. Der Vertrag beinhaltet Mechanismen zur Begutschriftung und zur Belastung der Konten aller Beteiligten; die folgende Auflistung nennt alle wichtigen Geld-Transfers:
 \begin{itemize}
   \item Nutzung durch den Kunden (Sender ist der Kunde, Empfänger ist der Hersteller)
   \item Reinigung durch den Kunden (Sender ist der Hersteller, Empfänger ist der Kunde)
@@ -64,7 +64,7 @@ Verträge (Mietverträge, Service-Verträge, Lieferverträge) werden von allen b
   \item Lieferung durch den Lieferanten (Sender ist der Absender, Empfänger ist die Lieferant)
 \end{itemize}
 
-\subsection{Frontend}
+\subsection{Benutzerschnittstelle}
 \label{subsec:iot_usecase:solution:frontend}
 Das Frontend stellt eine grafische Benutzerschnittstelle bereit, die je nach Stakeholder die relevanten Informationen und Funktionalitäten bereitstellt. Um an der Plattform teilnehmen zu können, muss ein Registrierungsprozess durchlaufen werden und die Rolle bestimmt werden (Hersteller, Kunde, ...). Jeder Rolle ist der Zugriff auf eine Ansicht gestattet:
 \begin{description}
@@ -76,4 +76,7 @@ Das Frontend stellt eine grafische Benutzerschnittstelle bereit, die je nach Sta
 
 \subsection{Backend}
 \label{subsec:iot_usecase:solution:backend}
-Die konkrete \ac{DLT}-Lösung wird im weiteren Verlauf dieser Arbeit evaluiert. Als dezentrale Plattform verwaltet und speichert sie alle Verträge sowie die Identitäten und Konten (Wallets) der oben aufgelisteten Stakeholder.
+Als dezentrale Plattform verwaltet und speichert das Backend alle Verträge sowie die Identitäten, Konten (Wallets) und Interaktionen der oben aufgelisteten Stakeholder. Die Implementierung auf einer \ac{DLT} kann in zwei verschiedenen Ausprägungen erfolgen, welche im Folgenden kurz dargelegt werden:\\
+Die einfachste Lösung eine \ac{DLT} zur Versionierung und Speicherung von Daten einzusetzen entspricht einer simplen, dezentralen Hash-Datenbank. Hierbei wird der Status bestehend aus Mietverträgen, Kontoständen, Benutzerinteraktionen und Weiteren als Hashwert abgebildet und in der \ac{DLT} persistiert. Somit wird ein einfaches Logging ermöglicht; die Stärken einer \c{DLT} werden allerdings nicht eingesetzt. An dieser Stelle ergibt die Frage, welchen Vorteil die umfangreiche Konfiguration und Einrichtung einer \ac{DLT} im Vergleich zu einer klassischen verteilten Datenbank mit sich bringt.\\
+Die zweite Variante setzt die Stärken einer \ac{DLT} geschickt ein und geht weit über das einfache Logging hinaus: Anstatt Hashwerte von einer Menge von Informationen zu bilden und diese in der \ac{DLT} zu speichern, werden die Informationen wie Benutzerinteraktionen, Miet- und Service-Verträge in die Blockchain geschrieben. Darüber hinaus geschieht die Vertragsabwicklung wie Zahlungstransaktionen, Vertragslogiken, etc. direkt auf der Blockchain und kann dort manipulationssicher verarbeitet werden. Zahlungen werden instantan ohne Integration eines Drittanbieters wie zum Beispiel PayPal oder Ähnliche abgewickelt und können nachvollziehbar und transparent persistiert werden. Zusammengefasst bedeutet das, dass die optimale Lösung dieses Anwendungsfalls auf Basis einer \ac{DLT} die Fähigkeiten dieser voll ausnutzt, indem Logging, Vertragsabwicklung, Payment und Manipulationssicherheit onchain ausgeführt werden.\\
+Das Ziel der Umsetzung dieses Anwendungsfalls ist die Implementierung der zweiten Variante, um einen realistischen Anwendungsfall zielbringend zu implementieren und um einen entsprechenden Mehrwert durch den Einsatz einer \ac{DLT} zu generieren.

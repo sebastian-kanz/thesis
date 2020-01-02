@@ -1,0 +1,41 @@
+@startuml
+'-----------------Start Title----------------------
+
+title Contract Termination\ntriggered by Customer
+
+'-----------------Start Formatting----------------------
+
+left to right direction
+
+skinparam {
+ backgroundColor #EEEBDC
+ handwritten false
+ shadowing false
+ FontSize 17
+ FontName Aapex
+ FontColor #A9DCDF
+ ArrowColor slategrey
+ 
+}
+
+skinparam rectangle {
+ BorderColor #358a8e
+}
+
+
+skinparam actor {
+ BackgroundColor #358a8e
+ BorderColor #2a5557
+}
+
+'-----------------Start Diagram----------------------
+
+actor Customer
+actor Clerk
+rectangle checkout {
+  Customer -- (checkout)
+  (checkout) .> (payment) : include
+  (help) .> (checkout) : extends
+  (checkout) -- Clerk
+}
+@enduml
