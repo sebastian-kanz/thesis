@@ -1,0 +1,121 @@
+@startuml
+'-----------------Start Title----------------------
+
+title Contract Termination\ntriggered by Customer
+
+'-----------------Start Formatting----------------------
+
+skinparam {
+  backgroundColor #EEEBDC
+  handwritten false
+  shadowing false
+}
+
+skinparam database {
+  BorderColor #2a5557
+  BackgroundColor #358a8e
+  FontName Impact
+  FontSize 17
+  FontColor #358a8e
+}
+
+skinparam sequence {
+  ArrowColor slategrey
+  LifeLineBorderColor green
+  LifeLineBackgroundColor #2b6569
+}
+
+skinparam actor {
+  BackgroundColor #358a8e
+  BorderColor #2a5557
+  FontColor #358a8e
+  FontSize 17
+  FontName Aapex
+}
+
+skinparam participant {
+  BorderColor #2a5557
+  BackgroundColor #358a8e
+  FontName Impact
+  FontSize 17
+  FontColor #A9DCDF
+}
+
+skinparam interface {
+  BackgroundColor #358a8e
+  BorderColor #2a5557
+}
+skinparam component {
+  FontSize 13
+  BackgroundColor #358a8e
+  BorderColor #2a5557
+  FontName Courier
+  BorderColor black
+  BackgroundColor gold
+  ArrowFontName Impact
+  ArrowColor slategrey
+}
+
+skinparam componentStyle uml2
+skinparam linetype ortho
+skinparam monochrome true
+
+'-----------------Start Diagram----------------------
+
+node "Blockchain" {
+    interface "web3-API" as web3api
+
+    [Proxy] <<smart-contract>>
+    [IdentityOracle] <<smart-contract>>
+    [Renting] <<smart-contract>>
+    [Service] <<smart-contract>>
+    [Supply] <<smart-contract>>
+    [PaymentChannel] <<smart-contract>>
+
+    [Proxy] -right- web3api
+    [Proxy] ..> [Renting]
+    [Renting] ..> [IdentityOracle]
+    [Renting] ..> [Service]
+    [Renting] ..> [Supply]
+    [Renting] ..> [PaymentChannel]
+}
+node "Device" {
+	package "Internal" {
+      interface "Sensor-API" as sensorapi
+      [State] <<sensor>>
+
+      [State] - sensorapi
+	}
+  cloud "Miele Cloud-Services" {
+    interface "Cloud-API" as cloudapi
+    [Cloud-Service] <<webservice>>
+    sensorapi )-down- [Cloud-Service]
+
+    [Cloud-Service] - cloudapi
+	}
+  package "Raspberry-Pi" {
+    interface "NFC-API" as nfcapi
+    [Logic] <<logic>>
+
+    [Logic] -right- nfcapi
+    cloudapi )-down- [Logic]
+
+    web3api )-left- [Logic]
+  }
+}
+node "Frontend" {
+  [Web-UI] <<user-interface>>
+  web3api )-up- [Web-UI]
+}
+node "User" {
+  [Wallet] <<keypair>>
+  [Smartphone] <<device>>
+  nfcapi )-right- [Smartphone]
+  [Smartphone] --> [Wallet]
+  [Browser] <<device>>
+  [Browser] -down-> [Web-UI]
+  [Browser] --> [Wallet]
+
+}
+
+@enduml

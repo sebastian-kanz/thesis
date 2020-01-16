@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-class ButtonAppBar extends React.Component {
+export class ButtonAppBar extends React.Component {
   const classes = useStyles();
   render() {
     return (

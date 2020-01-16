@@ -1,69 +1,70 @@
 \chapter{Auswahl relevanter DLTs}
 \label{ch:dlt_selection}
-In den vorherigen Kapiteln wurden der beispielhafte Anwendungsfall sowie dessen \ac{DLT}-relevanten Anforderungen aufgezeigt. In diesem Kapitel wird darauf aufbauen eine Marktübersicht möglicher \ac{DLT}s gegeben und auf die Erfüllung der Anforderungen überprüft.
+In den vorherigen Kapiteln wurden der beispielhafte Anwendungsfall sowie dessen \ac{DLT}-relevante Anforderungen aufgezeigt. In diesem Kapitel wird darauf aufbauend eine Marktübersicht möglicher \ac{DLT}s gegeben und auf die Erfüllung der Anforderungen überprüft.
 
 %
 % Section: Vorgehen
 %
 \section{Vorgehen}
 \label{sec:dlt_selection:approach}
-Die Website www.coinmarketcap.com, als eine der bekanntesten Marktübersichten für Kryptowährungen, listet derzeit (Stand: Januar 2020) über 2400 Kryptowährungen. Dabei muss beachtet werden, dass es sich nicht immer um eigentständige Blockchains handelt, allerdings auch keine Nicht-Krypto-Plattformen wie Hyperledger-Fabric, Corda oder andere enthalten sind. Es muss also ein geeigentes Vorgehen erarbeitet werden, um aus der unüberschaubaren Menge an Blockchain-Lösungen eine passende Untermenge auszuwählen.
+Die Website \url{www.coinmarketcap.com}, eine der bekanntesten Marktübersichten für Kryptowährungen, listet derzeit (Stand: Januar 2020) über 2400 Kryptowährungen. Dabei muss beachtet werden, dass es sich nicht immer um eigenständige Blockchains handelt, und auch keine Nicht-Krypto-Plattformen wie Hyperledger-Fabric, Corda oder andere enthalten sind. Es muss also ein geeigentes Vorgehen erarbeitet werden, um aus der unüberschaubaren Menge an Blockchain-Lösungen eine passende Untermenge auszuwählen und dabei keine wichtigen Implementierung zu übersehen. Im Folgenden werden fünf mögliche Kriterien vorgestellt, nach denen Blockchain-Lösungen bewertet werden können:
 \begin{description}
   \item[Business Relevance] Mitte April 2019 veröffentlichte das Wirtschaftsmagazin Forbes einen Artikel \cite{castillo2019}, der die eingesetzten Blockchain-Technologien großer, internationaler Unternehmen auflistet. Die daraus abzuleitende Relevanz für das internationale Business-Umfeld im Bereich Blockchain stellt einen Indikator da, der bei der Auswahl einer Blockchain-Lösung berücksichtigt werden muss. Es wurden alle Blockchain-Implementierungen berücksichtigt, die mehr als zwei große Unternehmen betreffen.
-  \item[Github Activity] Die Mehrheit der Blockchain-Entwicklungsprojekte sind open-source Projekte; der Quellcode ist meist frei verfügbar und auf Github öffentlich einsehbar. Ein wichtiger Indikator für Auswahl einer \ac{DLT}-Lösung ist die Aktivität der Entwickler auf Github: Es wird bewertet, wie regelmäßig Weiterentwicklungen stattfinden und wie interessiert die Community die Änderungen verfolgen. Je größer die Aktivität und Beliebtheit, desto wahrscheinlicher werden aktuelle Forschungsergebnisse und Neuerungen in die Lösung eingebaut. Um diese Werte vergleichen zu können, wurde sich der Quellen www.coincodecap.de und www.cryptomismo.de bedient: Die Anzahl an Commits, aktiven Entwicklern, interessierten Beobachtern und weiteren Kennzahlen wurde gewichtet und bewertet. Das Ergebnis ist ein Ranking der aktivsten Blockchain-Projekte auf Github.
+  \item[Github Activity] Die Mehrheit der Blockchain-Entwicklungsprojekte sind open-source Projekte; der Quellcode ist meist frei verfügbar und auf Github öffentlich einsehbar. Ein wichtiger Indikator für Auswahl einer \ac{DLT}-Lösung ist die Aktivität der Entwickler auf Github: Es wird bewertet, wie regelmäßig Weiterentwicklungen stattfinden und wie interessiert die Community die Änderungen verfolgen. Je größer die Aktivität und Beliebtheit, desto wahrscheinlicher werden aktuelle Forschungsergebnisse und Neuerungen in die Lösung eingebaut. Um diese Werte vergleichen zu können, wurde sich der Quellen \url{www.coincodecap.de} und \url{www.cryptomismo.de} bedient: Die Anzahl an Commits, aktiven Entwicklern, interessierten Beobachtern und weiteren Kennzahlen wurde gewichtet und bewertet. Das Ergebnis ist ein Ranking der aktivsten Blockchain-Projekte auf Github.
   \item[Financial Relevance] Die Marktkapitalisierung, also der rechnerische Gesamtwert, einer Blockchain-Lösung sollte Teil der Betrachtung sein: Projekte, denen eine Marktkapitalisierung von über einer Milliarde US-Dollar zugesagt wird, müssen eine Daseinsberechtigung haben.
-  \item[Blockchain Activity] Die Website www.blocktivity.info misst die Akivität einer Blockchain-Plattform, indem es die Anzahl an Operationen (Transaktionen, Votes, Blogposts, etc.) verschiedener Zeitpunkte mit der Marktkapitalisierung in Relation setzt. Darüber hinaus werden Angaben über die tatsächlich verwendete und die noch verfügbare Kapazitäten der Lösungen gemacht. Diese Angaben helfen, verschiedene Lösungen gegenüberzustellen und Kapazitäten abzuschätzen. Für die Relevanz im Kontext der Marktübersicht wurden die besten zehn Lösungen hinsichtlich Blockchain-Aktivität berücksichtigt.
-  \item[IOT Suitability] Da diese Arbeit von der Synergie zwischen \ac{DLT} und \ac{IOT} handelt, bietet es sich an, das Themenfeld \ac{IOT} bei der Auswahl zu berücksichtigen. Dazu wurden die zehn wertvollsten (nach Marktkapitalisierung) Blockchain-Lösungen, die als \ac{IOT}-Lösung bei der Informationsplattform www.cryptoslate.com geführt werden, berücksichtigt. Darüber hinaus handelt es sich bei der Auswahl um eigentständige Blockchains; ERC-Token\footnote{Blockchains basierend auf einem Ethereum-Standard; es handelt sich um eine Blockchain basierend auf der Ethereum-Blockchain.} oder ähnliche Implementierungen wurden ignoriert.
+  \item[Blockchain Activity] Die Website \url{www.blocktivity.info} misst die Akivität einer Blockchain-Plattform, indem es die Anzahl an Operationen (Transaktionen, Votes, Blogposts, etc.) verschiedener Zeitpunkte mit der Marktkapitalisierung in Relation setzt. Darüber hinaus werden Angaben über die tatsächlich verwendete und die noch verfügbare Kapazitäten der Lösungen gemacht. Diese Angaben helfen, verschiedene Lösungen gegenüberzustellen und Kapazitäten abzuschätzen. Für die Relevanz im Kontext der Marktübersicht wurden die besten zehn Lösungen hinsichtlich Blockchain-Aktivität berücksichtigt.
+  \item[IOT Suitability] Da diese Arbeit von der Synergie zwischen \ac{DLT} und \ac{IOT} handelt, bietet es sich an, das Themenfeld \ac{IOT} bei der Auswahl zu berücksichtigen. Dazu wurden die zehn wertvollsten (nach Marktkapitalisierung) Blockchain-Lösungen, die als \ac{IOT}-Lösung bei der Informationsplattform \url{www.cryptoslate.com} geführt werden, berücksichtigt.
 \end{description}
-
+Darüber hinaus fokussiert sich diese Arbeit auf eine Auswahl eigentständiger Blockchains; ERC-Token\footnote{Blockchains basierend auf einem Ethereum-Standard; keine eigenständige Blockchain.} oder ähnliche Implementierungen (Blockchains basierend auf anderen Blockchains) wurden nicht weiter beachtet.
 %
 % Section: Marktübersicht DLTs
 %
 \section{Marktübersicht DLTs}
 \label{sec:dlt_selection:market}
-Nach den im vorherigen Abschnitt vorgestellten Kriterien wurden 33 Blockchain-Lösungen identifiziert. Die Kriterien wurden folgendermaßen gewichtet: Die Business-Relevanz mit 35\%, die finanzielle Relevanz mit 15\%, die Github-Aktivität mit 15\%, die Blockchain-Aktivität mit 15\% und die IOT-Zugehörigkeit mit 25\%. Anschließend wurden alle 33 Lösungen überprüft, ob sie ein oder mehrere Kiterien erfüllen. Für jedes erfüllte Kriterium wurden der Lösung entsprechend der Gewichtungen Prozentpunkte angerechnet. Die Tabelle \ref{tab:dlt_preselection} listet die Erstauswahl gemäß der genannten Kriterien auf.\\
-Die Blockchain-Lösung Ethereum führt die Rangliste mit 75 Prozentpunkten an; das Schlusslicht stellt unter Anderem Nano mit zehn Prozentpunkten dar. Um für die weitere Betrachtung von Interesse zu sein, muss eine Lösung mindestens 35 Prozentpunkte erreichen; dies entspricht der Wertigkeit des wichtigsten Kriteriums: Der Business-Relevanz. Dadurch ergeben sich neun mögliche Kandidaten für die Untersuchung, inwieweit diese die \ac{DLT}-relevanten Anforderungen (vgl. Tabelle \ref{tab:dlt_relevant}) erfüllen.
+Nach den im vorherigen Abschnitt vorgestellten Kriterien wurden 33 Blockchain-Lösungen identifiziert. Eine detaillierte Übersicht der Einzelnachweise ist im Anhang zu finden. Die Kriterien wurden folgendermaßen gewichtet: Die Business-Relevanz wird als wichtigstes Kriterium mit 30\% bewertet. Die Aktualität der Blockchain unterteilt sich in Blockchain-Aktivität und Github-Aktivität; diese werden gleich gewichtet zu je 20\%. Die IOT-Zugehörigkeit wird wichtiger als die Aktualität aber etwas geringer als die Business-Relevanz mit 25\% bewertet. Übrig bleibt die finanzielle Relevanz, die mit nur fünf Prozent den geringsten Anteil trägt.\\
+Anschließend wurden alle 33 Lösungen überprüft, ob sie ein oder mehrere Kiterien erfüllen. Für jedes erfüllte Kriterium wurden der Lösung entsprechend der Gewichtungen Prozentpunkte angerechnet. Die Tabelle \ref{tab:dlt_preselection} listet die Erstauswahl gemäß der genannten Kriterien auf.\\
+Die Blockchain-Lösung Ethereum führt die Rangliste mit 75 Prozentpunkten an; das Schlusslicht stellt unter Anderem Tether mit fünf Prozentpunkten dar. Um für die weitere Betrachtung von Interesse zu sein, muss eine Lösung zu den Top10 (nach Prozentpunkten) gehören; dies entspricht 30 Prozentpunkten. Dadurch ergeben sich 11 mögliche Kandidaten (mit mind. 30 Punkten) für die Untersuchung, inwieweit diese die \ac{DLT}-relevanten Anforderungen (vgl. Tabelle \ref{tab:dlt_relevant}) erfüllen.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[]
-\begin{tabular}{@{}lcccccc@{}}
-\toprule
-\textbf{} & \textbf{Business} & \textbf{Financal} & \textbf{Github} & \textbf{Activity} & \textbf{IOT} & \textbf{Total} \\
-\textit{} & \textit{35\%} & \textit{15\%} & \textit{15\%} & \textit{10\%} & \textit{25\%} & \textit{\textbf{}} \\ \midrule
-Binance Coin &  & x &  &  &  & \textbf{15} \\
-Bitcoin & x & x & x &  &  & \textbf{65} \\
-Bitcoin SV &  & x &  & x &  & \textbf{25} \\
-BitcoinCash & x & x & x &  &  & \textbf{65} \\
-Cardano &  &  & x &  &  & \textbf{15} \\
-Corda & x &  &  &  &  & \textbf{35} \\
-Cosmos &  &  & x &  &  & \textbf{15} \\
-EOS &  & x & x & x &  & \textbf{40} \\
-Ethereum & x & x & x & x &  & \textbf{75} \\
-Hyperledger & x &  &  &  &  & \textbf{35} \\
-INT Chain &  &  &  &  & x & \textbf{25} \\
-IOST &  &  &  & x &  & \textbf{10} \\
-IoT Chain &  &  &  &  & x & \textbf{25} \\
-IOTA &  &  & x &  & x & \textbf{40} \\
-KIN &  &  &  & x &  & \textbf{10} \\
-LBRY Credits &  &  & x &  &  & \textbf{15} \\
-Lisk &  &  & x &  &  & \textbf{15} \\
-Litecoin &  & x &  &  &  & \textbf{15} \\
-Monero &  &  & x &  &  & \textbf{15} \\
-Nano &  &  &  & x &  & \textbf{10} \\
-Particl &  &  & x &  &  & \textbf{15} \\
-Quorum & x &  &  &  &  & \textbf{35} \\
-Ripple & x & x &  &  &  & \textbf{50} \\
-Ruff &  &  &  &  & x & \textbf{25} \\
-SDChain &  &  &  &  & x & \textbf{25} \\
-Steem &  &  &  & x &  & \textbf{10} \\
-Stellar &  &  & x & x &  & \textbf{25} \\
-Syscoin &  &  & x &  &  & \textbf{15} \\
-Telos &  &  &  & x &  & \textbf{10} \\
-Tether &  & x &  &  &  & \textbf{15} \\
-Tron &  &  & x & x &  & \textbf{25} \\
-WAVES &  &  & x &  &  & \textbf{15} \\
-Zcash &  &  & x &  &  & \textbf{15} \\ \bottomrule
+\begin{tabular}{lcccccc}
+\hline
+\textbf{} & \textbf{Business} & \textbf{Financal} & \textbf{\begin{tabular}[c]{@{}c@{}}Github\\ Activity\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Blockchain\\ Activity\end{tabular}} & \textbf{IOT} & \textbf{Total} \\
+ & 30\% & 5\% & 20\% & 20\% & 25\% &  \\ \hline
+Binance Coin &  & x &  &  &  & 5 \\
+Bitcoin & x & x & x &  &  & 55 \\
+Bitcoin SV &  & x &  & x &  & 25 \\
+BitcoinCash & x & x & x &  &  & 55 \\
+Cardano &  &  & x &  &  & 20 \\
+Corda & x &  &  &  &  & 30 \\
+Cosmos &  &  & x &  &  & 20 \\
+EOS &  & x & x & x &  & 45 \\
+Ethereum & x & x & x & x &  & 75 \\
+Hyperledger & x &  &  &  &  & 30 \\
+INT Chain &  &  &  &  & x & 25 \\
+IOST &  &  &  & x &  & 20 \\
+IoT Chain &  &  &  &  & x & 25 \\
+IOTA &  &  & x &  & x & 45 \\
+KIN &  &  &  & x &  & 20 \\
+LBRY Credits &  &  & x &  &  & 20 \\
+Lisk &  &  & x &  &  & 20 \\
+Litecoin &  & x &  &  &  & 5 \\
+Monero &  &  & x &  &  & 20 \\
+Nano &  &  &  & x &  & 20 \\
+Particl &  &  & x &  &  & 20 \\
+Quorum & x &  &  &  &  & 30 \\
+Ripple & x & x &  &  &  & 35 \\
+Ruff &  &  &  &  & x & 25 \\
+SDChain &  &  &  &  & x & 25 \\
+Steem &  &  &  & x &  & 20 \\
+Stellar &  &  & x & x &  & 40 \\
+Syscoin &  &  & x &  &  & 20 \\
+Telos &  &  &  & x &  & 20 \\
+Tether &  & x &  &  &  & 5 \\
+Tron &  &  & x & x &  & 40 \\
+WAVES &  &  & x &  &  & 20 \\
+Zcash &  &  & x &  &  & 20 \\ \hline
 \end{tabular}
 \caption{Erstauswahl von DLT-Lösungen}
 \label{tab:dlt_preselection}
@@ -74,35 +75,36 @@ Zcash &  &  & x &  &  & \textbf{15} \\ \bottomrule
 %
 \section{Anforderungserfüllung}
 \label{sec:dlt_selection:fullfilment}
-In Kapitel \ref{sec:requirements:transfer} wurden die zurvor als \ac{DLT}-relevant eingestuften Anforderungen in den Kontext \ac{DLT} übersetzt. Dabei ergaben sich sechs Funktionalitäten, die eine Blockchain-Lösung implementieren muss, um für den Einsatz im vorliegenden Anwendungsfall geeignet zu sein. Diese waren Smart-Contracts, Zahlungsmittel, Oracle-Services, Asynchronität, Performanz und Verschlüsselung. Die Tabelle \ref{tab:dlt_detailed_selection} zeigt die neun übrigen Kandidaten und deren Anforderungserfüllung alphabetisch geordnet auf. Dabei wird bewertet, ob eine Anforderung erfüllt ist \textit{[yes]} oder nicht \textit{[no]}. Kann eine Anforderung nur teilweise, sehr schwierig oder nur unter bestimmten Voraussetzungen erfüllt werden, so wurde diese Anforderung entsprechend mit \textit{[(yes)]} bewertet.
-
+In Kapitel \ref{sec:requirements:transfer} wurden die zurvor als \ac{DLT}-relevant eingestuften Anforderungen in den Kontext \ac{DLT} übersetzt. Dabei ergaben sich sechs Funktionalitäten, die eine Blockchain-Lösung implementieren muss, um für den Einsatz im vorliegenden Anwendungsfall geeignet zu sein. Diese waren Smart-Contracts, Zahlungsmittel, Oracle-Services, Asynchronität, Performanz und Verschlüsselung. Die Tabelle \ref{tab:dlt_detailed_selection} zeigt die 11 übrigen Kandidaten und deren Anforderungserfüllung alphabetisch geordnet auf. Dabei wird bewertet, ob eine Anforderung erfüllt ist \textit{[yes]} oder nicht \textit{[no]}. Kann eine Anforderung nur teilweise, sehr schwierig oder nur unter bestimmten Voraussetzungen erfüllt werden, so wurde diese Anforderung entsprechend mit \textit{[(yes)]} bewertet. Die Informationen der Tabelle wurden den technischen Spezifikationen oder den offiziellen Internetseiten der jeweiligen Lösungen entnommen.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
 \begin{table}[]
 \begin{tabular}{@{}lllllll@{}}
 \toprule
-\textbf{} & \textbf{\begin{tabular}[c]{@{}l@{}}Smart-\\ Contracts\end{tabular}} & \textbf{Payment} & \textbf{\begin{tabular}[c]{@{}l@{}}Oracle-\\ Services\end{tabular}} & \textbf{\begin{tabular}[c]{@{}l@{}}Perf.\\ (TPS)\end{tabular}} & \textbf{Async.} & \textbf{\begin{tabular}[c]{@{}l@{}}TX\\ Encrypt\end{tabular}} \\ \midrule
+\multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Smart-\\ Contracts\end{tabular}}} & \multicolumn{1}{c}{\textbf{Payment}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Oracle-\\ Services\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Perf\\ (TPS)\end{tabular}}} & \multicolumn{1}{c}{\textbf{Async.}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Tx\\ Encrypt.\end{tabular}}} \\ \midrule
 Bitcoin & (yes) & yes & (yes) & \textless 10 & yes & no \\
-BitcoinCash & (yes) & yes & (yes) & \textgreater 100 & no & no \\
-Corda & yes & (yes) & yes & ($\sim$1000) & yes & yes \\
+BitcoinCash & (yes) & yes & (yes) & \textless 100 & no & no \\
+Corda & yes & (yes) & yes & $\sim$1000 & yes & yes \\
 EOS & yes & yes & yes & \textgreater 1000 & yes & no \\
-Ethereum & yes & yes & yes & $\sim$20 & yes & yes \\
+Ethereum & yes & yes & yes & \textgreater 10 & yes & yes \\
 Hyperledger & yes & (yes) & yes & - & yes & yes \\
-IOTA & no & yes & no & - & yes & yes \\
-Quorum & yes & yes & yes & (\textless 1000) & yes & yes \\
-Ripple & no & yes & no & \textgreater 1000 & yes & no \\ \bottomrule
+IOTA & no & yes & no & \textgreater 100 & yes & yes \\
+Quorum & yes & yes & yes & \textless 1000 & yes & yes \\
+Ripple & no & yes & no & \textgreater 1000 & yes & no \\
+Stellar & yes & yes & (yes) & \textgreater 1000 & yes & no \\
+Tron & yes & yes & yes & \textless 1000 & yes & no \\ \bottomrule
 \end{tabular}
 \caption{Erfüllung der DLT-relevanten Anforderungen}
 \label{tab:dlt_detailed_selection}
 \end{table}
 
-Die Performanz bei privaten Blockchains (vgl. Kapitel \ref{subsec:fundamentals:dlt:taxonomy}) wurde ausgeklammert oder nicht angegeben, da diese sehr stark von der zugrundeliegenden Hardware abhängig ist. Für IOTA, als einzige public Blockchain ohne Performanz-Angabe, konnten keine konkreten Werte gefunden werden; die theoretische Performanz ist aufgrund der Struktur von IOTA unbegrenzt (praktisch allerdings nicht bewiesen). Darüber hinaus handelt es sich bei den Performanz-Werten um grobe Richtwerte, die teilweise nur unter Laborbedingungen erreicht werden können. Die tatsächlichen Tageswerte weichen zum Teil deutlich davon ab, daher sind diese Werte als Richtwerte zu verstehen und in der folgenden Bewertung als solche zu handhaben.
+Die Performanz bei privaten Blockchains (vgl. Kapitel \ref{subsec:fundamentals:dlt:taxonomy}) wurde ausgeklammert oder nicht angegeben, da diese sehr stark von der zugrundeliegenden Hardware abhängig ist. Darüber hinaus handelt es sich bei den Performanz-Werten um grobe Richtwerte, die teilweise nur unter Laborbedingungen erreicht werden können. Die tatsächlichen Tageswerte weichen zum Teil deutlich davon ab, daher sind diese Werte als Richtwerte zu verstehen und in der folgenden Bewertung als solche zu handhaben.
 
 %
 % Section: Bewertung, Ranking & Auswahl
 %
 \section{Bewertung, Ranking \& Auswahl}
 \label{sec:dlt_selection:rating}
-Tabelle \ref{tab:dlt_detailed_selection} zeigt mögliche \ac{DLT}-Kandidaten und deren Erfüllung der übersetzten, \ac{DLT}-relevanten Anforderungen auf. Die zentrale Anforderung ist die Ermöglichung von asynchronen Transaktionen bei Verbindungsverlust von Endgeräten. Lediglich Bitcoin-Cash bietet diese Funktionalität nicht, womit es als möglicher Kandidat ausscheidet. Eine weitere, entscheidende Anforderung ist die Bereitstellung von Smart-Contract Funktionalität, um unter Anderem Miet- und Service-Verträge abzubilden und automatisiert abzuarbeiten. Dies ist sowohl bei IOTA als auch bei Ripple nicht gegeben, wodurch beide im weiteren Verlauf nicht mehr betrachtet werden. Die Möglichkeit, Transaktionen oder Smart-Contracts zu verschlüsseln, sodass nur beteiligte Parteien den Inhalt einsehen können, ist bei Bitcoin, Bitcoin-Cash, EOS und Ripple nicht gegeben, wodurch zusätzlich EOS und Bitcoin als mögliche Kandidaten ausscheiden. Übrig bleiben Corda, Ethereum, Hyperledger und Quorum. Corda und Hyperledger bieten beide keine native Währung an; es besteht allerdings die Möglichkeit, entsprechende Funktionalitäten durch Umwege abzubilden. Corda, Quorum und Hyperledger sind für den Einsatz in privaten Blockchains vorgesehen, Ethereum kann darüber hinaus auch als public Blockchain zum Einsatz kommen. Bezüglich der Performanz steht Ethereum mit etwa 20 Transaktionen pro Sekunde vergleichsweise schlecht dar.\\
-Es zeichnet sich ab, dass die vier Lösungen Corda, Hyperledger, Ethereum und Quorum mögliche Kandidaten für eine prototypische Verprobung des vorliegenden Anwendungsfalls sind.
+Tabelle \ref{tab:dlt_detailed_selection} zeigt mögliche \ac{DLT}-Kandidaten und deren Erfüllung der übersetzten, \ac{DLT}-relevanten Anforderungen auf. Die zentrale Anforderung ist die Ermöglichung von asynchronen Transaktionen bei Verbindungsverlust von Endgeräten. Lediglich Bitcoin-Cash bietet diese Funktionalität nicht, womit es als möglicher Kandidat ausscheidet. Eine weitere, entscheidende Anforderung ist die Bereitstellung von Smart-Contract Funktionalität, um unter Anderem Miet- und Service-Verträge abzubilden und automatisiert abzuarbeiten. Dies ist sowohl bei IOTA als auch bei Ripple nicht gegeben, wodurch beide im weiteren Verlauf nicht mehr betrachtet werden. Die Möglichkeit, Transaktionen oder Smart-Contracts zu verschlüsseln, sodass nur beteiligte Parteien den Inhalt einsehen können, ist bei Bitcoin, Bitcoin-Cash, EOS, Ripple, Stellar und Tron nicht gegeben, weshalb diese im weiteren Verlauf vernachlässigt werden. Übrig bleiben Corda, Ethereum, Hyperledger und Quorum. Corda und Hyperledger bieten beide keine native Währung an; es besteht allerdings die Möglichkeit, entsprechende Funktionalitäten durch Umwege abzubilden. Corda, Quorum und Hyperledger sind für den Einsatz in privaten Blockchains vorgesehen, Ethereum kann darüber hinaus auch als Public-Blockchain zum Einsatz kommen. Bezüglich der Performanz steht Ethereum mit etwa 20 Transaktionen pro Sekunde vergleichsweise schlecht dar.\\
+Es zeichnet sich ab, dass die vier Lösungen Corda, Hyperledger, Ethereum und Quorum mögliche Kandidaten für eine prototypische Verprobung des vorliegenden Anwendungsfalls sind. Quorum ist in der Lage, sämtliche Anforderungen zu erfüllen. Es handelt sich um eine von der US-Bank JPMorgan entwickelte Blockchain basierend auf Ethereum. Dabei werden neue Ethereum-Releases mit Mechanismen für erhöhte Privätsphäre und alternativen Konsensmechanismen und als private und permissioned Blockchain bereitgestellt. Hierbei liegt allerdings auch die Problematik, die ebenfalls Corda und Hyperledger betreffen: Die zentrale Trustless-Eigenschaft geht in privaten und permissioned Blockchains verloren und die Transparent wird veringert. Darüber hinaus werden die Eintrittshürden für die Teilnahme am Blockchain-Netzwerk stark erhöht. Aufgrund dessen und der Tatsache, dass Quorum zum größten Teil aus Ethereum-Quellcode besteht, fällt für die praktische Verprobung in dieser Arbeit die Wahl der Blockchain-Lösung auf Ethereum. Die nicht ganz optimalen Transaktionsraten werden an dieser Stelle vernachlässigt; aktuelle Entwicklungen bezüglich der Skalierungsansätze von Blockchains (vgl. Kapitel \ref{subsec:fundamentals:dlt:scaling}) lassen darauf hoffen, zeitnah eine deutlich verbesserte Performanz erzielen zu können.
