@@ -11,8 +11,8 @@ export default class Web3Manager {
     const rpcURL = 'http://localhost:8545' // Your RCP URL goes here
     if (typeof window.ethereum !== 'undefined' || (typeof window.web3 !== 'undefined')) {
       ethereum.autoRefreshOnNetworkChange = false;
-      this.web3 = new Web3(rpcURL)
-      // const web3 = new Web3(window.ethereum || Web3.givenProvider);
+      // this.web3 = new Web3(rpcURL)
+      this.web3 = new Web3(window.ethereum || Web3.givenProvider);
       ethereum.on('chainChanged', chainId => {
         console.log("Metamask chain changed. Reloading data.");
         this.reload();
@@ -56,6 +56,14 @@ export default class Web3Manager {
     return await Web3.utils.fromWei(balance.toString(), "ether");
   }
 
+  addTestRentalAgreement = async() => {
+    if(await this.identityManager.getIdentityRole(this.account) == 1) {
+      await this.rentalManager.addTestData();
+    } else {
+      console.log("addTestRentalAgreement only callable by Manufacturer.");
+    }
+  }
+
   async init() {
     if(this.initialized) {
       console.log("Web3Manager already initialized.");
@@ -65,12 +73,17 @@ export default class Web3Manager {
         this.account = (await window.ethereum.enable())[0];
 				this.identityManager = new IdentityManager(this.account);
 				this.rentalManager = new RentalManager(this.account);
+        await this.rentalManager.init();
         this.loggedin = true;
         this.initialized = true;
       } catch(err) {
         console.error(err);
       }
     }
+  }
+
+  async testSigning() {
+
   }
 
 }

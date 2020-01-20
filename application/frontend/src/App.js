@@ -4,6 +4,7 @@ import './App.css';
 //import Test from './components/layout/Test';
 //import ButtonAppBar from './components/layout/ButtonAppBar';
 import Web3Manager from './manager/Web3Manager';
+import RentalAgreementContainer from './components/layout/RentalAgreement/RentalAgreementContainer';
 
 
 
@@ -34,7 +35,7 @@ export class App extends React.Component {
 
   addTestData = async() => {
     const { manager } = this.state;
-    console.log(await manager.rentalManager.addTestData());
+    await manager.addTestRentalAgreement();
   }
 
   render() {
@@ -58,6 +59,10 @@ export class App extends React.Component {
         <button onClick={() => this.getRentalAgreementIDs()}>
           Test2
         </button>
+        <button onClick={this.state.manager.testSigning}>
+          Test3
+        </button>
+        <RentalAgreementContainer/>
       </div>
     );
   }

@@ -4,14 +4,21 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.7.2",
+    "@material-ui/icons": "^4.5.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "did-jwt": "^4.0.0",
     "did-resolver": "^1.1.0",
+    "eth-sig-util": "^2.5.2",
+    "ethereumjs-abi": "^0.6.8",
+    "ethereumjs-util": "^6.2.0",
+    "ethjs": "^0.4.0",
+    "ethjs-util": "^0.1.6",
     "ethr-did": "^1.1.0",
     "ethr-did-registry": "^0.0.3",
     "ethr-did-resolver": "^1.0.3",
+    "material-ui-icons": "^1.0.0-beta.36",
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -21,7 +28,8 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "web3": "^1.2.4"
+    "web3": "^1.2.5-rc.0",
+    "web3-eth-personal": "^1.2.5-rc.0"
   },
   "scripts": {
     "start": "react-scripts start",

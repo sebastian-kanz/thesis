@@ -236,7 +236,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3420,
+                        "referencedDeclaration": 3531,
                         "src": "542:3:4",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -323,7 +323,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3420,
+                            "referencedDeclaration": 3531,
                             "src": "693:3:4",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -377,10 +377,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "685:7:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -535,10 +535,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "982:7:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -934,7 +934,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3420,
+                        "referencedDeclaration": 3531,
                         "src": "542:3:4",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -1021,7 +1021,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 3420,
+                            "referencedDeclaration": 3531,
                             "src": "693:3:4",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1075,10 +1075,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "685:7:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1233,10 +1233,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "982:7:4",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -1465,7 +1465,7 @@
     "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {
-    "1578650140676": {
+    "1579337915149": {
       "events": {
         "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
           "anonymous": false,
@@ -1489,256 +1489,12 @@
         }
       },
       "links": {},
-      "address": "0x7945ed01B0aE5De382a6A780afcD811f8cF5AA86",
-      "transactionHash": "0x7af4ab7e9e48c0e7a85b0ab0fc2f713c42991291f0f30d7531b8a16144820723"
-    },
-    "1578659614813": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0xDe3b09f31a88259Cc2c7aEE0cf92ac5BF2b7638a",
-      "transactionHash": "0x02ca3bd3861d5799cc6b9ae037caf6ca57e30b9b3c8e3dde2578ab187694ca6f"
-    },
-    "1578665330030": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x58cEb2bf996155828D2Efd367228c1dEa71950f0",
-      "transactionHash": "0xe1a2e00560b9b06e45189c3abdbdc5780d2095ace9970b199bff426990f014ab"
-    },
-    "1579012389017": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x13Fb6d61403552458E87f84e69d2b04081E99AfC",
-      "transactionHash": "0xd94523c9b89032e0e1e29b5f26e76dfec4f1c2709991127357b82fba4dd29ccc"
-    },
-    "1579169243744": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0xdc25703790DDFB48FA325D29a7D1C3598f60AC23",
-      "transactionHash": "0x52a8a7ad2dac8dade816c22ea6744f25bdf8b5355252b5016df92adadf200638"
-    },
-    "1579172648856": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0xA13402126A6CbC18D5693b10dB20E14Fb9DA2d12",
-      "transactionHash": "0xa248e3451a4246cae496362e7c2c4862fe6394c56155dbbb71fb75293171358b"
-    },
-    "1579175184900": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x403369e2259f6DeA93166C9fa5ddEF262c4AE5b7",
-      "transactionHash": "0x8d7726824f2ac162ffff515260a22fe883bf82b8c31e8907a9ba7229b7134094"
-    },
-    "1579186662096": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x81145e195b6c8219fF9c17B108BA8e0489CE386E",
-      "transactionHash": "0x8d0dcf514aa4e68abacaff95c65e3c9e306eff524ba8d35971c3b4f2c575706e"
-    },
-    "1579188466792": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x7AB5dD1d7f9B0C680d7aB0f3579Bba6FD120E13c",
-      "transactionHash": "0xa8a55c5b7a4ef02b3e88fbcf240d30b5132f23de6571901e58bd94fefec74df5"
-    },
-    "1579189268513": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0xAdF62c220b628eaF458aE8aC3f54d6849e0e3ff8",
-      "transactionHash": "0xc4fb90683695fc99524fd895b7fbdeffa33721b10d1e149c86831642ad35ae18"
+      "address": "0x9dB0fEDc38c30A41A8377345100Eb5eF0bAf96cC",
+      "transactionHash": "0xdf929b67f0330a4e938ab2892c28375ca930ef78664ceabebfa3b6be6c0f591f"
     }
   },
   "schemaVersion": "3.0.20",
-  "updatedAt": "2020-01-16T15:41:35.440Z",
-  "networkType": "ethereum",
+  "updatedAt": "2020-01-18T16:15:44.784Z",
   "devdoc": {
     "details": "The Ownable contract has an owner address, and provides basic authorization control functions, this simplifies the implementation of \"user permissions\".",
     "methods": {

@@ -1,7 +1,8 @@
 import Web3 from 'web3'
 import { isNullOrUndefined } from "util";
+import IdentityManager from './IdentityManager';
 
-export const RENTAL_CONTRACT_ADDR = '0x846161ac19de813492fa4641eddaeea529ffd4b6';
+export const RENTAL_CONTRACT_ADDR = '0xBe94bfe389406e3C12874EAC6Be2613ca8B9D7E4';
 export const RENTAL_CONTRACT_ABI =
 [
 	{
@@ -28,6 +29,51 @@ export const RENTAL_CONTRACT_ABI =
 		],
 		"name": "OwnershipTransferred",
 		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "DOMAIN_SEPARATOR",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "EIP712DOMAIN_TYPEHASH",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "RENTALSIGNATUREOBJECT_TYPEHASH",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"constant": false,
@@ -119,7 +165,7 @@ export const RENTAL_CONTRACT_ABI =
 				"type": "uint256"
 			}
 		],
-		"name": "create",
+		"name": "createRenting",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -352,8 +398,110 @@ export const RENTAL_CONTRACT_ABI =
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tenant",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_lessor",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_device",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_term",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "_sig",
+				"type": "bytes"
+			},
+			{
+				"internalType": "address",
+				"name": "_signer",
+				"type": "address"
+			}
+		],
+		"name": "verify",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tenant",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_lessor",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_device",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_fee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_term",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "_sig",
+				"type": "bytes"
+			},
+			{
+				"internalType": "address",
+				"name": "_signer",
+				"type": "address"
+			}
+		],
+		"name": "verify2",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
-]
+];
 
 export default class RentalManager {
 
@@ -367,27 +515,103 @@ export default class RentalManager {
 	}
 
   async init() {
-
+		await this.RentalContract.methods.registerIdentityOracle(IdentityManager.IDENTITY_CONTRACT_ADDR);
   }
 
 
   async getRentalAgreementIDs() {
     let pendingIDs = await this.RentalContract.methods.getIDs(0).call();
-    let activeIDs = await this.RentalContract.methods.getIDs(0).call();
-    let terminatedIDs = await this.RentalContract.methods.getIDs(0).call();
+    let activeIDs = await this.RentalContract.methods.getIDs(1).call();
+    let terminatedIDs = await this.RentalContract.methods.getIDs(2).call();
 		return { "Pending": pendingIDs, "Active": activeIDs, "Terminated": terminatedIDs };
   }
 
 	async addTestData() {
-		var block = await this.web3.eth.getBlock("latest");
-		console.log(block);
-		const tenant = "0x5Df79E4f8811e4078f2Ada2a6fE6c7f272B74deE";
-		const device = "0xae6d3A28Ee246571608B670f86573a4d2Ea5bDD0";
-		const usageFee = 1;
-		const contractTerm = Math.round(new Date(new Date().getTime() + 1000 * 60 * 60 * 24).getTime()/1000);
-		let signature = await this.web3.eth.sign(this.web3.utils.soliditySha3(tenant,this.account,device, usageFee, contractTerm),this.account);
-		let result = await this.RentalContract.methods.create(tenant, signature, device, usageFee, contractTerm).send({gas: 6700000});
+
+		// const domain = [
+		//     { name: "name", type: "string" },
+		//     { name: "version", type: "string" },
+		//     { name: "chainId", type: "uint256" },
+		//     { name: "verifyingContract", type: "address" },
+		//     { name: "salt", type: "bytes32" },
+		// ];
+		//
+		// const rentalSignatureObject = [
+		//     { name: "tenant", type: "address" },
+		//     { name: "lessor", type: "address" },
+		//     { name: "device", type: "address" },
+		//     { name: "fee", type: "uint256" },
+		//     { name: "term", type: "uint256" },
+		// ];
+		//
+		// const domainData = {
+	  //   name: "Device Rental",
+	  //   version: "1",
+	  //   chainId: 1579447585291,
+	  //   verifyingContract: RENTAL_CONTRACT_ADDR,
+	  //   salt: "0xf2d857f4a3edcb9b78b4d503bfe733db1e3f6cdc2b7971ee739626c97e86a558"
+		// };
+		//
+		// var message = {
+		//     tenant: "0x57Ce662Ef0d719bB1D43aA3A6140A98e0c9D6b2C",
+		//     lessor: "0xed62d9d8a84B23d7aF1714F1ea9647b572767834",
+		//     device: "0xcFce6D1Ec1647A7867AD922ecDd57e12bbfE1885",
+		//     fee: 100,
+		//     term: 1589255236
+		// };
+		//
+		// const data = JSON.stringify({
+		//     types: {
+		//         EIP712Domain: domain,
+		//         RentalSignatureObject: rentalSignatureObject,
+		//     },
+		//     domain: domainData,
+		//     primaryType: "RentalSignatureObject",
+		//     message: message
+		// });
+		//
+		// let signer = this.web3.utils.toChecksumAddress(this.account);
+		// let contract = this.RentalContract;
+		// let innerWeb3 = this.web3;
+		// console.log(data);
+		// let temp = await this.web3.currentProvider.send(
+    //   {
+    //     method: "eth_signTypedData_v3",
+    //     params: [signer, data],
+    //     from: signer
+    //   },
+    //   async function(err, result) {
+    //     if (err || result.error) {
+    //       return console.error(result);
+    //     } else {
+		// 			console.log(result.result);
+		//
+		// 			let signature = result.result;
+		// 			console.log(result);
+		//
+		// 		}
+		// });
+    let tenant = "0x57Ce662Ef0d719bB1D43aA3A6140A98e0c9D6b2C";
+    let lessor = "0xed62d9d8a84B23d7aF1714F1ea9647b572767834";
+    let device = "0xcFce6D1Ec1647A7867AD922ecDd57e12bbfE1885";
+    let fee = 1;
+    let term = 1589255236;
+
+
+		let hash = this.web3.utils.soliditySha3(tenant,lessor,device,fee,term);
+		console.log(hash);
+		// hash = await this.web3.utils.keccak256(this.web3.eth.abi.encodeParameters(
+		// 	[ "address", "address", "address", "uint256", "uint256" ],
+		// 	[ tenant, lessor, device, fee, term ],
+		// ));
+		console.log(hash);
+		let signature = await this.web3.eth.personal.sign(hash, this.account);
+		console.log(signature);
+
+
+		let result = await this.RentalContract.methods.verify2(tenant, lessor, device, fee, term, signature, this.account).call();
 		console.log(result);
 	}
+
 
 }

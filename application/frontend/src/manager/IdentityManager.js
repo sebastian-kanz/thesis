@@ -1,7 +1,7 @@
 import Web3 from 'web3'
 import { isNullOrUndefined } from "util";
 
-export const IDENTITY_CONTRACT_ADDR = '0x597b69324a0ddb5a37791a017bcd758c0bd8186f';
+export const IDENTITY_CONTRACT_ADDR = '0x6FB820827260bcf47CdC3c197F184ad89edF941c';
 export const IDENTITY_CONTRACT_ABI =
 [
 	{
@@ -245,6 +245,51 @@ export const IDENTITY_CONTRACT_ABI =
 	},
 	{
 		"constant": true,
+		"inputs": [],
+		"name": "getKnownManufacturers",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getKnownServiceProviders",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getKnownSuppliers",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -348,20 +393,20 @@ export default class IdentityManager {
 		return await this.IdentityContract.methods.getKnownDevices().call();
 	}
 
-	async getIdentityName() {
-		return await this.IdentityContract.methods.getIdentityName().call();
+	async getIdentityName(identity) {
+		return await this.IdentityContract.methods.getIdentityName(identity).call();
 	}
 
-	async getIdentityRole() {
-		return await this.IdentityContract.methods.getIdentityRole().call();
+	async getIdentityRole(identity) {
+		return await this.IdentityContract.methods.getIdentityRole(identity).call();
 	}
 
-	async getIdentityRoleName() {
-		return await this.IdentityContract.methods.getIdentityRoleName().call();
+	async getIdentityRoleName(identity) {
+		return await this.IdentityContract.methods.getIdentityRoleName(identity).call();
 	}
 
-	async getIdentityOwner() {
-		return await this.IdentityContract.methods.getIdentityOwner().call();
+	async getIdentityOwner(identity) {
+		return await this.IdentityContract.methods.getIdentityOwner(identity).call();
 	}
 
 }

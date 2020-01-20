@@ -553,24 +553,6 @@
                         "declaration": 44,
                         "isOffset": false,
                         "isSlot": false,
-                        "src": "1039:4:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
-                      "size": {
-                        "declaration": 44,
-                        "isOffset": false,
-                        "isSlot": false,
-                        "src": "1152:4:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
-                      "size": {
-                        "declaration": 44,
-                        "isOffset": false,
-                        "isSlot": false,
                         "src": "899:4:0",
                         "valueSize": 1
                       }
@@ -599,6 +581,24 @@
                         "isOffset": false,
                         "isSlot": false,
                         "src": "973:4:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "size": {
+                        "declaration": 44,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1039:4:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "size": {
+                        "declaration": 44,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1152:4:0",
                         "valueSize": 1
                       }
                     }
@@ -1310,15 +1310,6 @@
                 {
                   "externalReferences": [
                     {
-                      "_output": {
-                        "declaration": 92,
-                        "isOffset": false,
-                        "isSlot": false,
-                        "src": "2528:7:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
                       "_input": {
                         "declaration": 89,
                         "isOffset": false,
@@ -1333,6 +1324,15 @@
                         "isOffset": false,
                         "isSlot": false,
                         "src": "2557:6:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "_output": {
+                        "declaration": 92,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "2528:7:0",
                         "valueSize": 1
                       }
                     }
@@ -11177,24 +11177,6 @@
                         "declaration": 44,
                         "isOffset": false,
                         "isSlot": false,
-                        "src": "1039:4:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
-                      "size": {
-                        "declaration": 44,
-                        "isOffset": false,
-                        "isSlot": false,
-                        "src": "1152:4:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
-                      "size": {
-                        "declaration": 44,
-                        "isOffset": false,
-                        "isSlot": false,
                         "src": "899:4:0",
                         "valueSize": 1
                       }
@@ -11223,6 +11205,24 @@
                         "isOffset": false,
                         "isSlot": false,
                         "src": "973:4:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "size": {
+                        "declaration": 44,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1039:4:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "size": {
+                        "declaration": 44,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "1152:4:0",
                         "valueSize": 1
                       }
                     }
@@ -11934,15 +11934,6 @@
                 {
                   "externalReferences": [
                     {
-                      "_output": {
-                        "declaration": 92,
-                        "isOffset": false,
-                        "isSlot": false,
-                        "src": "2528:7:0",
-                        "valueSize": 1
-                      }
-                    },
-                    {
                       "_input": {
                         "declaration": 89,
                         "isOffset": false,
@@ -11957,6 +11948,15 @@
                         "isOffset": false,
                         "isSlot": false,
                         "src": "2557:6:0",
+                        "valueSize": 1
+                      }
+                    },
+                    {
+                      "_output": {
+                        "declaration": 92,
+                        "isOffset": false,
+                        "isSlot": false,
+                        "src": "2528:7:0",
                         "valueSize": 1
                       }
                     }
@@ -21262,7 +21262,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.20",
-  "updatedAt": "2020-01-16T15:41:31.946Z",
+  "updatedAt": "2020-01-18T16:15:44.755Z",
   "devdoc": {
     "author": "pouladzade@gmail.com",
     "details": "The BytesToTypes contract converts the memory byte arrays to the standard solidity types",

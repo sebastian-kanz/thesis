@@ -4,7 +4,6 @@ import "./IdentityOracle.sol";
 import "./Ownable.sol";
 
 contract Renting is Ownable {
-
   //possible states of an agreement
   enum AgreementState {
     Pending,
@@ -38,10 +37,6 @@ contract Renting is Ownable {
   address private oracle_addr;
   address payable public owner;
 
-  constructor() public {
-    owner = msg.sender;
-  }
-
   function destroy() public {
     require(msg.sender == owner, "Only owner can call this function.");
     selfdestruct(owner);
@@ -67,21 +62,109 @@ contract Renting is Ownable {
     oracle_addr = _addr;
   }
 
+
+
+  struct EIP712Domain {
+      string  name;
+      string  version;
+      uint256 chainId;
+      address verifyingContract;
+      bytes32 salt;
+  }
+
+  struct RentalSignatureObject {
+      address tenant;
+      address lessor;
+      address device;
+      uint256 fee;
+      uint256 term;
+  }
+
+  bytes32 constant public EIP712DOMAIN_TYPEHASH = keccak256(
+      "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract,bytes32 salt)"
+  );
+
+  bytes32 constant public RENTALSIGNATUREOBJECT_TYPEHASH = keccak256(
+      "RentalSignatureObject(address tenant,address lessor,address device,uint256 fee,uint256 term)"
+  );
+
+  bytes32 public DOMAIN_SEPARATOR;
+
+  constructor () public {
+    owner = msg.sender;
+    DOMAIN_SEPARATOR = hash(EIP712Domain({
+        name: "Device Rental",
+        version: '1',
+        chainId: 1579447585291,
+        // verifyingContract: this
+        verifyingContract: address(this),
+        salt: bytes32(0xf2d857f4a3edcb9b78b4d503bfe733db1e3f6cdc2b7971ee739626c97e86a558)
+    }));
+  }
+
+  function hash(EIP712Domain memory eip712Domain) internal pure returns (bytes32) {
+      return keccak256(abi.encode(
+          EIP712DOMAIN_TYPEHASH,
+          keccak256(abi.encodePacked(eip712Domain.name)),
+          keccak256(abi.encodePacked(eip712Domain.version)),
+          eip712Domain.chainId,
+          eip712Domain.verifyingContract,
+          eip712Domain.salt
+      ));
+  }
+
+  function hash(RentalSignatureObject memory _sigObj) internal pure returns (bytes32) {
+      return keccak256(abi.encode(
+          RENTALSIGNATUREOBJECT_TYPEHASH,
+          keccak256(abi.encode(_sigObj.tenant)),
+          keccak256(abi.encode(_sigObj.lessor)),
+          keccak256(abi.encode(_sigObj.device)),
+          keccak256(abi.encode(_sigObj.fee)),
+          keccak256(abi.encode(_sigObj.term))
+          // keccak256(bytes(mail.contents))
+      ));
+  }
+
+
+  function verify(address _tenant, address _lessor, address _device, uint256 _fee, uint256 _term, bytes memory _sig, address _signer) public view returns (bool) {
+    (uint8 v, bytes32 r, bytes32 s) = splitSignature(_sig);
+    // Note: we need to use `encodePacked` here instead of `encode`.
+    RentalSignatureObject memory sigObj = RentalSignatureObject(_tenant, _lessor, _device, _fee, _term);
+    bytes32 digest = keccak256(abi.encodePacked(
+        "\x19\x01",
+        DOMAIN_SEPARATOR,
+        hash(sigObj)
+    ));
+    return ecrecover(digest, v, r, s) == _signer;
+  }
+
+  function verify2(address _tenant, address _lessor, address _device, uint256 _fee, uint256 _term, bytes memory _sig, address _signer) public view returns (bool) {
+    (uint8 v, bytes32 r, bytes32 s) = splitSignature(_sig);
+    bytes32 hashCalc = keccak256(abi.encodePacked(_tenant,_lessor,_device,_fee,_term));
+    bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+    return ecrecover(keccak256(abi.encodePacked(prefix, hashCalc)), v, r, s) == _signer;
+  }
+
   /// @notice creates a rentalAgreement
   /// @param _tenant address of the tenant
   /// @param _lessorSignature signature of lessor of rentalAgreement
   /// @param _device address of device
   /// @param _usageFee fee for usage in wei
   /// @param _contractTerm timestamp, when rentalAgreement times out
-  function create(address payable _tenant, bytes memory _lessorSignature, address _device, uint _usageFee, uint _contractTerm) public {
+  function createRenting(address payable _tenant, bytes memory _lessorSignature, address _device, uint _usageFee, uint _contractTerm) public {
+
+
+
+    //require(verify(msg.sender, _tenant, msg.sender, _device, _usageFee, _contractTerm, _lessorSignature));
+
     //check if sender is Manufacturer, tenant is Customer and device is Device
     require(isKnownParticipant(msg.sender, 1));
     require(isKnownParticipant(_tenant, 2));
     require(isKnownParticipant(_device, 5));
     //check lessorSignature
-    bytes32 message = keccak256(abi.encodePacked(_tenant, msg.sender, _device, _usageFee, _contractTerm));
-    bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-    require(recoverSigner(keccak256(abi.encodePacked(prefix, message)), _lessorSignature) == msg.sender);
+    // bytes32 message = keccak256(abi.encodePacked(_tenant, msg.sender, _device, _usageFee, _contractTerm));
+    // bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+    // require(recoverSigner(keccak256(abi.encodePacked(prefix, message)), _lessorSignature) == msg.sender);
     //check contractTerm to be in future!
     require(_contractTerm > now);
     //check that no rentalAgreement with same parameters exists

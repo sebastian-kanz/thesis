@@ -2488,10 +2488,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "3824:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2581,10 +2581,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "3866:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2675,10 +2675,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "3904:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2760,7 +2760,7 @@
                         "name": "now",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3422,
+                        "referencedDeclaration": 3533,
                         "src": "3978:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -3283,10 +3283,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "4461:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -3446,10 +3446,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "4503:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -3531,7 +3531,7 @@
                         "name": "now",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3422,
+                        "referencedDeclaration": 3533,
                         "src": "4592:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -4178,10 +4178,10 @@
                                   "name": "revert",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [
-                                    3425,
-                                    3426
+                                    3536,
+                                    3537
                                   ],
-                                  "referencedDeclaration": 3426,
+                                  "referencedDeclaration": 3537,
                                   "src": "5007:6:2",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_function_revert_pure$_t_string_memory_ptr_$returns$__$",
@@ -5246,7 +5246,7 @@
                         "name": "this",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3440,
+                        "referencedDeclaration": 3551,
                         "src": "5967:4:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_IdentityOracle_$1994",
@@ -8657,10 +8657,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "3824:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -8750,10 +8750,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "3866:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -8844,10 +8844,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "3904:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -8929,7 +8929,7 @@
                         "name": "now",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3422,
+                        "referencedDeclaration": 3533,
                         "src": "3978:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -9452,10 +9452,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "4461:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -9615,10 +9615,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        3423,
-                        3424
+                        3534,
+                        3535
                       ],
-                      "referencedDeclaration": 3423,
+                      "referencedDeclaration": 3534,
                       "src": "4503:7:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -9700,7 +9700,7 @@
                         "name": "now",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3422,
+                        "referencedDeclaration": 3533,
                         "src": "4592:3:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -10347,10 +10347,10 @@
                                   "name": "revert",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [
-                                    3425,
-                                    3426
+                                    3536,
+                                    3537
                                   ],
-                                  "referencedDeclaration": 3426,
+                                  "referencedDeclaration": 3537,
                                   "src": "5007:6:2",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_function_revert_pure$_t_string_memory_ptr_$returns$__$",
@@ -11415,7 +11415,7 @@
                         "name": "this",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 3440,
+                        "referencedDeclaration": 3551,
                         "src": "5967:4:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_IdentityOracle_$1994",
@@ -12702,7 +12702,7 @@
     "version": "0.5.12+commit.7709ece9.Emscripten.clang"
   },
   "networks": {
-    "1578644859490": {
+    "1579337915149": {
       "events": {
         "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
           "anonymous": false,
@@ -12726,283 +12726,12 @@
         }
       },
       "links": {},
-      "address": "0x9D3987B424a4E56fa683cEED16d343e0EAF105c5",
-      "transactionHash": "0x80563ed621369714c4cc1c6a8dfe5a4066ab706ead3cae39eeea73f0f8143d32"
-    },
-    "1578650140676": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0xdfFE0Ce38eD47Ee73018fC042a0Ebe2062ba2151",
-      "transactionHash": "0xb87e985caeb5d9a0ab0f59650125305a77a4bb6b4eb47e4ae19a7c852e921537"
-    },
-    "1578659614813": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x7AE714E9c24782B861351901a0dfb28519C1484d",
-      "transactionHash": "0xbf2b3b23b613f83a636d4927c0558cf6f38fa394021c92ad828576cd069eefad"
-    },
-    "1578665330030": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0xba9f4BF9867e8c4F718EF0099a3d4c78EFCe3BF1",
-      "transactionHash": "0x59f4bf601b8a609cb7c373ce6943d4b701ce749b5fb2335521f521cd3a6056a4"
-    },
-    "1579012389017": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x671e131513715bcDcbF9Fb14Ad982348F7D8658F",
-      "transactionHash": "0x38964c57c96f80193314f002424eb52e07b544661403d9a810584ba86f51ff97"
-    },
-    "1579169243744": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x6bf933d5783d536B9F65f15083cbc1875FEE4866",
-      "transactionHash": "0xea302f32c41ce4052ca59c149fcee29c80932087df52f689320d21a1adbdb096"
-    },
-    "1579172648856": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0xf19765E0bdb930cea25A6a834D168Fc74736a824",
-      "transactionHash": "0xc3983b971dac3473026b55251275b31a6c686efe55c986abd721f09cf2224751"
-    },
-    "1579175184900": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x4C67B44C531A1326146378C80bf3056F37c5efB4",
-      "transactionHash": "0x7bfbf0b79a798bfb02d416af902aa614677530ae3ed73898179884e47e8696b7"
-    },
-    "1579186662096": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x9ba33DDfcf1d25f5390Fa0aF7ad87c45FA585612",
-      "transactionHash": "0xac7229f26134bf4f52b46cef68fe758a2e14c37dbdbb4830705a8a4e4c0daf2e"
-    },
-    "1579188466792": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0xB6951B35B3a29B893dd8d267c70F73c037604e26",
-      "transactionHash": "0x0217ce78497ff9e4d0fc8bdd27dbc1040db7d686dd05d263267e579888ccc108"
-    },
-    "1579189268513": {
-      "events": {
-        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
-          "anonymous": false,
-          "inputs": [
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "previousOwner",
-              "type": "address"
-            },
-            {
-              "indexed": true,
-              "internalType": "address",
-              "name": "newOwner",
-              "type": "address"
-            }
-          ],
-          "name": "OwnershipTransferred",
-          "type": "event",
-          "signature": "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0"
-        }
-      },
-      "links": {},
-      "address": "0x597b69324A0ddB5A37791a017bcD758C0BD8186F",
-      "transactionHash": "0x8d0100c3385c217aed3eb7c69db51e4ee95496974d50302dfa93103ad24cced8"
+      "address": "0x1367Fc2cB80065DA192279C5cCBbEf8663316d86",
+      "transactionHash": "0x379f53525d95ad38016e21a32d9cea90c0515e4161a5487ff3df957915748dcd"
     }
   },
   "schemaVersion": "3.0.20",
-  "updatedAt": "2020-01-16T15:41:35.447Z",
-  "networkType": "ethereum",
+  "updatedAt": "2020-01-18T16:15:44.779Z",
   "devdoc": {
     "author": "Sebastian Kanz",
     "methods": {
