@@ -9,6 +9,13 @@ export default class Web3Manager {
     this.account = '0x0000000000000000000000000000000000000000';
     const ethereum = window.ethereum;
     const rpcURL = 'http://localhost:8545' // Your RCP URL goes here
+
+    this.identityManager = new IdentityManager(this.account);
+    this.rentalManager = new RentalManager(this.account);
+    this.role = 0;
+    this.loggedin = false;
+    this.initialized = false;
+    this.balance = 0;
     if (typeof window.ethereum !== 'undefined' || (typeof window.web3 !== 'undefined')) {
       ethereum.autoRefreshOnNetworkChange = false;
       // this.web3 = new Web3(rpcURL)
@@ -28,9 +35,9 @@ export default class Web3Manager {
     }
   }
 
-  login = () => {
+  login = async() => {
     console.log("Logging in...");
-    this.init();
+    await this.init();
   }
 
   logout = async() => {
@@ -41,6 +48,7 @@ export default class Web3Manager {
     this.rentalManager = new RentalManager(this.account);
     this.loggedin = false;
     this.initialized = false;
+    this.balance = 0.0;
   }
 
   reload = () => {
@@ -57,7 +65,8 @@ export default class Web3Manager {
   }
 
   addTestRentalAgreement = async() => {
-    if(await this.identityManager.getIdentityRole(this.account) == 1) {
+    console.log(this.role);
+    if(this.role == 1) {
       await this.rentalManager.addTestData();
     } else {
       console.log("addTestRentalAgreement only callable by Manufacturer.");
@@ -73,17 +82,14 @@ export default class Web3Manager {
         this.account = (await window.ethereum.enable())[0];
 				this.identityManager = new IdentityManager(this.account);
 				this.rentalManager = new RentalManager(this.account);
-        await this.rentalManager.init();
+        this.role = await this.identityManager.getIdentityRole(this.account);
         this.loggedin = true;
         this.initialized = true;
+        this.balance = await this.getBalance();
       } catch(err) {
         console.error(err);
       }
     }
-  }
-
-  async testSigning() {
-
   }
 
 }

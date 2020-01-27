@@ -1,9 +1,15 @@
 import Web3 from 'web3'
 import { isNullOrUndefined } from "util";
 
-export const IDENTITY_CONTRACT_ADDR = '0x6FB820827260bcf47CdC3c197F184ad89edF941c';
+export const IDENTITY_CONTRACT_ADDR = '0x41161C77e50607BAa13185BB3b2a49cbbB6DB17B';
 export const IDENTITY_CONTRACT_ABI =
 [
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
 	{
 		"anonymous": false,
 		"inputs": [
@@ -354,23 +360,23 @@ export const IDENTITY_CONTRACT_ABI =
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
-]
+];
 
 export default class IdentityManager {
 
 	constructor(account) {
 		this.account = account;
-		const web3 = new Web3(window.web3.currentProvider);
-		this.IdentityContract = new web3.eth.Contract(IDENTITY_CONTRACT_ABI, IDENTITY_CONTRACT_ADDR, {
-			from: account,
-			gasPrice: '4700000',
-			gas: '4700000'
-		});
+		try {
+			const web3 = new Web3(window.web3.currentProvider);
+			this.IdentityContract = new web3.eth.Contract(IDENTITY_CONTRACT_ABI, IDENTITY_CONTRACT_ADDR, {
+				from: account,
+				gasPrice: '4700000',
+				gas: '4700000'
+			});
+		} catch(err) {
+			console.error(err);
+		}
 	}
-
-  async init() {
-
-  }
 
 	async isIdentityVerified(identity) {
 		return await this.IdentityContract.methods.identityExists(identity).call();

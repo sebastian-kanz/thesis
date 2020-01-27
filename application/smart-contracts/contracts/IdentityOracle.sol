@@ -36,6 +36,11 @@ contract IdentityOracle is Ownable {
       Device
     }
 
+    constructor () public {
+      owner = msg.sender;
+      // addTestData();
+    }
+
   /// @notice checks whether the identity is known or not
   /// @param _identity the identity address to analyze
   /// @return returns true if the identity is known
@@ -165,10 +170,13 @@ contract IdentityOracle is Ownable {
   /// @notice adds test identities
   /// @dev only callable by owner of smart contract
   function addTestData() onlyOwner public {
-    addIdentity("Testname 1", uint(Role.Manufacturer), address(0x006371774597D7955cA57deFCF84d8B5a699D34A));
-    addIdentity("Testname 2", uint(Role.Customer), address(0x9ef7f517b0C5340911562c2788C6E4fdc18690f4));
-    addIdentity("Testname 3", uint(Role.ServiceProvider), address(0x43b3C4A156aFF47AdB9FB802644219a562C4AFB6));
-    addIdentity("Testname 4", uint(Role.Supplier), address(0xEBf6D811269625389f188cb043555dB5392db69F));
+    addIdentity("Manufacturer", uint(Role.Manufacturer), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
+    addIdentity("Customer1", uint(Role.Customer), address(0xFF3904784BeF847991C7705Eef89164A32F31A19));
+    addIdentity("Customer2", uint(Role.Customer), address(0x87deeC84694929a63Aa8ccA01dE58eEA0a6A0e8b));
+    addIdentityOwnedBy("Device1", uint(Role.Device), address(0xbB8f0d80e1B66e71629D47AB547042E5004F39Df), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
+    addIdentityOwnedBy("Device2", uint(Role.Device), address(0x6A7b417aC5A2e20b47fa7717963ce24068B2b3c9), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
+    addIdentityOwnedBy("Device3", uint(Role.Device), address(0x0fd6f673BC51400B5022eeF84c4a87EBA7D4ac29), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
+    addIdentityOwnedBy("Device4", uint(Role.Device), address(0x158A17F73c8ca58f929B0cbAF0434Dd02a8cC159), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
   }
 
   function getKnownManufacturers() public view returns(address[] memory){

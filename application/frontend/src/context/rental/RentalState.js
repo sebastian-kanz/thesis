@@ -1,7 +1,18 @@
+import React, { useReducer } from 'react';
+import RentalContext from './rentalContext';
+import rentalReducer from './rentalReducer';
 import Web3 from 'web3'
-import { isNullOrUndefined } from "util";
-import { IDENTITY_CONTRACT_ADDR } from './IdentityManager';
-import IdentityManager from './IdentityManager';
+import {
+  RENTAL_RESET,
+  SET_RENTAL_ACCOUNT,
+  PAY,
+  GET_AGREEMENTS,
+  GET_PAYMENTS,
+  GET_RENTABLE_DEVICES,
+  ACCEPT_RENTAL_AGREEMENT,
+  RENTAL_ERROR,
+  ADD_TEST_RENTAL_AGREEMENTS
+} from '../types';
 
 export const RENTAL_CONTRACT_ADDR = '0x0fBBe45906B3e122021487d35310BD0351E57ce6';
 export const RENTAL_CONTRACT_ABI =
@@ -523,126 +534,250 @@ export const RENTAL_CONTRACT_ABI =
 	}
 ];
 
-export default class RentalManager {
+const RentalState = props => {
+  const initialState = {
+    account: null,
+    web3: new Web3(window.web3.currentProvider),
+    rentalContract: new (new Web3(window.web3.currentProvider)).eth.Contract(RENTAL_CONTRACT_ABI, RENTAL_CONTRACT_ADDR),
+    rentalAgreements: [],
+    payments: [],
+    rentableDevices: [],
+    numPendingAgreements: 0,
+    numActiveAgreements: 0,
+    numTerminatedAgreements: 0,
+    loading: false,
+    error: null
+  };
 
-	constructor(account) {
-		this.account = account;
-		this.web3 = new Web3(window.web3.currentProvider);
-		this.RentalContract = new this.web3.eth.Contract(RENTAL_CONTRACT_ABI, RENTAL_CONTRACT_ADDR, {
-			from: account,
-			gasPrice: '4700000'
-		});
-	}
+  const [state, dispatch] = useReducer(rentalReducer, initialState);
 
-  async init() {
-
+  const resetRental = () => {
+    try {
+      dispatch({
+        type: RENTAL_RESET
+      });
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
   }
 
-	async pay(timestamp, device, payer, receiver, amount, id) {
-		let paymentHash = await this.RentalContract.methods.calcPaymentHash(timestamp, device, payer, receiver, amount);
-		await this.RentalContract.methods.payForUsage(id,timestamp).send({value: amount});
-	}
-
-	async calcPaymentHash(timestamp, device, payer, receiver, amount) {
-		return await this.web3.utils.soliditySha3(timestamp,device,payer,receiver,amount);
-	}
-
-	async getPaymentsByAgreementID(id) {
-		let paymentHashes = await this.RentalContract.methods.getOutgoingPaymentHashes().call();
-		let agreementHash = await this.RentalContract.methods.getRentalAgreementHash(id).call();
-		let payments = new Array();
-		for(const hash of paymentHashes) {
-			let payment = await this.RentalContract.methods.getPayment(hash).call();
-			console.log(payment);
-			// if(payment)
-		}
-	}
-
-	async acceptRentalAgreement(tenant,lessor,device,usageFee,contractTerm,id) {
-	// async acceptRentalAgreement(id) {
-		let agreementHash = await this.web3.utils.soliditySha3(tenant,lessor,device,usageFee,contractTerm);
-		// let agreementHash = await this.web3.utils.soliditySha3("0xFF3904784BeF847991C7705Eef89164A32F31A19","0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD","0xbB8f0d80e1B66e71629D47AB547042E5004F39Df",'10000000000000000','1589255236');
-		let signature = await this.web3.eth.personal.sign(agreementHash, this.account);
-		await this.RentalContract.methods.accept(id, signature).send();
-	}
-
-	async getRentalAgreementIDs() {
-    let pendingIDs = await this.RentalContract.methods.getIDs(0).call();
-		console.log(pendingIDs);
-    let activeIDs = await this.RentalContract.methods.getIDs(1).call();
-    let terminatedIDs = await this.RentalContract.methods.getIDs(2).call();
-		return { "Pending": pendingIDs, "Active": activeIDs, "Terminated": terminatedIDs };
+  const setRentalAccount = (account) => {
+    try {
+      dispatch({
+        type: SET_RENTAL_ACCOUNT,
+        payload: account
+      });
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
   }
 
-	async getPendingAgreements() {
-		return this.getAgreementsByStateID(0);
-	}
+  // Get Agreements
+  const getAgreements = async () => {
+    let stateIDs = [0, 1, 2];
+    try {
+      let agreements = [];
+      let numPending = 0;
+      let numActive = 0;
+      let numTerminated = 0;
+      for (const stateID of stateIDs) {
+        let ids = await state.rentalContract.methods.getIDs(stateID).call({from: state.account});
+        for (const id of ids) {
+         const agreement = await state.rentalContract.methods.getByID(id).call({from: state.account});
+         switch (agreement[8]) {
+           case '0':
+             numPending++;
+             break;
+           case '1':
+             numActive++;
+             break;
+           case '2':
+             numTerminated++;
+             break;
+           default:
+             break;
+         }
+         const hash = await state.rentalContract.methods.getRentalAgreementHash(id).call({from: state.account});
+         agreement[9]=id;
+         agreement[10]=hash;
+         agreements.push(agreement);
+        }
+      }
+      dispatch({
+        type: GET_AGREEMENTS,
+        payload: agreements,
+        numPending: numPending,
+        numActive: numActive,
+        numTerminated: numTerminated
+      });
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
+  };
 
-	async getActiveAgreements() {
-		return this.getAgreementsByStateID(1);
-	}
+  // Get Payments
+  const getPayments = async () => {
+    try {
+      let paymentHashes = await state.rentalContract.methods.getOutgoingPaymentHashes().call({from: state.account});
+      let payments = [];
+  		for(const hash of paymentHashes) {
+  			let payment = await state.rentalContract.methods.getPayment(hash).call({from: state.account});
+  			payments.push(payment);
+  		}
+      dispatch({
+        type: GET_PAYMENTS,
+        payload: payments
+      });
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
+  };
 
-	async getTerminatedAgreements() {
-		return this.getAgreementsByStateID(2);
-	}
+  // Get rentableDevices
+  const getRentableDevices = async () => {
+    try {
+      let rentableDevices = await state.rentalContract.methods.getRentableDevices().call();
 
-	async getAgreementsByStateID(stateID) {
-		let ids = await this.RentalContract.methods.getIDs(stateID).call();
-		let agreements = new Array();
-	  for (const id of ids) {
-	   const agreement = await this.RentalContract.methods.getByID(id).call();
-		 agreement[9]=id;
-		 agreements.push(agreement);
-	  }
-		return agreements;
-	}
+      dispatch({
+        type: GET_RENTABLE_DEVICES,
+        payload: rentableDevices
+      });
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
+  };
 
-	async getRentableDevices() {
-		return await this.RentalContract.methods.getRentableDevices().call();
-	}
+  // Accep rentalAgreement
+  const acceptRentalAgreement = async (tenant,lessor,device,usageFee,contractTerm,id) => {
+    try {
+      let agreementHash = await state.web3.utils.soliditySha3(tenant,lessor,device,usageFee,contractTerm);
+      // let agreementHash = await this.web3.utils.soliditySha3("0xFF3904784BeF847991C7705Eef89164A32F31A19","0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD","0xbB8f0d80e1B66e71629D47AB547042E5004F39Df",'10000000000000000','1589255236');
+      let signature = await state.web3.eth.personal.sign(agreementHash, state.account);
+      await state.rentalContract.methods.accept(id, signature).send({from: state.account});
 
-	async addTestData() {
-    let tenant1 = "0xFF3904784BeF847991C7705Eef89164A32F31A19";
-    let tenant2 = "0x87deeC84694929a63Aa8ccA01dE58eEA0a6A0e8b";
-    let lessor = "0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD";
-    let device1 = "0xbB8f0d80e1B66e71629D47AB547042E5004F39Df";
-    let device2 = "0x6A7b417aC5A2e20b47fa7717963ce24068B2b3c9";
-    let device3 = "0x0fd6f673BC51400B5022eeF84c4a87EBA7D4ac29";
-    let device4 = "0x158A17F73c8ca58f929B0cbAF0434Dd02a8cC159";
-    let fee = '10000000000000000';
-    let term = 1589255236;
-		// let hash1 = this.web3.utils.soliditySha3(tenant1,lessor,device1,fee,term);
-		// let hash2 = this.web3.utils.soliditySha3(tenant1,lessor,device2,fee,term);
-		// let hash3 = this.web3.utils.soliditySha3(tenant2,lessor,device3,fee,term);
-		// let hash4 = this.web3.utils.soliditySha3(tenant2,lessor,device4,fee,term);
-		// let signature1 = await this.web3.eth.personal.sign(hash1, this.account);
-		// let signature2 = await this.web3.eth.personal.sign(hash2, this.account);
-		// let signature3 = await this.web3.eth.personal.sign(hash3, this.account);
-		// let signature4 = await this.web3.eth.personal.sign(hash4, this.account);
-		// let result1 = await this.RentalContract.methods.verify(tenant1, lessor, device1, fee, term, signature1, this.account).call();
-		// let result2 = await this.RentalContract.methods.verify(tenant1, lessor, device2, fee, term, signature2, this.account).call();
-		// let result3 = await this.RentalContract.methods.verify(tenant2, lessor, device3, fee, term, signature3, this.account).call();
-		// let result4 = await this.RentalContract.methods.verify(tenant2, lessor, device4, fee, term, signature4, this.account).call();
-		// console.log(signature1);
-		// console.log(signature2);
-		// console.log(signature3);
-		// console.log(signature4);
-		let signature1 = "0xabba693fdacb2bbe6241dcd0d28a644f4da3e0ea57bfd4121fcd09fb371284a75cd4b3a78f9ff86b47eb6583175fdb711dc3a8d3e127bccfab9e4053f9e107ea1b";
-		let signature2 = "0x2a1187601a6b8a9fffa71be8094c1d8561fdb37e0ba60283b39055c736467d404a2146d2fcc0c6c88b043db20abf01f78b582dc5d132244a7602dbaa442183b81b";
-		let signature3 = "0x818a0d6a8e6cb762d82cdde4d692038096d241628e8e491905b2fbb637f131261e96f7f9cfa7b0e52565ca28fad8a2e0a321dafac444109e673eaacd30dfb3d21b";
-		let signature4 = "0xb5db6f6cd51bf2680e92995660ec041d938af3a7c2b585fd8b3f7312fedb5b4f1a46c908c4cc771cd6ecc68bbf57e2b826f3e1f7b3936247f457ae990381e15c1b";
-	  let result1 = await this.RentalContract.methods.createRenting(tenant1, signature1, device1, fee, term).send();
-	  let result2 = await this.RentalContract.methods.createRenting(tenant1, signature2, device2, fee, term).send();
-	  let result3 = await this.RentalContract.methods.createRenting(tenant2, signature3, device3, fee, term).send();
-		// let result4 = await this.RentalContract.methods.createRenting(tenant2, signature4, device4, fee, term).send();
-		console.log(result1);
-		// console.log(result2);
-		// console.log(result3);
-		// console.log(result4);
-	}
+      dispatch({
+        type: ACCEPT_RENTAL_AGREEMENT
+      });
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
+  };
+
+  // Pay for usage
+  const pay = async (timestamp, device, payer, receiver, amount, id) => {
+    try {
+      await state.rentalContract.methods.payForUsage(id,timestamp).send({value: amount, from: state.account});
+      dispatch({
+        type: PAY
+      });
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
+  };
+
+  // Add rentalAgreements for testing
+  const addTestRentalAgreements = async () => {
+    try {
+      let tenant1 = "0xFF3904784BeF847991C7705Eef89164A32F31A19";
+      let tenant2 = "0x87deeC84694929a63Aa8ccA01dE58eEA0a6A0e8b";
+      let lessor = "0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD";
+      let device1 = "0xbB8f0d80e1B66e71629D47AB547042E5004F39Df";
+      let device2 = "0x6A7b417aC5A2e20b47fa7717963ce24068B2b3c9";
+      let device3 = "0x0fd6f673BC51400B5022eeF84c4a87EBA7D4ac29";
+      let device4 = "0x158A17F73c8ca58f929B0cbAF0434Dd02a8cC159";
+      let fee = '10000000000000000';
+      let term = 1589255236;
+      // let hash1 = this.web3.utils.soliditySha3(tenant1,lessor,device1,fee,term);
+      // let hash2 = this.web3.utils.soliditySha3(tenant1,lessor,device2,fee,term);
+      // let hash3 = this.web3.utils.soliditySha3(tenant2,lessor,device3,fee,term);
+      // let hash4 = this.web3.utils.soliditySha3(tenant2,lessor,device4,fee,term);
+      // let signature1 = await this.web3.eth.personal.sign(hash1, this.account);
+      // let signature2 = await this.web3.eth.personal.sign(hash2, this.account);
+      // let signature3 = await this.web3.eth.personal.sign(hash3, this.account);
+      // let signature4 = await this.web3.eth.personal.sign(hash4, this.account);
+      // let result1 = await this.RentalContract.methods.verify(tenant1, lessor, device1, fee, term, signature1, this.account).call();
+      // let result2 = await this.RentalContract.methods.verify(tenant1, lessor, device2, fee, term, signature2, this.account).call();
+      // let result3 = await this.RentalContract.methods.verify(tenant2, lessor, device3, fee, term, signature3, this.account).call();
+      // let result4 = await this.RentalContract.methods.verify(tenant2, lessor, device4, fee, term, signature4, this.account).call();
+      // console.log(signature1);
+      // console.log(signature2);
+      // console.log(signature3);
+      // console.log(signature4);
+      let signature1 = "0xabba693fdacb2bbe6241dcd0d28a644f4da3e0ea57bfd4121fcd09fb371284a75cd4b3a78f9ff86b47eb6583175fdb711dc3a8d3e127bccfab9e4053f9e107ea1b";
+      let signature2 = "0x2a1187601a6b8a9fffa71be8094c1d8561fdb37e0ba60283b39055c736467d404a2146d2fcc0c6c88b043db20abf01f78b582dc5d132244a7602dbaa442183b81b";
+      let signature3 = "0x818a0d6a8e6cb762d82cdde4d692038096d241628e8e491905b2fbb637f131261e96f7f9cfa7b0e52565ca28fad8a2e0a321dafac444109e673eaacd30dfb3d21b";
+      let signature4 = "0xb5db6f6cd51bf2680e92995660ec041d938af3a7c2b585fd8b3f7312fedb5b4f1a46c908c4cc771cd6ecc68bbf57e2b826f3e1f7b3936247f457ae990381e15c1b";
+      let result1 = await state.rentalContract.methods.createRenting(tenant1, signature1, device1, fee, term).send({from: state.account});
+      let result2 = await state.rentalContract.methods.createRenting(tenant1, signature2, device2, fee, term).send({from: state.account});
+      let result3 = await state.rentalContract.methods.createRenting(tenant2, signature3, device3, fee, term).send({from: state.account});
+      // let result4 = await this.RentalContract.methods.createRenting(tenant2, signature4, device4, fee, term).send();
+
+      dispatch({
+        type: ADD_TEST_RENTAL_AGREEMENTS
+      });
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
+  };
+
+  // TODO: TERMINATE_RENTAL_AGREEMENT = 'TERMINATE_RENTAL_AGREEMENT';
 
 
-}
+  return (
+    <RentalContext.Provider
+      value={{
+        account: state.account,
+        web3: state.web3,
+        rentalContract: state.rentalContract,
+        rentalAgreements: state.rentalAgreements,
+        payments: state.payments,
+        rentableDevices: state.rentableDevices,
+        loading: state.loading,
+        error: state.error,
+        numPendingAgreements: state.numPendingAgreements,
+        numActiveAgreements: state.numActiveAgreements,
+        numTerminatedAgreements: state.numTerminatedAgreements,
+        setRentalAccount,
+        getAgreements,
+        getPayments,
+        getRentableDevices,
+        acceptRentalAgreement,
+        pay,
+        addTestRentalAgreements,
+        resetRental
+      }}
+    >
+      {props.children}
+    </RentalContext.Provider>
+  );
+};
+
+export default RentalState;
+
 
 
 // const domain = [
