@@ -3,11 +3,11 @@ pragma solidity >= 0.5.0 < 0.7.0;
 import "./Ownable.sol";
 import "./DateLib.sol";
 
-/// @title IdentityOracle
+/// @title IdentityProvider
 /// @author Sebastian Kanz
 /// @notice Taken from: https://github.com/jrkosinski/oracle-example/blob/part2-step1/oracle/contracts/BoxingOracle.sol
 /// @notice Collects and provides information on identities
-contract IdentityOracle is Ownable {
+contract IdentityProvider is Ownable {
     mapping(address => Identity) identities;
 
     address[] knownDevices;
@@ -162,7 +162,7 @@ contract IdentityOracle is Ownable {
     return true;
   }
 
-  /// @notice gets the address of this contract test identities
+  /// @notice gets the address of this contract
   function getAddress() public view returns (address) {
     return address(this);
   }

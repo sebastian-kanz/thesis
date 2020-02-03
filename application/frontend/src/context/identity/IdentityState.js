@@ -15,7 +15,7 @@ import {
   IDENTITY_ERROR
 } from '../types';
 
-export const IDENTITY_CONTRACT_ADDR = '0x41161C77e50607BAa13185BB3b2a49cbbB6DB17B';
+export const IDENTITY_CONTRACT_ADDR = '0x1E6cB5696c7A718a7266f1CFBFc04adf369139dB';
 export const IDENTITY_CONTRACT_ABI =
 [
 	{
@@ -428,6 +428,7 @@ const IdentityState = props => {
         type: GET_KNOWN_DEVICES,
         payload: devices
       });
+      addIdentities(devices);
     } catch (err) {
       dispatch({
         type: IDENTITY_ERROR,
@@ -443,6 +444,7 @@ const IdentityState = props => {
         type: GET_KNOWN_MANUFACTURERS,
         payload: manufacturers
       });
+      addIdentities(manufacturers);
     } catch (err) {
       dispatch({
         type: IDENTITY_ERROR,
@@ -458,6 +460,7 @@ const IdentityState = props => {
         type: GET_KNOWN_SERVICEPROVIDERS,
         payload: serviceProviders
       });
+      addIdentities(serviceProviders);
     } catch (err) {
       dispatch({
         type: IDENTITY_ERROR,
@@ -473,6 +476,7 @@ const IdentityState = props => {
         type: GET_KNOWN_SUPPLIERS,
         payload: suppliers
       });
+      addIdentities(suppliers);
     } catch (err) {
       dispatch({
         type: IDENTITY_ERROR,
@@ -493,7 +497,7 @@ const IdentityState = props => {
         });
       }
       if(!alreadyKnown) {
-        let verified = await state.identityContract.methods.identityExists(address).call({from: state.account});
+        let verified = await state.identityContract.methods.identityExists(address).call({from: address});
         if(!verified) {
           dispatch({
             type: IDENTITY_ERROR,
@@ -501,9 +505,9 @@ const IdentityState = props => {
           });
           return;
         }
-        let name = await state.identityContract.methods.getIdentityName(address).call({from: state.account});
-        let role = await state.identityContract.methods.getIdentityRole(address).call({from: state.account});
-        let owner = await state.identityContract.methods.getIdentityOwner(address).call({from: state.account});
+        let name = await state.identityContract.methods.getIdentityName(address).call({from: address});
+        let role = await state.identityContract.methods.getIdentityRole(address).call({from: address});
+        let owner = await state.identityContract.methods.getIdentityOwner(address).call({from: address});
         let identity = { 'address': address.toLowerCase(), 'name': name, 'role': role, 'owner': owner }
         let identities = state.identities;
         identities.push(identity);

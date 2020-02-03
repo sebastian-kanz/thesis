@@ -21,7 +21,7 @@ export default (state, action) => {
     case LOGOUT:
       return {
         ...state,
-        account: null,
+        account: '0x0000000000000000000000000000000000000000',
         balance: 0.0,
         authenticated: false
       };

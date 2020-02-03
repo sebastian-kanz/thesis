@@ -15,14 +15,13 @@ const RentalAgreementContainer = ({state}) => {
   const rentalContext = useContext(RentalContext);
   const authContext = useContext(AuthContext);
   const identityContext = useContext(IdentityContext);
-  const { getAgreements, getPayments, rentalAgreements, account } = rentalContext;
+  const { getAgreements, rentalAgreements, account } = rentalContext;
   const { authenticated } = authContext;
   const { addIdentities, identities } = identityContext;
 
+
   useEffect(() => {
     getAgreements();
-    getPayments();
-
     // eslint-disable-next-line
   },[authenticated,account]);
 
@@ -49,7 +48,7 @@ const RentalAgreementContainer = ({state}) => {
   return(
     <Fragment>
       {
-        identities.length > 1 &&
+        identities.length > 1 && filteredAgreements &&
         filteredAgreements.map((item, i) => {
             return <RentalAgreement key={i} agreement={item}/>
         })
@@ -61,8 +60,7 @@ const RentalAgreementContainer = ({state}) => {
             <Grid container justify="center" alignContent="center" alignItems="center" spacing={2}>
                <Grid item xs={12} align="center">
                  <Container>
-                   <Typography>Sie haben kein Mietverträge in diesem Status.</Typography>
-                   <Typography>Neue Mietanfragen können sie _hier_ stellen.</Typography>
+                   <Typography>Sie haben keine Mietverträge in diesem Status.</Typography>
                  </Container>
                </Grid>
              </Grid>

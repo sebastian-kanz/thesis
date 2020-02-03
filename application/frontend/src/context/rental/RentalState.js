@@ -5,16 +5,17 @@ import Web3 from 'web3'
 import {
   RENTAL_RESET,
   SET_RENTAL_ACCOUNT,
-  PAY,
   GET_AGREEMENTS,
-  GET_PAYMENTS,
   GET_RENTABLE_DEVICES,
   ACCEPT_RENTAL_AGREEMENT,
   RENTAL_ERROR,
-  ADD_TEST_RENTAL_AGREEMENTS
+  ADD_REQUEST,
+  GET_REQUESTS,
+  ADD_TEST_RENTAL_AGREEMENTS,
+  TERMINATE_RENTAL_AGREEMENT
 } from '../types';
 
-export const RENTAL_CONTRACT_ADDR = '0x0fBBe45906B3e122021487d35310BD0351E57ce6';
+export const RENTAL_CONTRACT_ADDR = '0xa9967EB0893d0D9a1B85F677EEaa6127B1927f42';
 export const RENTAL_CONTRACT_ABI =
 [
 	{
@@ -58,8 +59,121 @@ export const RENTAL_CONTRACT_ABI =
 		],
 		"name": "accept",
 		"outputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tenant",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_device",
+				"type": "address"
+			}
+		],
+		"name": "agreementExists",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
 		"payable": false,
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "bytes",
+				"name": "_lessorSignature",
+				"type": "bytes"
+			}
+		],
+		"name": "agreementExists",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "agreements",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "tenant",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes",
+				"name": "tenantSignature",
+				"type": "bytes"
+			},
+			{
+				"internalType": "address payable",
+				"name": "lessor",
+				"type": "address"
+			},
+			{
+				"internalType": "bytes",
+				"name": "lessorSignature",
+				"type": "bytes"
+			},
+			{
+				"internalType": "address",
+				"name": "device",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "usageFee",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "contractTerm",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "creation",
+				"type": "uint256"
+			},
+			{
+				"internalType": "enum RentalProvider.AgreementState",
+				"name": "state",
+				"type": "uint8"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "paymentAgreementHash",
+				"type": "bytes32"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -106,6 +220,11 @@ export const RENTAL_CONTRACT_ABI =
 				"type": "address"
 			},
 			{
+				"internalType": "address",
+				"name": "_lessor",
+				"type": "address"
+			},
+			{
 				"internalType": "uint256",
 				"name": "_term",
 				"type": "uint256"
@@ -124,6 +243,27 @@ export const RENTAL_CONTRACT_ABI =
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_device",
+				"type": "address"
+			}
+		],
+		"name": "deviceIsRentable",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -181,6 +321,11 @@ export const RENTAL_CONTRACT_ABI =
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			},
+			{
+				"internalType": "bytes32",
+				"name": "",
+				"type": "bytes32"
 			}
 		],
 		"payable": false,
@@ -188,7 +333,7 @@ export const RENTAL_CONTRACT_ABI =
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -205,125 +350,24 @@ export const RENTAL_CONTRACT_ABI =
 			}
 		],
 		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getIncomingPaymentHashes",
-		"outputs": [
-			{
-				"internalType": "bytes32[]",
-				"name": "",
-				"type": "bytes32[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getOutgoingPaymentHashes",
-		"outputs": [
-			{
-				"internalType": "bytes32[]",
-				"name": "",
-				"type": "bytes32[]"
-			}
-		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
 		"constant": true,
 		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "_paymentHash",
-				"type": "bytes32"
-			}
-		],
-		"name": "getPayment",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "",
-				"type": "bytes32"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_timestamp",
-				"type": "uint256"
-			},
 			{
 				"internalType": "address",
 				"name": "_device",
 				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_payer",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_receiver",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes32",
-				"name": "_agreementHash",
-				"type": "bytes32"
 			}
 		],
-		"name": "getPaymentHash",
+		"name": "getRentableDeviceListIndex",
 		"outputs": [
 			{
-				"internalType": "bytes32",
+				"internalType": "uint256",
 				"name": "",
-				"type": "bytes32"
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -346,7 +390,7 @@ export const RENTAL_CONTRACT_ABI =
 		"type": "function"
 	},
 	{
-		"constant": false,
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -363,7 +407,67 @@ export const RENTAL_CONTRACT_ABI =
 			}
 		],
 		"payable": false,
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getRequestsAsLessor",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getRequestsAsTenant",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -404,6 +508,21 @@ export const RENTAL_CONTRACT_ABI =
 	{
 		"constant": true,
 		"inputs": [],
+		"name": "oracle_addr",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
 		"name": "owner",
 		"outputs": [
 			{
@@ -417,23 +536,18 @@ export const RENTAL_CONTRACT_ABI =
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
+		"constant": true,
+		"inputs": [],
+		"name": "paymentProvider_addr",
+		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "_id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_timestamp",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
-		"name": "payForUsage",
-		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -445,10 +559,163 @@ export const RENTAL_CONTRACT_ABI =
 				"type": "address"
 			}
 		],
-		"name": "registerIdentityOracle",
+		"name": "registerIdentityProvider",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "registerPaymentProvider",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "removeDeviceFromRentableList",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tenant",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_lessor",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_device",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_term",
+				"type": "uint256"
+			}
+		],
+		"name": "removeRequest",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "rentableDevices",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_tenant",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_lessor",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_device",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_term",
+				"type": "uint256"
+			}
+		],
+		"name": "requestExists",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "requests",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "tenant",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "lessor",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "device",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "contractTerm",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -529,7 +796,7 @@ export const RENTAL_CONTRACT_ABI =
 			}
 		],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "pure",
 		"type": "function"
 	}
 ];
@@ -540,7 +807,8 @@ const RentalState = props => {
     web3: new Web3(window.web3.currentProvider),
     rentalContract: new (new Web3(window.web3.currentProvider)).eth.Contract(RENTAL_CONTRACT_ABI, RENTAL_CONTRACT_ADDR),
     rentalAgreements: [],
-    payments: [],
+    requests: [],
+    numRequests: 0,
     rentableDevices: [],
     numPendingAgreements: 0,
     numActiveAgreements: 0,
@@ -604,8 +872,8 @@ const RentalState = props => {
              break;
          }
          const hash = await state.rentalContract.methods.getRentalAgreementHash(id).call({from: state.account});
-         agreement[9]=id;
-         agreement[10]=hash;
+         agreement[10]=id;
+         agreement[11]=hash;
          agreements.push(agreement);
         }
       }
@@ -615,27 +883,6 @@ const RentalState = props => {
         numPending: numPending,
         numActive: numActive,
         numTerminated: numTerminated
-      });
-    } catch (err) {
-      dispatch({
-        type: RENTAL_ERROR,
-        payload: err
-      });
-    }
-  };
-
-  // Get Payments
-  const getPayments = async () => {
-    try {
-      let paymentHashes = await state.rentalContract.methods.getOutgoingPaymentHashes().call({from: state.account});
-      let payments = [];
-  		for(const hash of paymentHashes) {
-  			let payment = await state.rentalContract.methods.getPayment(hash).call({from: state.account});
-  			payments.push(payment);
-  		}
-      dispatch({
-        type: GET_PAYMENTS,
-        payload: payments
       });
     } catch (err) {
       dispatch({
@@ -668,25 +915,10 @@ const RentalState = props => {
       let agreementHash = await state.web3.utils.soliditySha3(tenant,lessor,device,usageFee,contractTerm);
       // let agreementHash = await this.web3.utils.soliditySha3("0xFF3904784BeF847991C7705Eef89164A32F31A19","0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD","0xbB8f0d80e1B66e71629D47AB547042E5004F39Df",'10000000000000000','1589255236');
       let signature = await state.web3.eth.personal.sign(agreementHash, state.account);
-      await state.rentalContract.methods.accept(id, signature).send({from: state.account});
+      await state.rentalContract.methods.accept(id, signature).send({from: state.account, value: 100});
 
       dispatch({
         type: ACCEPT_RENTAL_AGREEMENT
-      });
-    } catch (err) {
-      dispatch({
-        type: RENTAL_ERROR,
-        payload: err
-      });
-    }
-  };
-
-  // Pay for usage
-  const pay = async (timestamp, device, payer, receiver, amount, id) => {
-    try {
-      await state.rentalContract.methods.payForUsage(id,timestamp).send({value: amount, from: state.account});
-      dispatch({
-        type: PAY
       });
     } catch (err) {
       dispatch({
@@ -700,37 +932,37 @@ const RentalState = props => {
   const addTestRentalAgreements = async () => {
     try {
       let tenant1 = "0xFF3904784BeF847991C7705Eef89164A32F31A19";
-      let tenant2 = "0x87deeC84694929a63Aa8ccA01dE58eEA0a6A0e8b";
+      // let tenant2 = "0x87deeC84694929a63Aa8ccA01dE58eEA0a6A0e8b";
       let lessor = "0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD";
       let device1 = "0xbB8f0d80e1B66e71629D47AB547042E5004F39Df";
-      let device2 = "0x6A7b417aC5A2e20b47fa7717963ce24068B2b3c9";
-      let device3 = "0x0fd6f673BC51400B5022eeF84c4a87EBA7D4ac29";
-      let device4 = "0x158A17F73c8ca58f929B0cbAF0434Dd02a8cC159";
-      let fee = '10000000000000000';
-      let term = 1589255236;
-      // let hash1 = this.web3.utils.soliditySha3(tenant1,lessor,device1,fee,term);
-      // let hash2 = this.web3.utils.soliditySha3(tenant1,lessor,device2,fee,term);
-      // let hash3 = this.web3.utils.soliditySha3(tenant2,lessor,device3,fee,term);
-      // let hash4 = this.web3.utils.soliditySha3(tenant2,lessor,device4,fee,term);
-      // let signature1 = await this.web3.eth.personal.sign(hash1, this.account);
-      // let signature2 = await this.web3.eth.personal.sign(hash2, this.account);
-      // let signature3 = await this.web3.eth.personal.sign(hash3, this.account);
-      // let signature4 = await this.web3.eth.personal.sign(hash4, this.account);
-      // let result1 = await this.RentalContract.methods.verify(tenant1, lessor, device1, fee, term, signature1, this.account).call();
-      // let result2 = await this.RentalContract.methods.verify(tenant1, lessor, device2, fee, term, signature2, this.account).call();
-      // let result3 = await this.RentalContract.methods.verify(tenant2, lessor, device3, fee, term, signature3, this.account).call();
-      // let result4 = await this.RentalContract.methods.verify(tenant2, lessor, device4, fee, term, signature4, this.account).call();
-      // console.log(signature1);
+      // let device2 = "0x6A7b417aC5A2e20b47fa7717963ce24068B2b3c9";
+      // let device3 = "0x0fd6f673BC51400B5022eeF84c4a87EBA7D4ac29";
+      // let device4 = "0x158A17F73c8ca58f929B0cbAF0434Dd02a8cC159";
+      let fee = '1';
+      let term = 1589378681;
+      let hash1 = state.web3.utils.soliditySha3(tenant1,lessor,device1,fee,term);
+      // let hash2 = state.web3.utils.soliditySha3(tenant1,lessor,device2,fee,term);
+      // let hash3 = state.web3.utils.soliditySha3(tenant2,lessor,device3,fee,term);
+      // let hash4 = state.web3.utils.soliditySha3(tenant2,lessor,device4,fee,term);
+      let signature1 = await state.web3.eth.personal.sign(hash1, state.account);
+      // let signature2 = await state.web3.eth.personal.sign(hash2, state.account);
+      // let signature3 = await state.web3.eth.personal.sign(hash3, state.account);
+      // let signature4 = await state.web3.eth.personal.sign(hash4, state.account);
+      // let result1 = await state.rentalContract.methods.verify(tenant1, lessor, device1, fee, term, signature1, this.account).call();
+      // let result2 = await state.rentalContract.methods.verify(tenant1, lessor, device2, fee, term, signature2, this.account).call();
+      // let result3 = await state.rentalContract.methods.verify(tenant2, lessor, device3, fee, term, signature3, this.account).call();
+      // let result4 = await state.rentalContract.methods.verify(tenant2, lessor, device4, fee, term, signature4, this.account).call();
+      console.log(signature1);
       // console.log(signature2);
       // console.log(signature3);
       // console.log(signature4);
-      let signature1 = "0xabba693fdacb2bbe6241dcd0d28a644f4da3e0ea57bfd4121fcd09fb371284a75cd4b3a78f9ff86b47eb6583175fdb711dc3a8d3e127bccfab9e4053f9e107ea1b";
-      let signature2 = "0x2a1187601a6b8a9fffa71be8094c1d8561fdb37e0ba60283b39055c736467d404a2146d2fcc0c6c88b043db20abf01f78b582dc5d132244a7602dbaa442183b81b";
-      let signature3 = "0x818a0d6a8e6cb762d82cdde4d692038096d241628e8e491905b2fbb637f131261e96f7f9cfa7b0e52565ca28fad8a2e0a321dafac444109e673eaacd30dfb3d21b";
-      let signature4 = "0xb5db6f6cd51bf2680e92995660ec041d938af3a7c2b585fd8b3f7312fedb5b4f1a46c908c4cc771cd6ecc68bbf57e2b826f3e1f7b3936247f457ae990381e15c1b";
+      // let signature1 = "0x08583087daa63888213b72accfb2ddad7749bc95743420d226b9eaf91fd24d851ad53944e2744a68b27911d949f5b0680c0e60ae487da7a81a72c07503a12c821c";
+      // let signature2 = "0x0a6c385d393a56b2b0d78c87fd70b7050474db78d58759534d71447342dccc193f77c9a5cd4217d6d19a662cb096aca702e9b3ad0b40f333ea8cb1132967bc4b1c";
+      // let signature3 = "0xd70103566140835f14af6e17a8a0124c0196ccaff9ba088b698e3db8ac74c8e706a4548f0789ca5efd9d7bc9ee16a17e259a18fdf07f4927e10f5918e2b1f0921c";
+      // let signature4 = "0x11f0648d05ceb6950df42279a065ad66528a90e5966be7c48a97ce1fb963ccb76b9296d84673012cdd150a79555873fd9b595b5304206eb2d1e9270e851ba1321b";
       let result1 = await state.rentalContract.methods.createRenting(tenant1, signature1, device1, fee, term).send({from: state.account});
-      let result2 = await state.rentalContract.methods.createRenting(tenant1, signature2, device2, fee, term).send({from: state.account});
-      let result3 = await state.rentalContract.methods.createRenting(tenant2, signature3, device3, fee, term).send({from: state.account});
+      // let result2 = await state.rentalContract.methods.createRenting(tenant1, signature2, device2, fee, term).send({from: state.account});
+      // let result3 = await state.rentalContract.methods.createRenting(tenant2, signature3, device3, fee, term).send({from: state.account});
       // let result4 = await this.RentalContract.methods.createRenting(tenant2, signature4, device4, fee, term).send();
 
       dispatch({
@@ -744,8 +976,72 @@ const RentalState = props => {
     }
   };
 
-  // TODO: TERMINATE_RENTAL_AGREEMENT = 'TERMINATE_RENTAL_AGREEMENT';
+  // terminate rentalAgreement
+  const terminateRentalAgreement = async (id) => {
+    try {
+      await state.rentalContract.methods.terminate(id).send({from: state.account});
 
+      dispatch({
+        type: TERMINATE_RENTAL_AGREEMENT
+      });
+      getAgreements();
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
+  };
+
+
+  // get rentalRequests
+  const getRequests = async (role) => {
+    try {
+      let requests;
+      console.log(role);
+      switch (role) {
+        case "1":
+          requests = await state.rentalContract.methods.getRequestsAsLessor().call({from: state.account});
+          console.log(requests);
+          dispatch({
+            type: GET_REQUESTS,
+            payload: requests
+          });
+          break;
+        case "2":
+          requests = await state.rentalContract.methods.getRequestsAsTenant().call({from: state.account});
+          dispatch({
+            type: GET_REQUESTS,
+            payload: requests
+          });
+          break;
+        default:
+
+      }
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
+  };
+
+
+  // add rentalRequest
+  const addRequest = async (device, lessor, term) => {
+    try {
+      await state.rentalContract.methods.createRequest(device, lessor, term).send({from: state.account});
+      dispatch({
+        type: ADD_REQUEST,
+        payload: device
+      });
+    } catch (err) {
+      dispatch({
+        type: RENTAL_ERROR,
+        payload: err
+      });
+    }
+  };
 
   return (
     <RentalContext.Provider
@@ -754,7 +1050,8 @@ const RentalState = props => {
         web3: state.web3,
         rentalContract: state.rentalContract,
         rentalAgreements: state.rentalAgreements,
-        payments: state.payments,
+        requests: state.requests,
+        numRequests: state.numRequests,
         rentableDevices: state.rentableDevices,
         loading: state.loading,
         error: state.error,
@@ -763,12 +1060,13 @@ const RentalState = props => {
         numTerminatedAgreements: state.numTerminatedAgreements,
         setRentalAccount,
         getAgreements,
-        getPayments,
         getRentableDevices,
         acceptRentalAgreement,
-        pay,
         addTestRentalAgreements,
-        resetRental
+        resetRental,
+        terminateRentalAgreement,
+        getRequests,
+        addRequest,
       }}
     >
       {props.children}

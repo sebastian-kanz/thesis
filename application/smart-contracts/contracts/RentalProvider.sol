@@ -1,9 +1,10 @@
 pragma solidity >= 0.5.0 < 0.7.0;
 
-import "./IdentityOracle.sol";
+import "./IdentityProvider.sol";
+import "./PaymentProvider.sol";
 import "./Ownable.sol";
 
-contract Renting is Ownable {
+contract RentalProvider is Ownable {
   //possible states of an agreement
   enum AgreementState {
     Pending,
@@ -11,8 +12,16 @@ contract Renting is Ownable {
     Terminated
   }
 
-  RentalAgreement[] private agreements;
-  address[] private rentableDevices;
+  RentalRequest[] public requests;
+  RentalAgreement[] public agreements;
+  address[] public rentableDevices;
+
+  struct RentalRequest {
+    address tenant;
+    address lessor;
+    address device;
+    uint256 contractTerm;
+  }
 
   struct RentalAgreement {
     address payable tenant;
@@ -24,27 +33,12 @@ contract Renting is Ownable {
     uint contractTerm;    //unix timestamp
     uint creation;        //unix timestamp
     AgreementState state;
+    bytes32 paymentAgreementHash;
   }
 
-  // mapping(address => mapping(bytes32 => Payment)) private payments;
-  //paymentHash to payment
-  mapping(bytes32 => Payment) private payments;
-  //payer address to array of paymentHashes
-  mapping(address => bytes32[]) private paymentsByPayer;
-  //receiver address to array of paymentHashes
-  mapping(address => bytes32[]) private paymentsByReceiver;
 
-
-  struct Payment {
-    uint timestamp;
-    address device;
-    address payer;
-    address receiver;
-    uint amount;
-    bytes32 agreementHash;
-  }
-
-  address private oracle_addr;
+  address public oracle_addr;
+  address public paymentProvider_addr;
   address payable public owner;
 
   constructor () public {
@@ -52,7 +46,7 @@ contract Renting is Ownable {
   }
 
   function init() public onlyOwner {
-    IdentityOracle oracle = IdentityOracle(oracle_addr);
+    IdentityProvider oracle = IdentityProvider(oracle_addr);
     rentableDevices = oracle.getKnownDevices();
   }
 
@@ -65,14 +59,106 @@ contract Renting is Ownable {
     return rentableDevices;
   }
 
-  function createRequest(address _device, uint256 _term) public {
-    require(isKnownParticipant(msg.sender, 2));
-    require(isKnownParticipant(_device, 5));
-    require(!agreementExists(msg.sender, _device));
-    //todo !!!!!!!!!!!!!!!!!!!!!!!
+  function deviceIsRentable(address _device) public view returns (bool) {
+    bool found = false;
+    for(uint i = 0; i < rentableDevices.length; i++) {
+      if(_device == rentableDevices[i]) {
+        found = true;
+      }
+    }
+    return found;
   }
 
-  function removeDeviceFromRentableList(uint index) private {
+  function createRequest(address _device, address _lessor, uint256 _term) public {
+    require(isKnownParticipant(msg.sender, 2));
+    require(isKnownParticipant(_device, 5));
+    require(isKnownParticipant(_lessor, 1));
+    require(deviceIsRentable(_device));
+    IdentityProvider oracle = IdentityProvider(oracle_addr);
+    require(_lessor == oracle.getIdentityOwner(_device));
+    require(!agreementExists(msg.sender, _device));
+    require(!requestExists(msg.sender, _lessor, _device, _term));
+    requests.push(RentalRequest(msg.sender, _lessor, _device, _term));
+    removeDeviceFromRentableList(getRentableDeviceListIndex(_device));
+  }
+
+  function removeRequest(address _tenant, address _lessor, address _device, uint256 _term) public {
+    require(isKnownParticipant(msg.sender, 1));
+    require(msg.sender == _lessor);
+    require(requestExists(_tenant, _lessor, _device, _term));
+    uint index = 0;
+    for(uint i = 0; i < requests.length; i++) {
+      if(requests[i].tenant == _tenant && requests[i].lessor == _lessor && requests[i].device == _device && requests[i].contractTerm == _term) {
+        index = i;
+      }
+    }
+    for (uint i = index; i<requests.length-1; i++){
+        requests[i] = requests[i+1];
+    }
+    delete requests[requests.length-1];
+    requests.length--;
+  }
+
+  function getRequestsAsLessor() public view returns(address[] memory, address[] memory, address[] memory, uint256[] memory) {
+    require(isKnownParticipant(msg.sender, 1));
+    uint count = 0;
+    for(uint i = 0; i < requests.length; i++) {
+      if(requests[i].lessor == msg.sender) {
+        count++;
+      }
+    }
+    address[] memory tenants = new address[](count);
+    address[] memory lessors = new address[](count);
+    address[] memory devices = new address[](count);
+    uint256[] memory terms = new uint256[](count);
+    uint index = 0;
+    for(uint i = 0; i < requests.length; i++) {
+      if(requests[i].lessor == msg.sender) {
+        tenants[index] = requests[i].tenant;
+        lessors[index] = requests[i].lessor;
+        devices[index] = requests[i].device;
+        terms[index] = requests[i].contractTerm;
+        index++;
+      }
+    }
+    return (tenants, lessors, devices, terms);
+  }
+
+  function getRequestsAsTenant() public view returns(address[] memory, address[] memory, address[] memory, uint256[] memory) {
+    require(isKnownParticipant(msg.sender, 2));
+    uint count = 0;
+    for(uint i = 0; i < requests.length; i++) {
+      if(requests[i].tenant == msg.sender) {
+        count++;
+      }
+    }
+    address[] memory tenants = new address[](count);
+    address[] memory lessors = new address[](count);
+    address[] memory devices = new address[](count);
+    uint256[] memory terms = new uint256[](count);
+    uint index = 0;
+    for(uint i = 0; i < requests.length; i++) {
+      if(requests[i].tenant == msg.sender) {
+        tenants[index] = requests[i].tenant;
+        lessors[index] = requests[i].lessor;
+        devices[index] = requests[i].device;
+        terms[index] = requests[i].contractTerm;
+        index++;
+      }
+    }
+    return (tenants, lessors, devices, terms);
+  }
+
+  function requestExists(address _tenant, address _lessor, address _device, uint256 _term) public view returns (bool){
+    for(uint i = 0; i < requests.length; i++) {
+      if(requests[i].tenant == _tenant && requests[i].lessor == _lessor && requests[i].device == _device && requests[i].contractTerm == _term ) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function removeDeviceFromRentableList(uint index) public {
     require(index < rentableDevices.length);
     require(index >= 0);
     for (uint i = index; i<rentableDevices.length-1; i++){
@@ -82,7 +168,7 @@ contract Renting is Ownable {
     rentableDevices.length--;
   }
 
-  function getRentableDeviceListIndex(address _device) private returns (uint) {
+  function getRentableDeviceListIndex(address _device) public view returns (uint) {
     for(uint i = 0; i < rentableDevices.length; i++) {
       if(_device == rentableDevices[i]) {
         return i;
@@ -96,7 +182,7 @@ contract Renting is Ownable {
   /// @param _roleID the role of the identity
   /// @return a boolean whether or not the identity is known
   function isKnownParticipant(address _addr, uint _roleID) public view returns(bool) {
-      IdentityOracle oracle = IdentityOracle(oracle_addr);
+      IdentityProvider oracle = IdentityProvider(oracle_addr);
       if(oracle.identityExists(_addr) && oracle.getIdentityRole(_addr) == _roleID) {
         return true;
       } else {
@@ -107,11 +193,18 @@ contract Renting is Ownable {
   /// @notice sets the oracle address
   /// @dev only callable by owner
   /// @param _addr the address of the orcle
-  function registerIdentityOracle(address _addr) public onlyOwner {
+  function registerIdentityProvider(address _addr) public onlyOwner {
     oracle_addr = _addr;
   }
 
-  function verify(address _tenant, address _lessor, address _device, uint256 _fee, uint256 _term, bytes memory _sig, address _signer) public view returns (bool) {
+  /// @notice sets the PaymentProvider address
+  /// @dev only callable by owner
+  /// @param _addr the address of the PaymentProvider
+  function registerPaymentProvider(address _addr) public onlyOwner {
+    paymentProvider_addr = _addr;
+  }
+
+  function verify(address _tenant, address _lessor, address _device, uint256 _fee, uint256 _term, bytes memory _sig, address _signer) public pure returns (bool) {
     (uint8 v, bytes32 r, bytes32 s) = splitSignature(_sig);
     bytes32 hashCalc = keccak256(abi.encodePacked(_tenant,_lessor,_device,_fee,_term));
     bytes memory prefix = "\x19Ethereum Signed Message:\n32";
@@ -135,10 +228,17 @@ contract Renting is Ownable {
     //check that no rentalAgreement with same parameters exists
     require(!agreementExists(_lessorSignature));
     removeDeviceFromRentableList(getRentableDeviceListIndex(_device));
-    agreements.push(RentalAgreement(address(uint160(_tenant)), new bytes(65), msg.sender, _lessorSignature, _device, _usageFee, _contractTerm, now, AgreementState.Pending));
+
+    removeRequest(_tenant, msg.sender, _device, _contractTerm);
+
+    bytes32 paymentAgreementHash = keccak256(abi.encodePacked(now, _tenant, msg.sender));
+    PaymentProvider paymentProvider = PaymentProvider(paymentProvider_addr);
+    paymentProvider.addPaymentAgreement(paymentAgreementHash, msg.sender, address(uint160(_tenant)));
+
+    agreements.push(RentalAgreement(address(uint160(_tenant)), new bytes(65), msg.sender, _lessorSignature, _device, _usageFee, _contractTerm, now, AgreementState.Pending, paymentAgreementHash));
   }
 
-  function agreementExists(bytes memory _lessorSignature) private view returns (bool) {
+  function agreementExists(bytes memory _lessorSignature) public view returns (bool) {
     for(uint i = 0; i < agreements.length; i++) {
       if(keccak256(agreements[i].lessorSignature) == keccak256(_lessorSignature)) {
         return true;
@@ -147,7 +247,7 @@ contract Renting is Ownable {
     return false;
   }
 
-  function agreementExists(address _tenant, address _device) private view returns (bool) {
+  function agreementExists(address _tenant, address _device) public view returns (bool) {
     require(isKnownParticipant(_tenant, 2));
     require(isKnownParticipant(_device, 5));
     for(uint i = 0; i < agreements.length; i++) {
@@ -158,7 +258,7 @@ contract Renting is Ownable {
     return false;
   }
 
-  function getIDs(uint _stateID) public returns (uint[] memory) {
+  function getIDs(uint _stateID) public view returns (uint[] memory) {
     uint count = 0;
     for(uint i = 0; i < agreements.length; i++) {
       if(agreements[i].tenant == msg.sender && agreements[i].state == AgreementState(_stateID) ) {
@@ -176,22 +276,24 @@ contract Renting is Ownable {
     return rentalAgreementIDs;
   }
 
-  function getByID(uint _id) public view returns (address, bytes memory, address, bytes memory, address, uint, uint, uint, uint) {
+  function getByID(uint _id) public view returns (address, bytes memory, address, bytes memory, address, uint, uint, uint, uint, bytes32) {
     require(_id < agreements.length);
     RentalAgreement memory agreement = agreements[_id];
     require(msg.sender == agreement.tenant || msg.sender == agreement.lessor);
-    return (agreement.tenant, agreement.tenantSignature, agreement.lessor, agreement.lessorSignature, agreement.device, agreement.usageFee, agreement.contractTerm, agreement.creation, uint256(agreement.state));
-
+    return (agreement.tenant, agreement.tenantSignature, agreement.lessor, agreement.lessorSignature, agreement.device, agreement.usageFee, agreement.contractTerm, agreement.creation, uint256(agreement.state), agreement.paymentAgreementHash);
   }
 
-  function accept(uint _id, bytes memory _signature) public {
+  function accept(uint _id, bytes memory _signature) public payable {
     require(_id < agreements.length);
     require(now < agreements[_id].contractTerm);
     require(agreements[_id].state == AgreementState.Pending);
     require(agreements[_id].tenant == msg.sender);
     require(recoverSigner(getRentalAgreementHash(_id), _signature) == msg.sender);
+    require(msg.value > 0);
     agreements[_id].tenantSignature = _signature;
     agreements[_id].state = AgreementState(1);
+    PaymentProvider paymentProvider = PaymentProvider(paymentProvider_addr);
+    paymentProvider.charge.value(msg.value)(agreements[_id].paymentAgreementHash);
   }
 
   function splitSignature(bytes memory _sig) internal pure returns (uint8 v, bytes32 r, bytes32 s) {
@@ -217,52 +319,52 @@ contract Renting is Ownable {
     return ecrecover(_message, v, r, s);
   }
 
-  function payForUsage(uint _id, uint _timestamp) payable public {
-    require(_id < agreements.length);
-    //payment must be in the past
-    require(_timestamp <= now);
-    // the contract must not be outdated
-    require(now < agreements[_id].contractTerm);
-    RentalAgreement memory rentalAgreement = agreements[_id];
-    //rentalAgreement must be accepted (and therefore signed) by sender
-    require(recoverSigner(getRentalAgreementHash(_id), rentalAgreement.tenantSignature) == msg.sender);
-    require(msg.sender == rentalAgreement.tenant);
-    require(msg.value == rentalAgreement.usageFee);
-    require(rentalAgreement.state == AgreementState.Active);
-    rentalAgreement.lessor.transfer(msg.value);
-    bytes32 agreementHash = getRentalAgreementHash(_id);
-    bytes32 paymentHash = getPaymentHash(_timestamp, rentalAgreement.device, msg.sender, rentalAgreement.lessor, msg.value, agreementHash);
-    payments[paymentHash] = Payment(_timestamp, rentalAgreement.device, msg.sender, rentalAgreement.lessor, msg.value, agreementHash);
-    paymentsByPayer[msg.sender].push(paymentHash);
-    paymentsByReceiver[rentalAgreement.lessor].push(paymentHash);
-  }
+  // function payForUsage(uint _id, uint _timestamp) payable public {
+  //   require(_id < agreements.length);
+  //   //payment must be in the past
+  //   require(_timestamp <= now);
+  //   // the contract must not be outdated
+  //   require(now < agreements[_id].contractTerm);
+  //   RentalAgreement memory rentalAgreement = agreements[_id];
+  //   //rentalAgreement must be accepted (and therefore signed) by sender
+  //   require(recoverSigner(getRentalAgreementHash(_id), rentalAgreement.tenantSignature) == msg.sender);
+  //   require(msg.sender == rentalAgreement.tenant);
+  //   require(msg.value == rentalAgreement.usageFee);
+  //   require(rentalAgreement.state == AgreementState.Active);
+  //   rentalAgreement.lessor.transfer(msg.value);
+  //   bytes32 agreementHash = getRentalAgreementHash(_id);
+  //   bytes32 paymentHash = getPaymentHash(_timestamp, rentalAgreement.device, msg.sender, rentalAgreement.lessor, msg.value, agreementHash);
+  //   payments[paymentHash] = Payment(_timestamp, rentalAgreement.device, msg.sender, rentalAgreement.lessor, msg.value, agreementHash);
+  //   paymentsByPayer[msg.sender].push(paymentHash);
+  //   paymentsByReceiver[rentalAgreement.lessor].push(paymentHash);
+  // }
 
-  function getRentalAgreementHash(uint _id) public returns (bytes32) {
+  function getRentalAgreementHash(uint _id) public view returns (bytes32) {
     require(_id < agreements.length);
     bytes32 message = keccak256(abi.encodePacked(agreements[_id].tenant, agreements[_id].lessor, agreements[_id].device, agreements[_id].usageFee, agreements[_id].contractTerm));
     bytes memory prefix = "\x19Ethereum Signed Message:\n32";
     return keccak256(abi.encodePacked(prefix, message));
   }
 
-  function getPaymentHash(uint _timestamp, address _device, address _payer, address _receiver, uint _amount, bytes32 _agreementHash) public view returns (bytes32) {
-    bytes32 message = keccak256(abi.encodePacked(_timestamp, _device, _payer, _receiver, _amount, _agreementHash));
-    // bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-    // return keccak256(abi.encodePacked(prefix, message));
-    return message;
-  }
+  // function getPaymentHash(uint _timestamp, address _device, address _payer, address _receiver, uint _amount, bytes32 _agreementHash) public view returns (bytes32) {
+  //   bytes32 message = keccak256(abi.encodePacked(_timestamp, _device, _payer, _receiver, _amount, _agreementHash));
+  //   // bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+  //   // return keccak256(abi.encodePacked(prefix, message));
+  //   return message;
+  // }
 
-  function getPayment(bytes32 _paymentHash) public view returns (uint256, address, address, address, uint256, bytes32){
-    require(msg.sender == payments[_paymentHash].device || msg.sender == payments[_paymentHash].payer || msg.sender == payments[_paymentHash].receiver);
-    return (payments[_paymentHash].timestamp, payments[_paymentHash].device, payments[_paymentHash].payer, payments[_paymentHash].receiver, payments[_paymentHash].amount, payments[_paymentHash].agreementHash);
-  }
+  // function getPayment(bytes32 _paymentHash) public view returns (uint256, address, address, address, uint256, bytes32){
+  //   require(msg.sender == payments[_paymentHash].device || msg.sender == payments[_paymentHash].payer || msg.sender == payments[_paymentHash].receiver);
+  //   return (payments[_paymentHash].timestamp, payments[_paymentHash].device, payments[_paymentHash].payer, payments[_paymentHash].receiver, payments[_paymentHash].amount, payments[_paymentHash].agreementHash);
+  // }
 
-  function getIncomingPaymentHashes() public view returns (bytes32[] memory) {
-    return paymentsByReceiver[msg.sender];
-  }
-
-  function getOutgoingPaymentHashes() public view returns (bytes32[] memory) {
-    return paymentsByPayer[msg.sender];
-  }
+  // function getIncomingPaymentHashes() public view returns (bytes32[] memory) {
+  //   return paymentsByReceiver[msg.sender];
+  // }
+  //
+  // function getOutgoingPaymentHashes() public view returns (bytes32[] memory) {
+  //   return paymentsByPayer[msg.sender];
+  // }
 
   function terminate(uint _agreementID) public {
     require(_agreementID < agreements.length);
@@ -270,6 +372,10 @@ contract Renting is Ownable {
     require(rentalAgreement.state == AgreementState.Active);
     require(msg.sender == rentalAgreement.tenant || msg.sender == rentalAgreement.lessor);
     agreements[_agreementID].state = AgreementState.Terminated;
+
+    PaymentProvider paymentProvider = PaymentProvider(paymentProvider_addr);
+    paymentProvider.empty(agreements[_agreementID].paymentAgreementHash);
+
     rentableDevices.push(rentalAgreement.device);
   }
 

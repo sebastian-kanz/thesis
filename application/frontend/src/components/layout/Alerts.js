@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 const Alerts = () => {
 
@@ -7,8 +7,8 @@ const Alerts = () => {
   return (
     test.length > 0 &&
     test.map(alert => (
-      <div key={alert.id} className={`alert alert-${alert.type}`}>
-        <i className='fas fa-info-circle' /> {alert.msg}
+      <div key={alert.id}>
+        {alert.msg}
       </div>
     ))
   );

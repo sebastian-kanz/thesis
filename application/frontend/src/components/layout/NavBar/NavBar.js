@@ -1,22 +1,16 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import Button from '@material-ui/core/Button';
 import PersonIcon from '@material-ui/icons/Person';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
@@ -24,7 +18,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AuthContext from './../../../context/auth/authContext';
 import IdentityContext from './../../../context/identity/identityContext';
 import RentalContext from './../../../context/rental/rentalContext';
-import RentalAgreementContainer from './../../RentalAgreement/RentalAgreementContainer';
+import PaymentContext from './../../../context/payment/paymentContext';
 import MenuDefault from './MenuList/MenuDefault';
 import MenuCustomer from './MenuList/MenuCustomer';
 import MenuManufacturer from './MenuList/MenuManufacturer';
@@ -107,9 +101,11 @@ export default function Bar() {
   const authContext = useContext(AuthContext);
   const rentalContext = useContext(RentalContext);
   const identityContext = useContext(IdentityContext);
-  const { setOwnIdentity, ownIdentity, resetIdentity } = identityContext;
+  const paymentContext = useContext(PaymentContext);
+  const { setOwnIdentity, ownIdentity, resetIdentity,getKnownDevices, getKnownManufacturers, getKnownServiceProviders, getKnownSuppliers } = identityContext;
   const { login, logout, authenticated, balance } = authContext;
-  const { addTestRentalAgreements, setRentalAccount, getAgreements, resetRental } = rentalContext;
+  const { setRentalAccount, resetRental } = rentalContext;
+  const { setPaymentAccount } = paymentContext;
 
 
 
@@ -120,16 +116,22 @@ export default function Bar() {
       if(authenticated) {
         reload();
       }
-    })
+    }, () => {
+      ethereum.removeAllListeners();
+    });
     ethereum.on('networkChanged', () => {
       if(authenticated) {
         reload();
       }
+    }, () => {
+      ethereum.removeAllListeners();
     });
     ethereum.on('accountsChanged', () => {
       if(authenticated) {
         reload();
       }
+    }, () => {
+      ethereum.removeAllListeners();
     });
   }
 
@@ -138,7 +140,12 @@ export default function Bar() {
   const onLogin = async() => {
     let newAccount = await login();
     await setOwnIdentity(newAccount);
+    await getKnownDevices();
+    await getKnownManufacturers();
+    await getKnownServiceProviders();
+    await getKnownSuppliers();
     await setRentalAccount(newAccount);
+    await setPaymentAccount(newAccount);
     history.push("/overview");
   }
 
@@ -152,10 +159,6 @@ export default function Bar() {
     resetIdentity();
     resetRental();
     history.push("/welcome");
-  }
-
-  const onCreateTest = () => {
-    addTestRentalAgreements();
   }
 
   return (

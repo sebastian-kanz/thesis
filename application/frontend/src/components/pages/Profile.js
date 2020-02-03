@@ -55,20 +55,14 @@ const Profile = () => {
                   switch (ownIdentity['role']) {
                     case '1':
                       return <span> Hersteller</span>
-                      break;
                     case '2':
                       return <span> Kunde</span>
-                      break;
                     case '3':
                       return <span> Service-Techniker</span>
-                      break;
                     case '4':
                       return <span> Lieferant</span>
-                      break;
                     default:
                       return <span> Unbekannt</span>
-                      break;
-
                   }
 
                 })()}

@@ -1,0 +1,10 @@
+1)	Deploy IdentityProvider
+2)	IdentityProvider: addTestData()
+3)	Deploy PaymentProvider
+4)	Deploy RentalProvider
+5)	PaymentProvider: registerRentalProvider()
+6)	RentalProvider: registerPaymentProvider()
+7)	RentalProvider: registerIdentityProvider()
+8)	RentalProvider: init()
+
+Update Contract Addresses in source files

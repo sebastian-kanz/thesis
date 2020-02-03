@@ -18,6 +18,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import IdentityContext from './../../context/identity/identityContext';
+import PaymentContext from './../../context/payment/paymentContext';
 Moment.globalFormat = 'DD.MM.YYYY HH:MM:SS';
 
 
@@ -33,64 +34,105 @@ const RentalAgreement = ({ agreement }) => {
   let contractTerm = agreement[6];
   let creation = agreement[7];
   let state = agreement[8];
-  let id = agreement[9];
-  let hash = agreement[10];
+  let paymentHash = agreement[9]
+  let id = agreement[10];
+  let hash = agreement[11];
 
   const rentalContext = useContext(RentalContext);
+  const paymentContext = useContext(PaymentContext);
   const identityContext = useContext(IdentityContext);
-  const { payments, acceptRentalAgreement, pay, getPayments, getAgreements } = rentalContext;
+  const { acceptRentalAgreement, getAgreements, terminateRentalAgreement } = rentalContext;
   const { identities } = identityContext;
+  const { charge, balance, getBalance, getPaymentHistory, paymentHistory, getPaymentData } = paymentContext;
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     getPayments();
+  //     getAgreements();
+  //   }, 5000);
+  //   return () => clearTimeout(timer);
+  //   // eslint-disable-next-line
+  // },[payments]);
 
   useEffect(() => {
-    // invoices = payments.filter((item) => {
-    //   return item[5] == hash
-    // });
-    // total = invoices.reduce(sumTotal,0.0)
-    const timer = setTimeout(() => {
-      getPayments();
-      getAgreements();
-    }, 5000);
-    return () => clearTimeout(timer);
+    getBalance(paymentHash);
+    getPaymentHistory(paymentHash);
     // eslint-disable-next-line
-  },[payments]);
+  },[]);
 
   const deviceIdentity = identities.filter((identity) => {
     return identity['address'] == device.toLowerCase()
   });
-  const deviceName = deviceIdentity[0]['name'];
+
+  let deviceName = !deviceIdentity? "" : [0]['name'];
 
   const lessorIdentity = identities.filter((identity) => {
     return identity['address'] == lessor.toLowerCase()
   });
   const lessorName = lessorIdentity[0]['name'];
 
-
-
   const [expanded, setExpanded] = useState(false);
-
-  let invoices = payments.filter((item) => {
-    return item[5] === hash
-  });
-
-  const sumTotal = (total, elem) => {
-    return total + parseFloat(elem[4]/1000000000000000000);
-  };
-
-  let total = invoices.reduce(sumTotal,0.0)
-
 
   const onToggleInvoice = async() => {
     setExpanded(!expanded);
+    getPaymentHistory(paymentHash);
   }
 
   const onPay = async() => {
-    let timestamp = Math.floor(Date.now() / 1000);
-    await pay(timestamp, device, tenant, lessor, usageFee, id);
+    await getPaymentData(paymentHash);
+  }
+
+  const onCharge = async() => {
+    await charge(paymentHash, 58000000000000000);
+    await getBalance(paymentHash);
   }
 
   const onAccept = async() => {
     await acceptRentalAgreement(tenant,lessor,device,usageFee,contractTerm,id);
   }
+
+  const onTerminate = async() => {
+    await terminateRentalAgreement(id);
+  }
+
+  let history = [];
+  let timestampStartArr = [];
+  let timestampEndArr = [];
+  let units = [];
+  let costs = [];
+
+  Object.entries(paymentHistory).forEach((item, i) => {
+    switch (item[0]) {
+      case "0":
+        timestampStartArr = item[1];
+        break;
+      case "1":
+        timestampEndArr = item[1];
+        break;
+      case "2":
+        units = item[1];
+        break;
+      case "3":
+        costs = item[1];
+        break;
+      default:
+        break;
+    }
+  });
+
+  for (let i = 0; i < costs.length; i++) {
+    history[i] = {
+      "timestampStart": timestampStartArr[i],
+      "timestampEnd": timestampEndArr[i],
+      "units": units[i],
+      "costs": costs[i],
+    };
+  }
+
+  const totalCosts = history.reduce((sum,record) => sum + parseInt(record['costs']), 0);
+  const totalUnits = history.reduce((sum,record) => sum + parseInt(record['units']), 0);
+
+
 
   return (
     <Container fixed style={{marginTop: 40}}>
@@ -157,15 +199,18 @@ const RentalAgreement = ({ agreement }) => {
            <Grid item xs={2} align="center">
              <Container>
                <Typography variant="caption" color="textSecondary">
-                 <p>Kosten pro Einheit:<br/>~{(usageFee/ 1000000000000000000 * 148.15).toFixed(2)}€<br/>({usageFee / 1000000000000000000} ETH)</p>
+                 <p>Kosten pro Einheit:<br/>~{(totalCosts / totalUnits / 1000000000000000000 * 172.16).toFixed(2)}€<br/>({(totalCosts / totalUnits / 1000000000000000000).toFixed(4)}<br/>ETH)</p>
                </Typography>
                {parseInt(state) === 1 &&
                  <Fragment>
                    <Typography variant="caption" color="textSecondary">
-                     <p>Kosten Gesamt:<br/>~{(total * 148.15).toFixed(2)}€<br/>({total} ETH)</p>
+                     <p>Kosten Gesamt:<br/>~{(totalCosts/1000000000000000000 * 172.16).toFixed(2)}€<br/>({(totalCosts/1000000000000000000).toFixed(4)}<br/>ETH)</p>
                    </Typography>
                    <Typography variant="caption" color="textSecondary">
-                     <p>Einheiten Gesamt:<br/>{invoices.length}</p>
+                     <p>Einheiten Gesamt:<br/>{totalUnits}</p>
+                   </Typography>
+                   <Typography variant="caption" color="textSecondary">
+                     <p>Guthaben:<br/>~{(balance/1000000000000000000 * 172.16).toFixed(2)}€<br/>({(balance/1000000000000000000).toFixed(4)}<br/>ETH)</p>
                    </Typography>
                  </Fragment>
                }
@@ -184,14 +229,19 @@ const RentalAgreement = ({ agreement }) => {
                  }
                  {parseInt(state) === 1?
                    <Fragment>
-                     <Button size="large" variant="outlined" color="secondary">
+                     <Button onClick={onTerminate} size="large" variant="outlined" color="secondary">
                        <Typography variant="body2" style={{ cursor: 'pointer' }}>
                         Beenden
                        </Typography>
                      </Button>
                      <Button onClick={onPay} size="large" variant="outlined" color="primary">
                        <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                        Bezahlen
+                        10 Kaffee Bezahlen
+                       </Typography>
+                     </Button>
+                     <Button onClick={onCharge} size="large" variant="outlined" color="primary">
+                       <Typography variant="body2" style={{ cursor: 'pointer' }}>
+                        10€ Aufladen
                        </Typography>
                      </Button>
                      <Button onClick={onToggleInvoice} size="large" variant="outlined" color="primary">
@@ -202,14 +252,14 @@ const RentalAgreement = ({ agreement }) => {
                     </Fragment>
                    : null
                  }
-                 {parseInt(state) === 2?
+                 {/*{parseInt(state) === 2?
                  <Button size="large" variant="outlined" color="default">
                    <Typography variant="body2" style={{ cursor: 'pointer' }}>
                     Reaktivieren
                    </Typography>
                  </Button>
                    : null
-                 }
+                 }*/}
            </Grid>
          </Grid>
          <Grid container justify="center" alignContent="center" alignItems="center" spacing={2}>
@@ -220,17 +270,21 @@ const RentalAgreement = ({ agreement }) => {
                   <Table size="small" aria-label="a dense table">
                     <TableHead>
                       <TableRow>
-                        <TableCell>Zeitpunkt</TableCell>
+                        <TableCell>Zeitraum von</TableCell>
+                        <TableCell>Zeitraum bis</TableCell>
+                        <TableCell>Einheiten</TableCell>
                         <TableCell align="right">Summe</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {
-                        invoices.map((elem, i) => {
+                        history && history.map((elem, i) => {
                           return (
                             <TableRow key={i}>
-                              <TableCell size="small" align="left"><Moment unix format="DD.MM.YYYY HH:mm:ss">{elem[0]}</Moment></TableCell>
-                              <TableCell size="small" align="right">{elem[4] / 1000000000000000000 * 148.15}€ ({elem[4] / 1000000000000000000}ETH)</TableCell>
+                              <TableCell size="small" align="left"><Moment unix format="DD.MM.YYYY HH:mm:ss">{elem['timestampStart']}</Moment></TableCell>
+                              <TableCell size="small" align="left"><Moment unix format="DD.MM.YYYY HH:mm:ss">{elem['timestampEnd']}</Moment></TableCell>
+                              <TableCell size="small" align="left">{elem['units']}</TableCell>
+                              <TableCell size="small" align="right">~{(elem['costs']/ 1000000000000000000 * 172.16).toFixed(2)}€<br/>({(elem['costs'] / 1000000000000000000).toFixed(4)}<br/>ETH)</TableCell>
                             </TableRow>
                           )
                         })

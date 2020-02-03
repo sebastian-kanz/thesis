@@ -14,7 +14,7 @@ import {
 
 const AuthState = props => {
   const initialState = {
-    account: null,
+    account: '0x0000000000000000000000000000000000000000',
     web3: new Web3(window.ethereum || Web3.givenProvider),
     balance: null,
     authenticated: false,

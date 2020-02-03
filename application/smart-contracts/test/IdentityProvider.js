@@ -1,6 +1,6 @@
-var IdentityOracle = artifacts.require("./IdentityOracle.sol");
+var IdentityProvider = artifacts.require("./IdentityProvider.sol");
 
-contract("IdentityOracle", () => {
+contract("IdentityProvider", () => {
     let owner;
     let accounts;
     beforeEach(async() => {
@@ -8,28 +8,28 @@ contract("IdentityOracle", () => {
        owner = accounts[0];
     });
     it('has an owner', async function () {
-      const instance = await IdentityOracle.new();
+      const instance = await IdentityProvider.new();
       assert.equal(await instance.owner(), owner)
     });
     it('should be callable', async function () {
-      const instance = await IdentityOracle.new();
+      const instance = await IdentityProvider.new();
       let result = await instance.testConnection();
       assert.equal(result, true);
     });
     it("should be possible to add test identities", async () => {
-      const instance = await IdentityOracle.new();
+      const instance = await IdentityProvider.new();
       await instance.addTestData();
-      let result1 = await instance.identityExists.call('0x006371774597D7955cA57deFCF84d8B5a699D34A');
+      let result1 = await instance.identityExists.call('0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD');
       assert.equal(result1, true);
-      let result2 = await instance.identityExists.call('0x9ef7f517b0C5340911562c2788C6E4fdc18690f4');
+      let result2 = await instance.identityExists.call('0xFF3904784BeF847991C7705Eef89164A32F31A19');
       assert.equal(result2, true);
-      let result3 = await instance.identityExists.call('0x43b3C4A156aFF47AdB9FB802644219a562C4AFB6');
+      let result3 = await instance.identityExists.call('0x87deeC84694929a63Aa8ccA01dE58eEA0a6A0e8b');
       assert.equal(result3, true);
-      let result4 = await instance.identityExists.call('0xEBf6D811269625389f188cb043555dB5392db69F');
+      let result4 = await instance.identityExists.call('0xbB8f0d80e1B66e71629D47AB547042E5004F39Df');
       assert.equal(result4, true);
     });
     it("should be possible to add custom identities", async () => {
-      const instance = await IdentityOracle.new();
+      const instance = await IdentityProvider.new();
       let result = await instance.identityExists.call(owner);
       assert.equal(result, false, "owner should not be added yet.");
       await instance.addIdentity("owner", 1, owner);
@@ -54,7 +54,7 @@ contract("IdentityOracle", () => {
     });
 
     it("should be possible to own an identity", async () => {
-      const instance = await IdentityOracle.new();
+      const instance = await IdentityProvider.new();
       let result = await instance.identityExists.call(owner);
       assert.equal(result, false, "owner should not be added yet.");
       await instance.addIdentity("owner", 1, owner);
@@ -69,9 +69,9 @@ contract("IdentityOracle", () => {
     });
 
     it("should only be possible to add an identity by owner", async () => {
-      const instance = await IdentityOracle.new();
+      const instance = await IdentityProvider.new();
       try{
-        let result = await instance.addIdentity("owner", 1, accounts[9], {from: accounts[9]});
+        let result = await instance.addIdentity("owner", 1, accounts[0], {from: accounts[1]});
         assert(false);
       }
       catch(err){
@@ -80,7 +80,7 @@ contract("IdentityOracle", () => {
     });
 
     it("should be possible to delete identities", async () => {
-      const instance = await IdentityOracle.new();
+      const instance = await IdentityProvider.new();
       let result = await instance.identityExists.call(owner);
       assert.equal(result, false, "owner should not be added yet.");
       await instance.addIdentity("owner", 1, owner);
@@ -92,10 +92,10 @@ contract("IdentityOracle", () => {
     });
 
     it("should only be possible to delete an identity by owner", async () => {
-      const instance = await IdentityOracle.new();
+      const instance = await IdentityProvider.new();
       await instance.addIdentity("owner", 1, owner);
       try{
-        let result = await instance.deleteIdentity(owner, {from: accounts[9]});
+        let result = await instance.deleteIdentity(owner, {from: accounts[1]});
         assert(false);
       }
       catch(err){

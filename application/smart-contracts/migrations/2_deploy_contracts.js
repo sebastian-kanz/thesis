@@ -1,11 +1,13 @@
-var Renting=artifacts.require ("./Renting.sol");
+var RentalProvider=artifacts.require ("./RentalProvider.sol");
 var DateLib=artifacts.require ("./DateLib.sol");
 var Ownable=artifacts.require ("./Ownable.sol");
-var IdentityOracle=artifacts.require ("./IdentityOracle.sol");
+var IdentityProvider=artifacts.require ("./IdentityProvider.sol");
+var PaymentProvider=artifacts.require ("./PaymentProvider.sol");
 
 module.exports = function(deployer) {
-      deployer.deploy(Renting);
+      deployer.deploy(RentalProvider);
       deployer.deploy(DateLib);
       deployer.deploy(Ownable);
-      deployer.deploy(IdentityOracle);
+      deployer.deploy(IdentityProvider);
+      deployer.deploy(PaymentProvider);
 }
