@@ -6,7 +6,7 @@ import RentalManager from './RentalManager';
 export default class Web3Manager {
 
   constructor() {
-    this.account = '0x0000000000000000000000000000000000000000';
+    this.account = '0x0000000000000000000000000000000000000001';
     const ethereum = window.ethereum;
     const rpcURL = 'http://localhost:8545' // Your RCP URL goes here
 
@@ -43,7 +43,7 @@ export default class Web3Manager {
   logout = async() => {
     console.log("Logging out...");
     var accounts = await window.ethereum.enable();
-    this.account = '0x0000000000000000000000000000000000000000';
+    this.account = '0x0000000000000000000000000000000000000001';
     this.identityManager = new IdentityManager(this.account);
     this.rentalManager = new RentalManager(this.account);
     this.loggedin = false;

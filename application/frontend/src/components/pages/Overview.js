@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 
 
-import AuthContext from './../../context/auth/authContext';
 import IdentityContext from './../../context/identity/identityContext';
 
 import Customer from './../views/Customer'
@@ -12,10 +11,8 @@ import ErrorPage from './../pages/ErrorPage'
 
 const Overview = () => {
 
-  const authContext = useContext(AuthContext);
   const identityContext = useContext(IdentityContext);
-  const { authenticated } = authContext;
-  const { ownIdentity } = identityContext;
+  const { ownIdentity, authenticated } = identityContext;
 
 
   if(authenticated && ownIdentity) {
@@ -33,7 +30,7 @@ const Overview = () => {
 
     }
   } else {
-    return <ErrorPage/>
+    window.location.reload();
   }
 };
 

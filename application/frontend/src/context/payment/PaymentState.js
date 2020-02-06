@@ -12,9 +12,58 @@ import {
   GET_BALANCE
 } from '../types';
 
-export const PAYMENTPROVIDER_CONTRACT_ADDR = '0xE1D50f9f4fCC94E02EeEd3Ca1B635dc33533FBE6';
+export const PAYMENTPROVIDER_CONTRACT_ADDR = '0x363E679332da9824A42673de8B4c03136A07A3f5';
 export const PAYMENTPROVIDER_CONTRACT_ABI =
 [
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "address payable",
+				"name": "_receiver",
+				"type": "address"
+			},
+			{
+				"internalType": "address payable",
+				"name": "_sender",
+				"type": "address"
+			}
+		],
+		"name": "addPaymentAgreement",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hash",
+				"type": "bytes32"
+			}
+		],
+		"name": "charge",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hash",
+				"type": "bytes32"
+			}
+		],
+		"name": "empty",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
 	{
 		"anonymous": false,
 		"inputs": [
@@ -35,149 +84,6 @@ export const PAYMENTPROVIDER_CONTRACT_ABI =
 		"type": "event"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "_hash",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "address payable",
-				"name": "_receiver",
-				"type": "address"
-			},
-			{
-				"internalType": "address payable",
-				"name": "_sender",
-				"type": "address"
-			}
-		],
-		"name": "addPaymentAgreement",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "_hash",
-				"type": "bytes32"
-			}
-		],
-		"name": "charge",
-		"outputs": [],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "_hash",
-				"type": "bytes32"
-			}
-		],
-		"name": "empty",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "_hash",
-				"type": "bytes32"
-			}
-		],
-		"name": "getBalance",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "_hash",
-				"type": "bytes32"
-			}
-		],
-		"name": "getPaymentHistory",
-		"outputs": [
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "",
-				"type": "uint256[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": false,
 		"inputs": [
 			{
 				"internalType": "bytes32",
@@ -212,12 +118,10 @@ export const PAYMENTPROVIDER_CONTRACT_ABI =
 		],
 		"name": "redeem",
 		"outputs": [],
-		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": false,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -227,30 +131,106 @@ export const PAYMENTPROVIDER_CONTRACT_ABI =
 		],
 		"name": "registerRentalProvider",
 		"outputs": [],
-		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": false,
 		"inputs": [
 			{
-				"internalType": "address",
+				"internalType": "address payable",
 				"name": "newOwner",
 				"type": "address"
 			}
 		],
 		"name": "transferOwnership",
 		"outputs": [],
-		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getAddress",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hash",
+				"type": "bytes32"
+			}
+		],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "_hash",
+				"type": "bytes32"
+			}
+		],
+		"name": "getPaymentHistory",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address payable",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	}
 ];
 
 const PaymentState = props => {
   const initialState = {
-    account: null,
+    account: localStorage.getItem('account') || null,
     web3: new Web3(window.web3.currentProvider),
     paymentProviderContract: new (new Web3(window.web3.currentProvider)).eth.Contract(PAYMENTPROVIDER_CONTRACT_ABI, PAYMENTPROVIDER_CONTRACT_ADDR),
     balance: 0,
@@ -278,33 +258,49 @@ const PaymentState = props => {
     }
   }
 
-  const getBalance = async(hash) => {
+  const getBalance = async(hash, controller) => {
     try {
       let balance = await state.paymentProviderContract.methods.getBalance(hash).call({from: state.account});
-      dispatch({
-        type: GET_BALANCE,
-        payload: balance
-      });
+      if(!controller.cancelled) {
+        dispatch({
+          type: GET_BALANCE,
+          payload: balance
+        });
+      } else {
+        console.log("cancelled");
+      }
     } catch (err) {
-      dispatch({
-        type: PAYMENT_ERROR,
-        payload: err
-      });
+      if(!controller.cancelled) {
+        dispatch({
+          type: PAYMENT_ERROR,
+          payload: err
+        });
+      } else {
+        console.log("cancelled");
+      }
     }
   }
 
-  const getPaymentHistory = async(hash) => {
+  const getPaymentHistory = async(hash, controller) => {
     try {
       let history = await state.paymentProviderContract.methods.getPaymentHistory(hash).call({from: state.account});
-      dispatch({
-        type: GET_PAYMENT_HISTORY,
-        payload: history
-      });
+      if(!controller.cancelled) {
+        dispatch({
+          type: GET_PAYMENT_HISTORY,
+          payload: history
+        });
+      } else {
+        console.log("cancelled");
+      }
     } catch (err) {
-      dispatch({
-        type: PAYMENT_ERROR,
-        payload: err
-      });
+      if(!controller.cancelled) {
+        dispatch({
+          type: PAYMENT_ERROR,
+          payload: err
+        });
+      } else {
+        console.log("cancelled");
+      }
     }
   }
 
@@ -322,34 +318,42 @@ const PaymentState = props => {
     }
   }
 
-  const getPaymentData = async(paymentHash) => {
+  const getPaymentData = async(paymentHash, timestampStart, timestampEnd, units, usageFee, controller) => {
     try {
-      let timestampStart = 1580386022;
-      let timestampEnd = 1580396024;
-      let units = 1;
-      let costs = units * 58000000000000000;
+      let costs = units * usageFee;
       let hash = await state.web3.utils.soliditySha3(PAYMENTPROVIDER_CONTRACT_ADDR, timestampStart, timestampEnd, units, costs);
       let signature = await state.web3.eth.personal.sign(hash,state.account);
-      console.log("timestampStart: ", timestampStart);
-      console.log("timestampEnd: ", timestampEnd);
-      console.log("units: ", units);
-      console.log("costs: ", costs);
-      console.log("signature: ",signature);
-      console.log("hash: ",paymentHash);
-      dispatch({
-        type: GET_PAYMENT_DATA
-      });
+      let payment = {
+        'timestampStart': timestampStart,
+        'timestampEnd': timestampEnd,
+        'units': units,
+        'signature': signature,
+        'hash': hash,
+      }
+      console.log(JSON.stringify(payment));
+      if(!controller.cancelled) {
+        dispatch({
+          type: GET_PAYMENT_DATA
+        });
+      } else {
+        console.log("cancelled");
+      }
     } catch (err) {
-      dispatch({
-        type: PAYMENT_ERROR,
-        payload: err
-      });
+      if(!controller.cancelled) {
+        dispatch({
+          type: PAYMENT_ERROR,
+          payload: err
+        });
+      } else {
+        console.log("cancelled");
+      }
     }
   }
-
+// {"timestampStart":"1580999861","timestampEnd":"1589639317","units":10,"signature":"0x5d534d729bfdb02a57d9766f002aea0180c8c0d1ac830a1089e45f9c6739912f490914775b6d5e5d4f138bb0fde84283c7a028b257eff030a277c2732ed328ce1c","hash":"0xdfc5cace8d4a967c482581155f177e74276d56324618268c0da5032848582094"}
   //bytes32 _hash, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, bytes memory _signature
   const redeem = async(hash, timestampStart, timestampEnd, units, costs, signature) => {
     try {
+      console.log(costs);
       await state.paymentProviderContract.methods.redeem(hash, timestampStart, timestampEnd, units, costs, signature).send({from: state.account});
 
       dispatch({

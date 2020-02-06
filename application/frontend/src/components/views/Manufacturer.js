@@ -9,8 +9,15 @@ import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
 
 const Manufacturer = () => {
+
+  const controller = { cancelled: false };
+  useEffect(() => {
+
+    return () => controller.cancelled = true;
+  }, []);
+
   const rentalContext = useContext(RentalContext);
-  const { numActiveAgreements, numPendingAgreements, numTerminatedAgreements } = rentalContext;
+  const { numActiveAgreements, numPendingAgreements, numTerminatedAgreements, requests, getRequests, numRequests, getAgreements } = rentalContext;
   const identityContext = useContext(IdentityContext);
   const { ownIdentity } = identityContext;
 
@@ -19,12 +26,12 @@ const Manufacturer = () => {
   const [openTerminated, setOpenTerminated] = useState(false);
   const [openRequests, setOpenRequests] = useState(false);
 
-  // useEffect(() => {
-  //   getAgreements();
-  //   getRentableDevices();
-  //   getRequests(ownIdentity['role']);
-  //   // eslint-disable-next-line
-  // },[]);
+  useEffect(() => {
+    getAgreements(controller);
+    getRequests(ownIdentity['role'], controller);
+    // eslint-disable-next-line
+  },[]);
+
 
   const onOpenPending = () => {
     setOpenPending(true);
@@ -58,7 +65,7 @@ const Manufacturer = () => {
     <Fragment>
       <Grid container justify="center" alignContent="center" alignItems="center" spacing={2}>
         <Grid item xs align="center">
-          <Badge color="secondary" badgeContent={0}>
+          <Badge color="secondary" badgeContent={numRequests}>
             <Button onClick={onOpenRequests} size="large" variant={openRequests ? "contained" : "text"}>
               <Typography variant="body2" style={{ cursor: 'pointer' }}>
                 Laufende Anfragen

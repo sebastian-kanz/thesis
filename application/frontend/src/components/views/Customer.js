@@ -12,6 +12,12 @@ import IdentityContext from './../../context/identity/identityContext';
 
 const Customer = () => {
 
+  const controller = { cancelled: false };
+  useEffect(() => {
+
+    return () => controller.cancelled = true;
+  }, []);
+
   const rentalContext = useContext(RentalContext);
   const { getAgreements, getRentableDevices, numPendingAgreements, numActiveAgreements, numTerminatedAgreements, getRequests, requests, numRequests, rentableDevices } = rentalContext;
   const identityContext = useContext(IdentityContext);
@@ -24,9 +30,9 @@ const Customer = () => {
   const [openRequests, setOpenRequests] = useState(false);
 
   useEffect(() => {
-    getAgreements();
-    getRentableDevices();
-    getRequests(ownIdentity['role']);
+    getAgreements(controller);
+    getRentableDevices(controller);
+    getRequests(ownIdentity['role'], controller);
     // eslint-disable-next-line
   },[]);
 
@@ -69,6 +75,7 @@ const Customer = () => {
     setOpenDevices(false);
     setOpenRequests(true);
   }
+
 
   return (
     <Fragment>

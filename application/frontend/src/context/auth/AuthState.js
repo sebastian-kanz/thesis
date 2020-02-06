@@ -9,15 +9,17 @@ import {
   AUTH_ERROR
 } from '../types';
 
+import IDENTITY_CONTRACT_ADDR from '../identity/IdentityState'
+
 // this.loggedin = false;
 // this.initialized = false;
 
 const AuthState = props => {
   const initialState = {
-    account: '0x0000000000000000000000000000000000000000',
+    account: localStorage.getItem('account') || IDENTITY_CONTRACT_ADDR,
     web3: new Web3(window.ethereum || Web3.givenProvider),
-    balance: null,
-    authenticated: false,
+    balance: localStorage.getItem('balance') || 0,
+    authenticated: localStorage.getItem('authenticated') || false,
     loading: null,
     error: null
   };
@@ -27,8 +29,11 @@ const AuthState = props => {
   const login = async() => {
     try {
       let account = (await window.ethereum.enable())[0];
+      localStorage.setItem('account', account);
       let tmp = await state.web3.eth.getBalance(account);
       let balance = await Web3.utils.fromWei(tmp.toString(), "ether");
+      localStorage.setItem('balance', balance);
+      localStorage.setItem('authenticated', true);
       dispatch({
         type: LOGIN,
         account: account,
@@ -44,6 +49,9 @@ const AuthState = props => {
   }
 
   const logout = async() => {
+    localStorage.removeItem('account');
+    localStorage.removeItem('balance');
+    localStorage.removeItem('authenticated');
     try {
       dispatch({
         type: LOGOUT

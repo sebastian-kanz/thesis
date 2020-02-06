@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, Fragment } from 'react';
 import RentalContext from './../../context/rental/rentalContext';
-import AuthContext from './../../context/auth/authContext';
 import IdentityContext from './../../context/identity/identityContext';
 import Device from './Device';
 import { isNullOrUndefined } from "util";
@@ -14,16 +13,20 @@ import Typography from '@material-ui/core/Typography';
 
 const Devices = () => {
 
+  const controller = { cancelled: false };
+  useEffect(() => {
+
+    return () => controller.cancelled = true;
+  }, []);
+
   const rentalContext = useContext(RentalContext);
   const identityContext = useContext(IdentityContext);
   const { getRentableDevices, rentableDevices, getRequests, requests } = rentalContext;
   const { identities, ownIdentity } = identityContext;
 
   useEffect(() => {
-    const abortController = new AbortController();
-    getRentableDevices();
-    getRequests(ownIdentity['role']);
-
+    getRentableDevices(controller);
+    getRequests(ownIdentity['role'], controller);
     // eslint-disable-next-line
   },[]);
 

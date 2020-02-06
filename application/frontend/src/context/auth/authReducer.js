@@ -3,6 +3,7 @@ import {
   LOGOUT,
   AUTH_ERROR
 } from '../types';
+import IDENTITY_CONTRACT_ADDR from '../identity/IdentityState'
 
 export default (state, action) => {
   switch (action.type) {
@@ -21,7 +22,7 @@ export default (state, action) => {
     case LOGOUT:
       return {
         ...state,
-        account: '0x0000000000000000000000000000000000000000',
+        account: IDENTITY_CONTRACT_ADDR,
         balance: 0.0,
         authenticated: false
       };

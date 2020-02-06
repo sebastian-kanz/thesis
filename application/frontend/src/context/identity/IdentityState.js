@@ -12,39 +12,15 @@ import {
   GET_KNOWN_SUPPLIERS,
   ADD_IDENTITY,
   ADD_IDENTITIES,
-  IDENTITY_ERROR
+  IDENTITY_ERROR,
+  LOGIN,
+  LOGOUT
 } from '../types';
 
-export const IDENTITY_CONTRACT_ADDR = '0x1E6cB5696c7A718a7266f1CFBFc04adf369139dB';
+export const IDENTITY_CONTRACT_ADDR = '0x569B552cd5ed33FF19384F0Cef4566C183A36ceb';
 export const IDENTITY_CONTRACT_ABI =
 [
 	{
-		"inputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"constant": false,
 		"inputs": [
 			{
 				"internalType": "string",
@@ -64,12 +40,10 @@ export const IDENTITY_CONTRACT_ABI =
 		],
 		"name": "addIdentity",
 		"outputs": [],
-		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": false,
 		"inputs": [
 			{
 				"internalType": "string",
@@ -94,21 +68,17 @@ export const IDENTITY_CONTRACT_ABI =
 		],
 		"name": "addIdentityOwnedBy",
 		"outputs": [],
-		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": false,
 		"inputs": [],
 		"name": "addTestData",
 		"outputs": [],
-		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": false,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -124,12 +94,47 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "bool"
 			}
 		],
-		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": true,
+		"inputs": [
+			{
+				"internalType": "address payable",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
 		"inputs": [],
 		"name": "getAddress",
 		"outputs": [
@@ -139,12 +144,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "address"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -160,12 +163,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "uint256"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -181,12 +182,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "string"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -202,12 +201,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "address"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -223,12 +220,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "uint256"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -244,12 +239,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "string"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [],
 		"name": "getKnownDevices",
 		"outputs": [
@@ -259,12 +252,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "address[]"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [],
 		"name": "getKnownManufacturers",
 		"outputs": [
@@ -274,12 +265,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "address[]"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [],
 		"name": "getKnownServiceProviders",
 		"outputs": [
@@ -289,12 +278,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "address[]"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [],
 		"name": "getKnownSuppliers",
 		"outputs": [
@@ -304,12 +291,10 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "address[]"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -325,27 +310,23 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "bool"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
 			{
-				"internalType": "address",
+				"internalType": "address payable",
 				"name": "",
 				"type": "address"
 			}
 		],
-		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": true,
 		"inputs": [],
 		"name": "testConnection",
 		"outputs": [
@@ -355,48 +336,85 @@ export const IDENTITY_CONTRACT_ABI =
 				"type": "bool"
 			}
 		],
-		"payable": false,
 		"stateMutability": "pure",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ];
 
+Storage.prototype.setObject = function(key, value) {
+    this.setItem(key, JSON.stringify(value));
+}
+
+Storage.prototype.getObject = function(key) {
+    var value = this.getItem(key);
+    return value && JSON.parse(value);
+}
+
+Storage.prototype.removeObject = function(key) {
+    this.removeItem(key);
+}
+
 const IdentityState = props => {
   const initialState = {
-    account: null,
+    account: localStorage.getItem('account') || IDENTITY_CONTRACT_ADDR,
     web3: new Web3(window.web3.currentProvider),
     identityContract: new (new Web3(window.web3.currentProvider)).eth.Contract(IDENTITY_CONTRACT_ABI, IDENTITY_CONTRACT_ADDR),
-    ownIdentity: null,
+    ownIdentity: localStorage.getObject('ownIdentity') || null,
+    balance: localStorage.getItem('balance') || 0,
+    authenticated: localStorage.getItem('authenticated') || false,
     knownDevices: [],
     knownManufacturers: [],
     knownServiceProviders: [],
     knownSuppliers: [],
-    identities: [],
+    identities: localStorage.getObject('identities') || [],
     loading: false,
     error: null
   };
 
   const [state, dispatch] = useReducer(identityReducer, initialState);
 
-  const resetIdentity = () => {
+  const login = async() => {
+    try {
+      let account = (await window.ethereum.enable())[0];
+      let tmp = await state.web3.eth.getBalance(account);
+      let balance = await Web3.utils.fromWei(tmp.toString(), "ether");
+      let identity = await addIdentity(account);
+      if(!identity) {
+        dispatch({
+          type: IDENTITY_ERROR,
+          payload: "Unknown identity!"
+        });
+        console.log("Unknown identity!!!");
+        return null;
+      }
+      localStorage.setItem('account', account);
+      localStorage.setObject('ownIdentity', identity);
+      localStorage.setItem('balance', balance);
+      localStorage.setItem('authenticated', true);
+      dispatch({
+        type: LOGIN,
+        account: account,
+        balance: balance,
+        ownIdentity: identity
+      });
+      return account;
+    } catch (err) {
+      dispatch({
+        type: IDENTITY_ERROR,
+        payload: err
+      });
+    }
+  }
+
+  const logout = async() => {
+    localStorage.removeItem('account');
+    localStorage.removeObject('ownIdentity');
+    localStorage.removeItem('balance');
+    localStorage.removeItem('authenticated');
+    localStorage.removeObject('identities');
     try {
       dispatch({
-        type: IDENTITY_RESET
+        type: LOGOUT
       });
     } catch (err) {
       dispatch({
@@ -406,82 +424,99 @@ const IdentityState = props => {
     }
   }
 
-  const setOwnIdentity = async(address) => {
-    try {
-      let identity = await addIdentity(address);
-      dispatch({
-        type: SET_OWN_IDENTITY,
-        payload: identity
-      });
-    } catch (err) {
-      dispatch({
-        type: IDENTITY_ERROR,
-        payload: err
-      });
-    }
-  }
-
-  const getKnownDevices = async() => {
+  const getKnownDevices = async(controller) => {
     try {
       let devices = await state.identityContract.methods.getKnownDevices().call();
-      dispatch({
-        type: GET_KNOWN_DEVICES,
-        payload: devices
-      });
-      addIdentities(devices);
+      if(!controller.cancelled) {
+        dispatch({
+          type: GET_KNOWN_DEVICES,
+          payload: devices
+        });
+        addIdentities(devices);
+      } else {
+        console.log("cancelled");
+      }
     } catch (err) {
-      dispatch({
-        type: IDENTITY_ERROR,
-        payload: err
-      });
+      if(!controller.cancelled) {
+        dispatch({
+          type: IDENTITY_ERROR,
+          payload: err
+        });
+      } else {
+        console.log("cancelled");
+      }
     }
   }
 
-  const getKnownManufacturers = async() => {
+  const getKnownManufacturers = async(controller) => {
     try {
       let manufacturers = await state.identityContract.methods.getKnownManufacturers().call();
-      dispatch({
-        type: GET_KNOWN_MANUFACTURERS,
-        payload: manufacturers
-      });
-      addIdentities(manufacturers);
+      if(!controller.cancelled) {
+        dispatch({
+          type: GET_KNOWN_MANUFACTURERS,
+          payload: manufacturers
+        });
+        addIdentities(manufacturers);
+      } else {
+        console.log("cancelled");
+      }
     } catch (err) {
-      dispatch({
-        type: IDENTITY_ERROR,
-        payload: err
-      });
+      if(!controller.cancelled) {
+        dispatch({
+          type: IDENTITY_ERROR,
+          payload: err
+        });
+      } else {
+        console.log("cancelled");
+      }
     }
   }
 
-  const getKnownServiceProviders = async() => {
+  const getKnownServiceProviders = async(controller) => {
     try {
       let serviceProviders = await state.identityContract.methods.getKnownServiceProviders().call();
-      dispatch({
-        type: GET_KNOWN_SERVICEPROVIDERS,
-        payload: serviceProviders
-      });
-      addIdentities(serviceProviders);
+      if(!controller.cancelled) {
+        dispatch({
+          type: GET_KNOWN_SERVICEPROVIDERS,
+          payload: serviceProviders
+        });
+        addIdentities(serviceProviders);
+      } else {
+        console.log("cancelled");
+      }
     } catch (err) {
-      dispatch({
-        type: IDENTITY_ERROR,
-        payload: err
-      });
+      if(!controller.cancelled) {
+        dispatch({
+          type: IDENTITY_ERROR,
+          payload: err
+        });
+      } else {
+        console.log("cancelled");
+      }
     }
   }
 
-  const getKnownSuppliers = async() => {
+  const getKnownSuppliers = async(controller) => {
     try {
       let suppliers = await state.identityContract.methods.getKnownSuppliers().call();
-      dispatch({
-        type: GET_KNOWN_SUPPLIERS,
-        payload: suppliers
-      });
-      addIdentities(suppliers);
+      if(!controller.cancelled) {
+        dispatch({
+          type: GET_KNOWN_SUPPLIERS,
+          payload: suppliers
+        });
+        addIdentities(suppliers);
+      } else {
+        console.log("cancelled");
+      }
     } catch (err) {
-      dispatch({
-        type: IDENTITY_ERROR,
-        payload: err
-      });
+      if(!controller.cancelled) {
+        dispatch({
+          type: IDENTITY_ERROR,
+          payload: err
+        });
+      } else {
+        console.log("cancelled");
+      }
     }
   }
 
@@ -492,7 +527,7 @@ const IdentityState = props => {
         state.identities.map((identity) => {
           if(identity['address'] == address.toLowerCase()) {
             alreadyKnown = true;
-            return;
+            return identity;
           }
         });
       }
@@ -503,7 +538,7 @@ const IdentityState = props => {
             type: IDENTITY_ERROR,
             payload: "Unknown identity!"
           });
-          return;
+          return null;
         }
         let name = await state.identityContract.methods.getIdentityName(address).call({from: address});
         let role = await state.identityContract.methods.getIdentityRole(address).call({from: address});
@@ -511,6 +546,7 @@ const IdentityState = props => {
         let identity = { 'address': address.toLowerCase(), 'name': name, 'role': role, 'owner': owner }
         let identities = state.identities;
         identities.push(identity);
+        localStorage.setObject('identities', identities);
         dispatch({
           type: ADD_IDENTITY,
           payload: identities
@@ -520,6 +556,7 @@ const IdentityState = props => {
         return null;
       }
     } catch (err) {
+      console.error(err);
       dispatch({
         type: IDENTITY_ERROR,
         payload: err
@@ -538,7 +575,6 @@ const IdentityState = props => {
           state.identities.map((identity) => {
             if(identity['address'] == address.toLowerCase()) {
               alreadyKnown = true;
-              return;
             }
           });
         }
@@ -549,7 +585,7 @@ const IdentityState = props => {
               type: IDENTITY_ERROR,
               payload: "Unknown identity!"
             });
-            return;
+            console.log("error");
           }
           let name = await state.identityContract.methods.getIdentityName(address).call({from: state.account});
           let role = await state.identityContract.methods.getIdentityRole(address).call({from: state.account});
@@ -558,6 +594,8 @@ const IdentityState = props => {
           identities.push(identity);
         }
       }
+
+      localStorage.setObject('identities', identities);
       dispatch({
         type: ADD_IDENTITY,
         payload: identities
@@ -577,6 +615,8 @@ const IdentityState = props => {
         web3: state.web3,
         identityContract: state.identityContract,
         ownIdentity: state.ownIdentity,
+        balance: state.balance,
+        authenticated: state.authenticated,
         knownDevices: state.knownDevices,
         knownManufacturers: state.knownManufacturers,
         knownServiceProviders: state.knownServiceProviders,
@@ -584,14 +624,14 @@ const IdentityState = props => {
         identities: state.identities,
         loading: state.loading,
         error: state.error,
-        setOwnIdentity,
+        login,
+        logout,
         getKnownDevices,
         getKnownManufacturers,
         getKnownServiceProviders,
         getKnownSuppliers,
         addIdentity,
-        addIdentities,
-        resetIdentity
+        addIdentities
       }}
     >
       {props.children}

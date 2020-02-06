@@ -1,30 +1,40 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState, Fragment } from 'react';
 import RentalContext from './../../context/rental/rentalContext';
 import IdentityContext from './../../context/identity/identityContext';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
+import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 import Moment from 'react-moment';
+import {ETH_EUR} from '../../constants.js'
 Moment.globalFormat = 'DD.MM.YYYY HH:MM:SS';
 
 
 
 const Request = ({request}) => {
 
+  const controller = { cancelled: false };
+  useEffect(() => {
+
+    return () => controller.cancelled = true;
+  }, []);
+
+
   const rentalContext = useContext(RentalContext);
   const identityContext = useContext(IdentityContext);
   const { identities, ownIdentity } = identityContext;
-  const { requests, getRequests } = rentalContext;
+  const { requests, getRequests, addAgreement, getAgreements } = rentalContext;
   const { tenant, lessor, device, term } = request;
-
 
   let tenantName = "";
   let lessorName = "";
 
   switch (ownIdentity['role']) {
     case "1":
-      //tenantName = identities.filter(identity => identity.address.toUpperCase() === tenant.toUpperCase())[0].name;
+      // tenantName = (identities.filter(identity => identity.address.toUpperCase() === tenant.toUpperCase()))[0].name;
       break;
     case "2":
       lessorName = identities.filter(identity => identity.address.toUpperCase() === lessor.toUpperCase())[0].name;
@@ -36,6 +46,26 @@ const Request = ({request}) => {
   let deviceName = identities.filter(identity => identity.address.toUpperCase() === device.toUpperCase())[0].name;
 
 
+  const [value, setValue] = useState(0.001);
+
+  const handleSliderChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleInputChange = event => {
+    setValue(event.target.value === '' ? '' : Number(event.target.value));
+  };
+
+  const onAccept = async() => {
+    await addAgreement(tenant, device, value, term);
+    await getRequests(ownIdentity['role'], controller);
+    await getAgreements(controller);
+  }
+
+  const onDecline = async() => {
+
+  }
+
   return(
     <Container fixed style={{marginTop: 40}}>
       <Paper>
@@ -46,12 +76,7 @@ const Request = ({request}) => {
                  <span>{deviceName}</span>
                </Typography>
                <Typography variant="overline" color="textSecondary">
-                 Hersteller: {lessorName}
-               </Typography>
-               <br/>
-               <br/>
-               <Typography variant="overline" color="textSecondary">
-                 Status: Warte auf Bestätigung.
+                 {ownIdentity['role'] === "1" ? ("Kunde: "+{tenantName}) : ("Hersteller: "+{lessorName})}
                </Typography>
                <br/>
                <br/>
@@ -60,6 +85,48 @@ const Request = ({request}) => {
                </Typography>
              </Container>
            </Grid>
+           {ownIdentity['role'] === "1" ? (
+           <Fragment>
+             <Grid item xs={4} align="center">
+               <Slider
+                  value={typeof value === 'number' ? value : 0}
+                  onChange={handleSliderChange}
+                  step={0.001}
+                  min={0.001}
+                  max={0.01}
+                />
+              </Grid>
+              <Grid item xs={6} align="center">
+                <Input
+                  value={value}
+                  margin="dense"
+                  onChange={handleInputChange}
+                  inputProps={{
+                    step: 0.001,
+                    min: 0.001,
+                    max: 0.01,
+                    type: 'number',
+                    'aria-labelledby': 'input-slider',
+                  }}
+                />
+                <Typography>
+                 {(value*ETH_EUR).toFixed(1)}0€
+                </Typography>
+              </Grid>
+              <Grid item xs={12} align="center">
+                <Button onClick={onAccept} size="large" variant="outlined" color="primary">
+                  <Typography variant="body2" style={{ cursor: 'pointer'}}>
+                   Akzeptieren
+                  </Typography>
+                </Button>
+                <Button onClick={onDecline} size="large" variant="outlined" color="primary">
+                  <Typography variant="body2" style={{ cursor: 'pointer'}}>
+                   Ablehnen
+                  </Typography>
+                </Button>
+              </Grid>
+            </Fragment>
+          ) : null }
          </Grid>
       </Paper>
     </Container>

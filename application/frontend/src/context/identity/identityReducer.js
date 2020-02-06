@@ -7,27 +7,28 @@ import {
   GET_KNOWN_SUPPLIERS,
   ADD_IDENTITY,
   ADD_IDENTITIES,
-  IDENTITY_ERROR
+  IDENTITY_ERROR,
+  LOGIN,
+  LOGOUT
 } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
-    case IDENTITY_RESET:
+    case LOGIN:
       return {
         ...state,
-        account: null,
-        ownIdentity: null,
-        knownDevices: [],
-        knownManufacturers: [],
-        knownServiceProviders: [],
-        knownSuppliers: [],
-        identities: [],
-        loading: false
+        account: action.account,
+        balance: action.balance,
+        ownIdentity: action.ownIdentity,
+        authenticated: true
       };
-    case SET_OWN_IDENTITY:
+    case LOGOUT:
       return {
         ...state,
-        ownIdentity: action.payload
+        account: '0x0000000000000000000000000000000000000001',
+        balance: 0.0,
+        ownIdentity: null,
+        authenticated: false
       };
     case GET_KNOWN_DEVICES:
       return {

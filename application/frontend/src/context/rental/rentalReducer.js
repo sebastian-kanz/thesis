@@ -8,8 +8,11 @@ import {
   ADD_REQUEST,
   GET_REQUESTS,
   ADD_TEST_RENTAL_AGREEMENTS,
-  TERMINATE_RENTAL_AGREEMENT
+  TERMINATE_RENTAL_AGREEMENT,
+  ADD_AGREEMENT
 } from '../types';
+
+import RENTAL_CONTRACT_ADDR from './RentalState'
 
 export default (state, action) => {
   switch (action.type) {
@@ -21,7 +24,7 @@ export default (state, action) => {
     case RENTAL_RESET:
       return {
         ...state,
-        account: '0x0000000000000000000000000000000000000000',
+        account: RENTAL_CONTRACT_ADDR,
         rentalAgreements: [],
         rentableDevices: [],
         numPendingAgreements: 0,
@@ -67,6 +70,12 @@ export default (state, action) => {
         rentableDevices: state.rentableDevices.filter(
           device => device !== action.payload
         ),
+        loading: false
+      };
+    case ADD_AGREEMENT:
+      return {
+        ...state,
+        rentalAgreements: [action.payload, ...state.rentalAgreements],
         loading: false
       };
     case GET_REQUESTS:

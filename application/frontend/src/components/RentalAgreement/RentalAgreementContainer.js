@@ -1,7 +1,6 @@
 import React, {Fragment, useEffect, useContext } from 'react';
 import RentalAgreement from './RentalAgreement';
 import RentalContext from './../../context/rental/rentalContext';
-import AuthContext from './../../context/auth/authContext';
 import IdentityContext from './../../context/identity/identityContext';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -12,18 +11,24 @@ import Typography from '@material-ui/core/Typography';
 
 const RentalAgreementContainer = ({state}) => {
 
+  const controller = { cancelled: false };
+  useEffect(() => {
+
+    return () => controller.cancelled = true;
+  }, []);
+
+
   const rentalContext = useContext(RentalContext);
-  const authContext = useContext(AuthContext);
   const identityContext = useContext(IdentityContext);
   const { getAgreements, rentalAgreements, account } = rentalContext;
-  const { authenticated } = authContext;
-  const { addIdentities, identities } = identityContext;
+  const { addIdentities, identities, authenticated } = identityContext;
 
 
   useEffect(() => {
-    getAgreements();
+    getAgreements(controller);
     // eslint-disable-next-line
   },[authenticated,account]);
+
 
   useEffect(() => {
     addRentalIdentities();

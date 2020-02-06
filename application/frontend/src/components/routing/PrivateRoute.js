@@ -1,18 +1,26 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import AuthContext from '../../context/auth/authContext';
+import IdentityContext from '../../context/identity/identityContext';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const authContext = useContext(AuthContext);
-  const { authenticated } = authContext;
+  const identityContext = useContext(IdentityContext);
+  const { ownIdentity, authenticated } = identityContext;
+
+  // useEffect(() => {
+  //   console.log("test");
+  //   console.log(authenticated);
+  //   console.log(ownIdentity);
+  // }, [authenticated,ownIdentity]);
+
+
   return (
     <Route
       {...rest}
       render={props =>
-        !authenticated ? (
-          <Redirect to='/welcome' />
-        ) : (
+        (authenticated && ownIdentity != null) ? (
           <Component {...props} />
+        ) : (
+          <Redirect to='/welcome' />
         )
       }
     />

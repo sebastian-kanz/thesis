@@ -3,14 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import AuthContext from './../../context/auth/authContext';
 import IdentityContext from './../../context/identity/identityContext';
 
 const Profile = () => {
-  const authContext = useContext(AuthContext);
   const identityContext = useContext(IdentityContext);
-  const { authenticated } = authContext;
-  const { ownIdentity } = identityContext;
+  const { ownIdentity, authenticated } = identityContext;
 
 
   if(authenticated && ownIdentity) {

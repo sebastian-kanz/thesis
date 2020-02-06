@@ -17,14 +17,24 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from '@material-ui/core/TextField';
 import IdentityContext from './../../context/identity/identityContext';
 import PaymentContext from './../../context/payment/paymentContext';
+import {ETH_EUR} from '../../constants.js'
+import {EUR_ETH} from '../../constants.js'
 Moment.globalFormat = 'DD.MM.YYYY HH:MM:SS';
 
 
 
 
 const RentalAgreement = ({ agreement }) => {
+
+  const controller = { cancelled: false };
+  useEffect(() => {
+
+    return () => controller.cancelled = true;
+  }, []);
+
   let tenant = agreement[0];
   let tenantSignature = agreement[1];
   let lessor = agreement[2];
@@ -42,8 +52,8 @@ const RentalAgreement = ({ agreement }) => {
   const paymentContext = useContext(PaymentContext);
   const identityContext = useContext(IdentityContext);
   const { acceptRentalAgreement, getAgreements, terminateRentalAgreement } = rentalContext;
-  const { identities } = identityContext;
-  const { charge, balance, getBalance, getPaymentHistory, paymentHistory, getPaymentData } = paymentContext;
+  const { identities, ownIdentity } = identityContext;
+  const { charge, balance, getBalance, getPaymentHistory, paymentHistory, getPaymentData, redeem } = paymentContext;
 
   // useEffect(() => {
   //   const timer = setTimeout(() => {
@@ -55,8 +65,8 @@ const RentalAgreement = ({ agreement }) => {
   // },[payments]);
 
   useEffect(() => {
-    getBalance(paymentHash);
-    getPaymentHistory(paymentHash);
+    getBalance(paymentHash, controller);
+    getPaymentHistory(paymentHash, controller);
     // eslint-disable-next-line
   },[]);
 
@@ -75,24 +85,28 @@ const RentalAgreement = ({ agreement }) => {
 
   const onToggleInvoice = async() => {
     setExpanded(!expanded);
-    getPaymentHistory(paymentHash);
+    getPaymentHistory(paymentHash, controller);
   }
 
   const onPay = async() => {
-    await getPaymentData(paymentHash);
+    let units = 10;
+    await getPaymentData(paymentHash, creation, contractTerm, units, usageFee, controller);
   }
 
   const onCharge = async() => {
-    await charge(paymentHash, 58000000000000000);
-    await getBalance(paymentHash);
+    let amount = 10.0 * 1000000000000000000 * EUR_ETH;
+    await charge(paymentHash, amount);
+    await getBalance(paymentHash, controller);
   }
 
   const onAccept = async() => {
     await acceptRentalAgreement(tenant,lessor,device,usageFee,contractTerm,id);
+    await getAgreements(controller);
   }
 
   const onTerminate = async() => {
     await terminateRentalAgreement(id);
+    await getAgreements(controller);
   }
 
   let history = [];
@@ -132,6 +146,21 @@ const RentalAgreement = ({ agreement }) => {
   const totalCosts = history.reduce((sum,record) => sum + parseInt(record['costs']), 0);
   const totalUnits = history.reduce((sum,record) => sum + parseInt(record['units']), 0);
 
+  const onRedeem = async() => {
+    console.log(json);
+    let obj = JSON.parse(json);
+    await redeem(obj.hash, obj.timestampStart, obj.timestampEnd, obj.units, usageFee, obj.signature );
+  }
+
+  const [json, setJson] = useState(null);
+
+  const handleHashInput = (event) => {
+    setJson(event.target.value);
+  }
+
+  // const handleInputChange = event => {
+  //   setValue(event.target.value === '' ? '' : Number(event.target.value));
+  // };
 
 
   return (
@@ -199,18 +228,18 @@ const RentalAgreement = ({ agreement }) => {
            <Grid item xs={2} align="center">
              <Container>
                <Typography variant="caption" color="textSecondary">
-                 <p>Kosten pro Einheit:<br/>~{(totalCosts / totalUnits / 1000000000000000000 * 172.16).toFixed(2)}€<br/>({(totalCosts / totalUnits / 1000000000000000000).toFixed(4)}<br/>ETH)</p>
+                 <p>Kosten pro Einheit:<br/>~{(usageFee / 1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(usageFee / 1000000000000000000).toFixed(4)}<br/>ETH)</p>
                </Typography>
                {parseInt(state) === 1 &&
                  <Fragment>
                    <Typography variant="caption" color="textSecondary">
-                     <p>Kosten Gesamt:<br/>~{(totalCosts/1000000000000000000 * 172.16).toFixed(2)}€<br/>({(totalCosts/1000000000000000000).toFixed(4)}<br/>ETH)</p>
+                     <p>Kosten Gesamt:<br/>~{(totalCosts/1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(totalCosts/1000000000000000000).toFixed(4)}<br/>ETH)</p>
                    </Typography>
                    <Typography variant="caption" color="textSecondary">
                      <p>Einheiten Gesamt:<br/>{totalUnits}</p>
                    </Typography>
                    <Typography variant="caption" color="textSecondary">
-                     <p>Guthaben:<br/>~{(balance/1000000000000000000 * 172.16).toFixed(2)}€<br/>({(balance/1000000000000000000).toFixed(4)}<br/>ETH)</p>
+                     <p>Guthaben:<br/>~{(balance/1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(balance/1000000000000000000).toFixed(4)}<br/>ETH)</p>
                    </Typography>
                  </Fragment>
                }
@@ -219,7 +248,7 @@ const RentalAgreement = ({ agreement }) => {
          </Grid>
          <Grid container justify="center" alignContent="center" alignItems="center" spacing={2}>
            <Grid item xs align="center">
-                 {parseInt(state) === 0?
+                 {parseInt(state) === 0 && ownIdentity['role'] == "2"?
                  <Button onClick={onAccept} size="large" variant="outlined" color="primary">
                    <Typography variant="body2" style={{ cursor: 'pointer' }}>
                     Akzeptieren
@@ -234,16 +263,28 @@ const RentalAgreement = ({ agreement }) => {
                         Beenden
                        </Typography>
                      </Button>
-                     <Button onClick={onPay} size="large" variant="outlined" color="primary">
-                       <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                        10 Kaffee Bezahlen
-                       </Typography>
-                     </Button>
-                     <Button onClick={onCharge} size="large" variant="outlined" color="primary">
-                       <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                        10€ Aufladen
-                       </Typography>
-                     </Button>
+                     {parseInt(state) === 1 && ownIdentity['role'] == "2"?
+                     <Fragment>
+                       <Button onClick={onPay} size="large" variant="outlined" color="primary">
+                         <Typography variant="body2" style={{ cursor: 'pointer' }}>
+                          10 Kaffee Bezahlen
+                         </Typography>
+                       </Button>
+                       <Button onClick={onCharge} size="large" variant="outlined" color="primary">
+                         <Typography variant="body2" style={{ cursor: 'pointer' }}>
+                          10€ Aufladen
+                         </Typography>
+                       </Button>
+                     </Fragment>
+                     : null
+                     }
+                     {parseInt(state) === 1 && ownIdentity['role'] == "1"?
+                     <Fragment>
+                       <TextField label="JSON" onChange={handleHashInput} onSubmit={onRedeem}/>
+                       <Button onClick={onRedeem} size="large" variant="outlined" color="primary">Einlösen</Button>
+                     </Fragment>
+                     : null
+                     }
                      <Button onClick={onToggleInvoice} size="large" variant="outlined" color="primary">
                        <Typography variant="body2" style={{ cursor: 'pointer' }}>
                         Rechnungen
@@ -284,7 +325,7 @@ const RentalAgreement = ({ agreement }) => {
                               <TableCell size="small" align="left"><Moment unix format="DD.MM.YYYY HH:mm:ss">{elem['timestampStart']}</Moment></TableCell>
                               <TableCell size="small" align="left"><Moment unix format="DD.MM.YYYY HH:mm:ss">{elem['timestampEnd']}</Moment></TableCell>
                               <TableCell size="small" align="left">{elem['units']}</TableCell>
-                              <TableCell size="small" align="right">~{(elem['costs']/ 1000000000000000000 * 172.16).toFixed(2)}€<br/>({(elem['costs'] / 1000000000000000000).toFixed(4)}<br/>ETH)</TableCell>
+                              <TableCell size="small" align="right">~{(elem['costs']/ 1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(elem['costs'] / 1000000000000000000).toFixed(4)}<br/>ETH)</TableCell>
                             </TableRow>
                           )
                         })

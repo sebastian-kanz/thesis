@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect } from 'react';
 import RentalContext from './../../context/rental/rentalContext';
 import IdentityContext from './../../context/identity/identityContext';
 import Grid from '@material-ui/core/Grid';
@@ -13,6 +13,12 @@ import Divider from '@material-ui/core/Divider';
 
 const Device = ({device}) => {
 
+  const controller = { cancelled: false };
+  useEffect(() => {
+
+    return () => controller.cancelled = true;
+  }, []);
+
   const rentalContext = useContext(RentalContext);
   const identityContext = useContext(IdentityContext);
   const { addRequest, getRentableDevices, getRequests } = rentalContext;
@@ -20,11 +26,26 @@ const Device = ({device}) => {
 
   const { address, name, role, owner, ownerName } = device;
 
+
+  //
+  // const timeout = (ms) => {
+  //     return new Promise(resolve => setTimeout(resolve, ms));
+  // }
+  //
+  // const myAsyncFunction = async(controller) => {
+  //   await timeout(2000);
+  //   if(controller.cancelled) {
+  //     console.log("cancelled");
+  //   } else {
+  //     console.log("finished");
+  //   }
+  // }
+
   const onRequest = async() => {
     let term = Math.floor(Date.now() / 1000) + 60*60*24*100;
     await addRequest(address, owner, term);
-    await getRentableDevices();
-    await getRequests(ownIdentity['role']);
+    await getRentableDevices(controller);
+    await getRequests(ownIdentity['role'], controller);
   }
 
   return(

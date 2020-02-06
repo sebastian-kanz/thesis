@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -15,7 +15,7 @@ import Button from '@material-ui/core/Button';
 import PersonIcon from '@material-ui/icons/Person';
 import LockOpenIcon from '@material-ui/icons/LockOpen';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AuthContext from './../../../context/auth/authContext';
+
 import IdentityContext from './../../../context/identity/identityContext';
 import RentalContext from './../../../context/rental/rentalContext';
 import PaymentContext from './../../../context/payment/paymentContext';
@@ -86,6 +86,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Bar() {
+
+  const controller = { cancelled: false };
+  useEffect(() => {
+
+    return () => controller.cancelled = true;
+  }, []);
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -98,12 +105,10 @@ export default function Bar() {
     setOpen(false);
   };
 
-  const authContext = useContext(AuthContext);
   const rentalContext = useContext(RentalContext);
   const identityContext = useContext(IdentityContext);
   const paymentContext = useContext(PaymentContext);
-  const { setOwnIdentity, ownIdentity, resetIdentity,getKnownDevices, getKnownManufacturers, getKnownServiceProviders, getKnownSuppliers } = identityContext;
-  const { login, logout, authenticated, balance } = authContext;
+  const { login, logout, authenticated, balance, ownIdentity, getKnownDevices, getKnownManufacturers, getKnownServiceProviders, getKnownSuppliers } = identityContext;
   const { setRentalAccount, resetRental } = rentalContext;
   const { setPaymentAccount } = paymentContext;
 
@@ -113,22 +118,25 @@ export default function Bar() {
   if (typeof window.ethereum !== 'undefined' || (typeof window.web3 !== 'undefined')) {
     ethereum.autoRefreshOnNetworkChange = false;
     ethereum.on('chainChanged', chainId => {
-      if(authenticated) {
-        reload();
+      if(authenticated && ownIdentity) {
+        console.log("chainChanged");
+        onAccountChanged();
       }
     }, () => {
       ethereum.removeAllListeners();
     });
     ethereum.on('networkChanged', () => {
-      if(authenticated) {
-        reload();
+      if(authenticated && ownIdentity) {
+        console.log("networkChanged");
+        onAccountChanged();
       }
     }, () => {
       ethereum.removeAllListeners();
     });
     ethereum.on('accountsChanged', () => {
-      if(authenticated) {
-        reload();
+      if(authenticated && ownIdentity) {
+        console.log("accountsChanged");
+        onAccountChanged();
       }
     }, () => {
       ethereum.removeAllListeners();
@@ -138,27 +146,37 @@ export default function Bar() {
   let history = useHistory();
 
   const onLogin = async() => {
+    // let account = (await window.ethereum.enable())[0];
+    // console.log(account);
+    // await setOwnIdentity(account);
+    // let newAccount = await login();
+    // await getKnownDevices(controller);
+    // await getKnownManufacturers(controller);
+    // await getKnownServiceProviders(controller);
+    // await getKnownSuppliers(controller);
+    // await setRentalAccount(newAccount);
+    // await setPaymentAccount(newAccount);
+
     let newAccount = await login();
-    await setOwnIdentity(newAccount);
-    await getKnownDevices();
-    await getKnownManufacturers();
-    await getKnownServiceProviders();
-    await getKnownSuppliers();
     await setRentalAccount(newAccount);
     await setPaymentAccount(newAccount);
+    await getKnownDevices(controller);
+    await getKnownManufacturers(controller);
+    await getKnownServiceProviders(controller);
+    await getKnownSuppliers(controller);
     history.push("/overview");
   }
 
-  const reload = () => {
-    onLogout();
-    onLogin();
+  const onAccountChanged = async() => {
+    await onLogout();
   }
+
 
   const onLogout = () => {
     logout();
-    resetIdentity();
     resetRental();
-    history.push("/welcome");
+    //resetPayment();
+    window.location.assign('/welcome');
   }
 
   return (
@@ -199,6 +217,7 @@ export default function Bar() {
                 aria-controls="simple-menu" aria-haspopup="true"
               >
                 {ownIdentity['name']}
+                {/*ownIdentity['name'] is empty on login!?!?!?*/}
               </Button>
               <Typography variant="button" style={{marginLeft: 10}}>
                 ETH: {balance}

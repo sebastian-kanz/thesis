@@ -17,7 +17,7 @@ import Profile from './components/pages/Profile';
 
 
 export default function App() {
-  window.web3.currentProvider.setMaxListeners(1000);
+  // window.web3.currentProvider.setMaxListeners(0);
   return (
   <AuthState>
     <IdentityState>
