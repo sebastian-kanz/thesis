@@ -2,6 +2,7 @@ import React, {Fragment, useEffect, useContext } from 'react';
 import RentalAgreement from './RentalAgreement';
 import RentalContext from './../../context/rental/rentalContext';
 import IdentityContext from './../../context/identity/identityContext';
+import PaymentContext from './../../context/payment/paymentContext';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
@@ -20,12 +21,15 @@ const RentalAgreementContainer = ({state}) => {
 
   const rentalContext = useContext(RentalContext);
   const identityContext = useContext(IdentityContext);
+  const paymentContext = useContext(PaymentContext);
   const { getAgreements, rentalAgreements, account } = rentalContext;
   const { addIdentities, identities, authenticated } = identityContext;
+  const { addPaymentHash } = paymentContext;
 
 
   useEffect(() => {
     getAgreements(controller);
+
     // eslint-disable-next-line
   },[authenticated,account]);
 
@@ -38,7 +42,7 @@ const RentalAgreementContainer = ({state}) => {
   const addRentalIdentities = async() => {
     let allIdentities = [];
     for( const agreement of rentalAgreements)  {
-      //add device
+      //add tenant
       allIdentities.push(agreement[0]);
       //add lessor
       allIdentities.push(agreement[2]);
@@ -47,6 +51,8 @@ const RentalAgreementContainer = ({state}) => {
     }
     addIdentities(allIdentities);
   }
+
+
 
   let filteredAgreements = rentalAgreements.filter((agreement) => {return agreement[8] == state});
 

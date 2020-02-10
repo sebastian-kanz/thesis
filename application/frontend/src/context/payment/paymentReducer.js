@@ -1,25 +1,33 @@
 import {
   PAYMENT_ERROR,
-  GET_PAYMENT_HISTORY,
+  ADD_PAYMENT_HASH,
   CHARGE,
-  GET_PAYMENT_DATA,
+  GET_SIGNED_PAYMENT_JSON,
   REDEEM,
   SET_PAYMENT_ACCOUNT,
-  GET_BALANCE
+  GET_PAYMENT_AGREEMENTS
 } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
-    case GET_PAYMENT_HISTORY:
+    case GET_PAYMENT_AGREEMENTS:
       return {
         ...state,
-        paymentHistory: action.payload
+        paymentAgreements: action.payload
+      };
+    case ADD_PAYMENT_HASH:
+      return {
+        ...state,
+        paymentHashes: [...state.paymentHashes, action.payload]
       };
     case CHARGE:
       return {
-        ...state
+        ...state,
+        paymentAgreements: state.paymentAgreements.map(paymentAgreement =>
+          paymentAgreement.paymentHash === action.hash ? action.newPaymentAgreement : paymentAgreement
+        ),
       };
-    case GET_PAYMENT_DATA:
+    case GET_SIGNED_PAYMENT_JSON:
       return {
         ...state
       };
@@ -36,11 +44,6 @@ export default (state, action) => {
       return {
         ...state,
         error: action.payload
-      };
-    case GET_BALANCE:
-      return {
-        ...state,
-        balance: action.payload
       };
     default:
       return state;

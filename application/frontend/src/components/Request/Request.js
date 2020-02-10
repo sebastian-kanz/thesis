@@ -19,13 +19,14 @@ const Request = ({request}) => {
   const controller = { cancelled: false };
   useEffect(() => {
 
+    getBalance(controller);
     return () => controller.cancelled = true;
   }, []);
 
 
   const rentalContext = useContext(RentalContext);
   const identityContext = useContext(IdentityContext);
-  const { identities, ownIdentity } = identityContext;
+  const { identities, ownIdentity, getBalance } = identityContext;
   const { requests, getRequests, addAgreement, getAgreements } = rentalContext;
   const { tenant, lessor, device, term } = request;
 
@@ -35,16 +36,19 @@ const Request = ({request}) => {
   switch (ownIdentity['role']) {
     case "1":
       // tenantName = (identities.filter(identity => identity.address.toUpperCase() === tenant.toUpperCase()))[0].name;
+      let tenantIdentity = identities.filter(identity => identity.address.toUpperCase() === tenant.toUpperCase());
+      tenantName = tenantIdentity[0] ? tenantIdentity[0].name : "Name unknown";
       break;
     case "2":
-      lessorName = identities.filter(identity => identity.address.toUpperCase() === lessor.toUpperCase())[0].name;
+      let lessorIdentity = identities.filter(identity => identity.address.toUpperCase() === lessor.toUpperCase());
+      lessorName = lessorIdentity[0] ? lessorIdentity[0].name : "Name unknown";
       break;
     default:
 
   }
 
-  let deviceName = identities.filter(identity => identity.address.toUpperCase() === device.toUpperCase())[0].name;
-
+  let deviceIdentity = identities.filter(identity => identity.address.toUpperCase() === device.toUpperCase());
+  let deviceName = deviceIdentity[0] ? deviceIdentity[0].name : "";
 
   const [value, setValue] = useState(0.001);
 
@@ -59,6 +63,7 @@ const Request = ({request}) => {
   const onAccept = async() => {
     await addAgreement(tenant, device, value, term);
     await getRequests(ownIdentity['role'], controller);
+    await getBalance(controller);
     await getAgreements(controller);
   }
 
@@ -76,7 +81,7 @@ const Request = ({request}) => {
                  <span>{deviceName}</span>
                </Typography>
                <Typography variant="overline" color="textSecondary">
-                 {ownIdentity['role'] === "1" ? ("Kunde: "+{tenantName}) : ("Hersteller: "+{lessorName})}
+                 {ownIdentity['role'] === "1" ? (<span>Kunde: {tenantName}</span>) : (<span>Hersteller: {lessorName}</span>)}
                </Typography>
                <br/>
                <br/>

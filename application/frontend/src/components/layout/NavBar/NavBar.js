@@ -93,6 +93,7 @@ export default function Bar() {
     return () => controller.cancelled = true;
   }, []);
 
+
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -111,7 +112,6 @@ export default function Bar() {
   const { login, logout, authenticated, balance, ownIdentity, getKnownDevices, getKnownManufacturers, getKnownServiceProviders, getKnownSuppliers } = identityContext;
   const { setRentalAccount, resetRental } = rentalContext;
   const { setPaymentAccount } = paymentContext;
-
 
 
   const ethereum = window.ethereum;
@@ -220,7 +220,7 @@ export default function Bar() {
                 {/*ownIdentity['name'] is empty on login!?!?!?*/}
               </Button>
               <Typography variant="button" style={{marginLeft: 10}}>
-                ETH: {balance}
+                ETH: {balance && balance}
               </Typography>
             </div>
             :

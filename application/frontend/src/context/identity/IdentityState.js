@@ -14,332 +14,13 @@ import {
   ADD_IDENTITIES,
   IDENTITY_ERROR,
   LOGIN,
-  LOGOUT
+  LOGOUT,
+  GET_BALANCE
 } from '../types';
 
-export const IDENTITY_CONTRACT_ADDR = '0x569B552cd5ed33FF19384F0Cef4566C183A36ceb';
-export const IDENTITY_CONTRACT_ABI =
-[
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_roleID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_identity",
-				"type": "address"
-			}
-		],
-		"name": "addIdentity",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_roleID",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "_identity",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "_owner",
-				"type": "address"
-			}
-		],
-		"name": "addIdentityOwnedBy",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "addTestData",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_identity",
-				"type": "address"
-			}
-		],
-		"name": "deleteIdentity",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address payable",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "getAddress",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_identity",
-				"type": "address"
-			}
-		],
-		"name": "getIdentityCreationTime",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_identity",
-				"type": "address"
-			}
-		],
-		"name": "getIdentityName",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_identity",
-				"type": "address"
-			}
-		],
-		"name": "getIdentityOwner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_identity",
-				"type": "address"
-			}
-		],
-		"name": "getIdentityRole",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_identity",
-				"type": "address"
-			}
-		],
-		"name": "getIdentityRoleName",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getKnownDevices",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getKnownManufacturers",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getKnownServiceProviders",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getKnownSuppliers",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_identity",
-				"type": "address"
-			}
-		],
-		"name": "identityExists",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address payable",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "testConnection",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "pure",
-		"type": "function"
-	}
-];
+import IDENTITY_CONTRACT_ABI from './IdentityProvider'
+export const IDENTITY_CONTRACT_ADDR = '0xA17351BfA16dAE1FD285e11AcC00882Eb459C7cb';
+
 
 Storage.prototype.setObject = function(key, value) {
     this.setItem(key, JSON.stringify(value));
@@ -609,6 +290,32 @@ const IdentityState = props => {
   }
 
 
+  const getBalance = async(controller) => {
+    try {
+
+      let tmp = await state.web3.eth.getBalance(state.account);
+      let balance = await Web3.utils.fromWei(tmp.toString(), "ether");
+      localStorage.setItem('balance', balance);
+      if(!controller.cancelled) {
+        dispatch({
+          type: GET_BALANCE,
+          payload: balance
+        });
+      } else {
+        console.log("cancelled");
+      }
+    } catch (err) {
+      if(!controller.cancelled) {
+        dispatch({
+          type: IDENTITY_ERROR,
+          payload: err
+        });
+      } else {
+        console.log("cancelled");
+      }
+    }
+  }
+
   return (
     <IdentityContext.Provider
       value={{
@@ -626,6 +333,7 @@ const IdentityState = props => {
         error: state.error,
         login,
         logout,
+        getBalance,
         getKnownDevices,
         getKnownManufacturers,
         getKnownServiceProviders,

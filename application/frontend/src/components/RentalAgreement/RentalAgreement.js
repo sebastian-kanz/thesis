@@ -53,7 +53,7 @@ const RentalAgreement = ({ agreement }) => {
   const identityContext = useContext(IdentityContext);
   const { acceptRentalAgreement, getAgreements, terminateRentalAgreement } = rentalContext;
   const { identities, ownIdentity } = identityContext;
-  const { charge, balance, getBalance, getPaymentHistory, paymentHistory, getPaymentData, redeem } = paymentContext;
+  const { charge, getSignedPaymentJSON, redeem, addPaymentHash, getPaymentAgreements, paymentAgreements, paymentHashes } = paymentContext;
 
   // useEffect(() => {
   //   const timer = setTimeout(() => {
@@ -65,91 +65,130 @@ const RentalAgreement = ({ agreement }) => {
   // },[payments]);
 
   useEffect(() => {
-    getBalance(paymentHash, controller);
-    getPaymentHistory(paymentHash, controller);
+    addPaymentHash(paymentHash);
+
+    getPaymentAgreements(controller);
     // eslint-disable-next-line
   },[]);
 
-  const deviceIdentity = identities.filter((identity) => {
-    return identity['address'] == device.toLowerCase()
+  useEffect(() => {
+    getPaymentAgreements(controller);
+    // eslint-disable-next-line
+  },[paymentHashes]);
+
+  const deviceIdentity = identities.find((identity) => {
+    return identity['address'].toLowerCase() == device.toLowerCase()
   });
 
-  let deviceName = !deviceIdentity? "" : [0]['name'];
+  let deviceName = !deviceIdentity? "" : deviceIdentity['name'];
 
-  const lessorIdentity = identities.filter((identity) => {
-    return identity['address'] == lessor.toLowerCase()
+  const lessorIdentity = identities.find((identity) => {
+    return identity['address'].toLowerCase() == lessor.toLowerCase()
   });
-  const lessorName = lessorIdentity[0]['name'];
+  const lessorName = !lessorIdentity? "" : lessorIdentity['name'];
+
+  const tenantIdentity = identities.find((identity) => {
+    return identity['address'].toLowerCase() == tenant.toLowerCase()
+  });
+  const tenantName = !tenantIdentity? "" : tenantIdentity['name'];
 
   const [expanded, setExpanded] = useState(false);
 
   const onToggleInvoice = async() => {
     setExpanded(!expanded);
-    getPaymentHistory(paymentHash, controller);
+    getPaymentAgreements(controller);
   }
 
   const onPay = async() => {
     let units = 10;
-    await getPaymentData(paymentHash, creation, contractTerm, units, usageFee, controller);
+    let timestampStart = Math.floor(Date.now() / 1000);
+    let timestampEnd = timestampStart + 60*60*24*10;
+    await getSignedPaymentJSON(paymentHash, timestampStart, timestampEnd, units, usageFee, device, controller);
   }
 
   const onCharge = async() => {
     let amount = 10.0 * 1000000000000000000 * EUR_ETH;
     await charge(paymentHash, amount);
-    await getBalance(paymentHash, controller);
+    await getPaymentAgreements(controller);
   }
 
   const onAccept = async() => {
     await acceptRentalAgreement(tenant,lessor,device,usageFee,contractTerm,id);
-    await getAgreements(controller);
+    await getPaymentAgreements(controller);
   }
 
   const onTerminate = async() => {
     await terminateRentalAgreement(id);
-    await getAgreements(controller);
+    await getPaymentAgreements(controller);
   }
 
-  let history = [];
-  let timestampStartArr = [];
-  let timestampEndArr = [];
-  let units = [];
-  let costs = [];
+  const [paymentAgreement, setPaymentAgreement] = useState({});
+  const [history, setHistory] = useState([]);
+  const [timestampStartArr, setTimestampStartArr] = useState([]);
+  const [timestampEndArr, setTimestampEndArr] = useState([]);
+  const [units, setUnits] = useState([]);
+  const [costs, setCosts] = useState([]);
+  const [totalCosts, setTotalCosts] = useState(0);
+  const [totalUnits, setTotalUnits] = useState(0);
 
-  Object.entries(paymentHistory).forEach((item, i) => {
-    switch (item[0]) {
-      case "0":
-        timestampStartArr = item[1];
-        break;
-      case "1":
-        timestampEndArr = item[1];
-        break;
-      case "2":
-        units = item[1];
-        break;
-      case "3":
-        costs = item[1];
-        break;
-      default:
-        break;
+  useEffect(() => {
+    let tmp = paymentAgreements.find(obj => {
+      return obj.paymentHash === paymentHash
+    })
+    if(tmp) {
+      setPaymentAgreement(tmp);
     }
-  });
+    // eslint-disable-next-line
+  },[paymentAgreements]);
 
-  for (let i = 0; i < costs.length; i++) {
-    history[i] = {
-      "timestampStart": timestampStartArr[i],
-      "timestampEnd": timestampEndArr[i],
-      "units": units[i],
-      "costs": costs[i],
-    };
-  }
+  useEffect(() => {
+    if(Object.keys(paymentAgreement).length !== 0 && paymentAgreement.constructor === Object) {
+      if(paymentAgreement['history'][0].length > 0) {
+        Object.entries(paymentAgreement['history']).forEach((item, i) => {
+          switch (item[0]) {
+            case "0":
+              setTimestampStartArr(item[1]);
+              break;
+            case "1":
+              setTimestampEndArr(item[1]);
+              break;
+            case "2":
+              setUnits(item[1]);
+              break;
+            case "3":
+              setCosts(item[1]);
+              break;
+            default:
+              break;
+          }
+        });
+        let newHistory = [];
+        for (let i = 0; i < costs.length; i++) {
+          let tmp = {
+            "timestampStart": timestampStartArr[i],
+            "timestampEnd": timestampEndArr[i],
+            "units": units[i],
+            "costs": costs[i],
+          };
+          newHistory.push(tmp);
+        }
+        setHistory(newHistory);
+        setTotalCosts(history.reduce((sum,record) => sum + parseInt(record['costs']), 0));
+        setTotalUnits(history.reduce((sum,record) => sum + parseInt(record['units']), 0));
+      }
 
-  const totalCosts = history.reduce((sum,record) => sum + parseInt(record['costs']), 0);
-  const totalUnits = history.reduce((sum,record) => sum + parseInt(record['units']), 0);
+
+    }
+
+    // eslint-disable-next-line
+  },[paymentAgreement]);
+
+
 
   const onRedeem = async() => {
-    console.log(json);
     let obj = JSON.parse(json);
-    await redeem(obj.hash, obj.timestampStart, obj.timestampEnd, obj.units, usageFee, obj.signature );
+    await redeem(obj.hash, obj.timestampStart, obj.timestampEnd, obj.units, obj.costs, obj.signature, obj.device );
+    getPaymentAgreements(controller);
   }
 
   const [json, setJson] = useState(null);
@@ -201,12 +240,27 @@ const RentalAgreement = ({ agreement }) => {
                </Typography>
                <br/>
                <br/>
-               <Typography variant="h5">
-                 {lessorName}
-               </Typography>
-               <Typography variant="overline" color="textSecondary">
-                 Adresse: {lessor}
-               </Typography>
+               { ownIdentity['role'] == "1"?
+                   <Fragment>
+                     <Typography variant="h5">
+                       {tenantName}
+                     </Typography>
+                     <Typography variant="overline" color="textSecondary">
+                       Mieter: {tenant}
+                     </Typography>
+                   </Fragment>
+                 : ownIdentity['role'] == "2"?
+                   <Fragment>
+                     <Typography variant="h5">
+                       {lessorName}
+                     </Typography>
+                     <Typography variant="overline" color="textSecondary">
+                       Hersteller: {lessor}
+                     </Typography>
+                   </Fragment>
+                :
+                  null
+                }
                <br/>
                <br/>
                <Typography variant="h5">
@@ -236,10 +290,10 @@ const RentalAgreement = ({ agreement }) => {
                      <p>Kosten Gesamt:<br/>~{(totalCosts/1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(totalCosts/1000000000000000000).toFixed(4)}<br/>ETH)</p>
                    </Typography>
                    <Typography variant="caption" color="textSecondary">
-                     <p>Einheiten Gesamt:<br/>{totalUnits}</p>
+                     <p>Einheiten Gesamt:<br/>{paymentAgreement && totalUnits}</p>
                    </Typography>
                    <Typography variant="caption" color="textSecondary">
-                     <p>Guthaben:<br/>~{(balance/1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(balance/1000000000000000000).toFixed(4)}<br/>ETH)</p>
+                     <p>Guthaben:<br/>~{(paymentAgreement['balance']/1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(paymentAgreement['balance']/1000000000000000000).toFixed(4)}<br/>ETH)</p>
                    </Typography>
                  </Fragment>
                }
@@ -319,7 +373,7 @@ const RentalAgreement = ({ agreement }) => {
                     </TableHead>
                     <TableBody>
                       {
-                        history && history.map((elem, i) => {
+                        history.length > 0 && history.map((elem, i) => {
                           return (
                             <TableRow key={i}>
                               <TableCell size="small" align="left"><Moment unix format="DD.MM.YYYY HH:mm:ss">{elem['timestampStart']}</Moment></TableCell>

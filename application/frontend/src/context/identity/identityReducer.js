@@ -9,7 +9,8 @@ import {
   ADD_IDENTITIES,
   IDENTITY_ERROR,
   LOGIN,
-  LOGOUT
+  LOGOUT,
+  GET_BALANCE
 } from '../types';
 
 export default (state, action) => {
@@ -65,6 +66,11 @@ export default (state, action) => {
         ...state,
         identities: action.payload,
         loading: false
+      };
+    case GET_BALANCE:
+      return {
+        ...state,
+        balance: action.payload
       };
     case IDENTITY_ERROR:
       return {
