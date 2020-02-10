@@ -170,13 +170,13 @@ contract IdentityProvider is Ownable {
   /// @notice adds test identities
   /// @dev only callable by owner of smart contract
   function addTestData() onlyOwner public {
-    addIdentity("Manufacturer", uint(Role.Manufacturer), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
-    addIdentity("Customer1", uint(Role.Customer), address(0xFF3904784BeF847991C7705Eef89164A32F31A19));
-    addIdentity("Customer2", uint(Role.Customer), address(0x87deeC84694929a63Aa8ccA01dE58eEA0a6A0e8b));
-    addIdentityOwnedBy("Device1", uint(Role.Device), address(0xbB8f0d80e1B66e71629D47AB547042E5004F39Df), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
-    addIdentityOwnedBy("Device2", uint(Role.Device), address(0x6A7b417aC5A2e20b47fa7717963ce24068B2b3c9), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
-    addIdentityOwnedBy("Device3", uint(Role.Device), address(0x0fd6f673BC51400B5022eeF84c4a87EBA7D4ac29), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
-    addIdentityOwnedBy("Device4", uint(Role.Device), address(0x158A17F73c8ca58f929B0cbAF0434Dd02a8cC159), address(0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD));
+    addIdentity("Manufacturer", uint(Role.Manufacturer), address(0xe3CBf35cD6FadEA91C4b9A19882Af976725753dD));
+    addIdentity("Customer1", uint(Role.Customer), address(0x37848e7bDDbF872093D346f89be9B507eDf6462b));
+    addIdentity("Customer2", uint(Role.Customer), address(0x8Ef5906034be23248EF49C38fEf9f17265ab044F));
+    addIdentityOwnedBy("Device1", uint(Role.Device), address(0xf00C699c96E05f919EE1C57B824a29cC6216352E), address(0xe3CBf35cD6FadEA91C4b9A19882Af976725753dD));
+    addIdentityOwnedBy("Device2", uint(Role.Device), address(0xCF5f7aa0103662Ef67cF453F7d4A6bFDfF04057e), address(0xe3CBf35cD6FadEA91C4b9A19882Af976725753dD));
+    addIdentityOwnedBy("Device3", uint(Role.Device), address(0x4A21C369a3B7f4C56eC4DcBAB706C30897Cb1845), address(0xe3CBf35cD6FadEA91C4b9A19882Af976725753dD));
+    addIdentityOwnedBy("Device4", uint(Role.Device), address(0xEa05a247562D4865F6e2a5d9347EeB61C966A214), address(0xe3CBf35cD6FadEA91C4b9A19882Af976725753dD));
   }
 
   function getKnownManufacturers() public view returns(address[] memory){

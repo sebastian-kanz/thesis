@@ -8,6 +8,7 @@ contract PaymentProvider is Ownable {
   struct PaymentAgreement {
     address payable sender;
     address payable receiver;
+    address device;
     uint256 balance;
     uint256 numPayments;
     mapping(bytes32 => bool) usedSignatures;
@@ -21,7 +22,7 @@ contract PaymentProvider is Ownable {
     uint256 cost;
   }
 
-  mapping(bytes32 => PaymentAgreement) private paymentAgreements;
+  mapping(bytes32 => PaymentAgreement) public paymentAgreements;
 
   address private rentalProvider;
 
@@ -32,10 +33,11 @@ contract PaymentProvider is Ownable {
     rentalProvider = _addr;
   }
 
-  function addPaymentAgreement(bytes32 _hash, address payable _receiver, address payable _sender) public {
+  function addPaymentAgreement(bytes32 _hash, address payable _receiver, address payable _sender, address _device) public {
     PaymentAgreement memory tmp;
     tmp.sender = _sender;
     tmp.receiver = _receiver;
+    tmp.device = _device;
     tmp.balance = 0;
     tmp.numPayments = 0;
     paymentAgreements[_hash] = tmp;
@@ -45,6 +47,21 @@ contract PaymentProvider is Ownable {
   function charge(bytes32 _hash) public payable {
     require(msg.sender == paymentAgreements[_hash].sender || msg.sender == rentalProvider);
     paymentAgreements[_hash].balance = paymentAgreements[_hash].balance + msg.value;
+  }
+
+  function getSender(bytes32 _hash) public returns (address) {
+    require(msg.sender == paymentAgreements[_hash].sender || msg.sender == paymentAgreements[_hash].receiver);
+    return paymentAgreements[_hash].sender;
+  }
+
+  function getReceiver(bytes32 _hash) public returns (address) {
+    require(msg.sender == paymentAgreements[_hash].sender || msg.sender == paymentAgreements[_hash].receiver);
+    return paymentAgreements[_hash].receiver;
+  }
+
+  function getDevice(bytes32 _hash) public returns (address) {
+    require(msg.sender == paymentAgreements[_hash].sender || msg.sender == paymentAgreements[_hash].receiver);
+    return paymentAgreements[_hash].device;
   }
 
   function getBalance(bytes32 _hash) public returns (uint256) {
@@ -77,13 +94,14 @@ contract PaymentProvider is Ownable {
   // The receiver can pay out his balance by presenting a signed
   // amount from the sender. The receiver will be sent that amount but the channel will stay open.
   // The rest of the balance is kept in the channel and not payed out back to the sender.
-  function redeem(bytes32 _hash, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, bytes memory _signature) public {
-    bytes32 paymentHash = keccak256(abi.encodePacked(_hash, _timestampStart, _timestampEnd, _units, _cost, _signature));
+  function redeem(bytes32 _hash, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, bytes memory _signature, address _device) public {
+    bytes32 paymentHash = keccak256(abi.encodePacked(_hash, _timestampStart, _timestampEnd, _units, _cost, _signature, _device));
     require(paymentAgreements[_hash].usedSignatures[paymentHash] == false);
     require(_timestampStart < _timestampEnd);
+    require(_device == paymentAgreements[_hash].device);
     require(_cost <= paymentAgreements[_hash].balance);
     require(msg.sender == paymentAgreements[_hash].receiver);
-    require(isValidSignature(paymentAgreements[_hash].sender, _timestampStart, _timestampEnd, _units, _cost, _signature));
+    require(isValidSignature(paymentAgreements[_hash].sender, _timestampStart, _timestampEnd, _units, _cost, _device, _signature));
     uint256 num = paymentAgreements[_hash].numPayments;
     paymentAgreements[_hash].history[num] = Usage(_timestampStart, _timestampEnd, _units, _cost);
     paymentAgreements[_hash].numPayments++;
@@ -116,8 +134,8 @@ contract PaymentProvider is Ownable {
     return address(this);
   }
 
-  function isValidSignature(address _sender, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, bytes memory _signature) internal view returns (bool) {
-    bytes32 message = prefixed(keccak256(abi.encodePacked(this, _timestampStart, _timestampEnd, _units, _cost)));
+  function isValidSignature(address _sender, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, address _device, bytes memory _signature) internal view returns (bool) {
+    bytes32 message = prefixed(keccak256(abi.encodePacked(this, _timestampStart, _timestampEnd, _units, _cost, _device)));
 
     // Check that the signature is from the payment sender.
     return recoverSigner(message, _signature) == _sender;

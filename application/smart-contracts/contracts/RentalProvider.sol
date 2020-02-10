@@ -39,7 +39,6 @@ contract RentalProvider is Ownable {
 
   address public oracle_addr;
   address public paymentProvider_addr;
-  address payable public owner;
 
   constructor () public {
     owner = msg.sender;
@@ -95,8 +94,9 @@ contract RentalProvider is Ownable {
     for (uint i = index; i<requests.length-1; i++){
         requests[i] = requests[i+1];
     }
-    delete requests[requests.length-1];
-    requests.length--;
+    requests.pop();
+    //delete requests[requests.length-1];
+    //requests.length--;
   }
 
   function getRequestsAsLessor() public view returns(address[] memory, address[] memory, address[] memory, uint256[] memory) {
@@ -164,8 +164,9 @@ contract RentalProvider is Ownable {
     for (uint i = index; i<rentableDevices.length-1; i++){
         rentableDevices[i] = rentableDevices[i+1];
     }
-    delete rentableDevices[rentableDevices.length-1];
-    rentableDevices.length--;
+    rentableDevices.pop();
+    //delete rentableDevices[rentableDevices.length-1];
+    //rentableDevices.length--;
   }
 
   function getRentableDeviceListIndex(address _device) public view returns (uint) {
@@ -227,13 +228,15 @@ contract RentalProvider is Ownable {
     require(_contractTerm > now);
     //check that no rentalAgreement with same parameters exists
     require(!agreementExists(_lessorSignature));
-    removeDeviceFromRentableList(getRentableDeviceListIndex(_device));
+
+    //already removed by request!
+    //removeDeviceFromRentableList(getRentableDeviceListIndex(_device));
 
     removeRequest(_tenant, msg.sender, _device, _contractTerm);
 
     bytes32 paymentAgreementHash = keccak256(abi.encodePacked(now, _tenant, msg.sender));
     PaymentProvider paymentProvider = PaymentProvider(paymentProvider_addr);
-    paymentProvider.addPaymentAgreement(paymentAgreementHash, msg.sender, address(uint160(_tenant)));
+    paymentProvider.addPaymentAgreement(paymentAgreementHash, msg.sender, address(uint160(_tenant)), _device);
 
     agreements.push(RentalAgreement(address(uint160(_tenant)), new bytes(65), msg.sender, _lessorSignature, _device, _usageFee, _contractTerm, now, AgreementState.Pending, paymentAgreementHash));
   }
@@ -261,14 +264,14 @@ contract RentalProvider is Ownable {
   function getIDs(uint _stateID) public view returns (uint[] memory) {
     uint count = 0;
     for(uint i = 0; i < agreements.length; i++) {
-      if(agreements[i].tenant == msg.sender && agreements[i].state == AgreementState(_stateID) ) {
+      if((agreements[i].tenant == msg.sender || agreements[i].lessor == msg.sender) && agreements[i].state == AgreementState(_stateID) ) {
         count++;
       }
     }
     uint[] memory rentalAgreementIDs = new uint[](count);
     uint index = 0;
     for(uint i = 0; i < agreements.length; i++) {
-      if(agreements[i].tenant == msg.sender && agreements[i].state == AgreementState(_stateID) ) {
+      if((agreements[i].tenant == msg.sender || agreements[i].lessor == msg.sender) && agreements[i].state == AgreementState(_stateID) ) {
         rentalAgreementIDs[index] = i;
         index++;
       }
