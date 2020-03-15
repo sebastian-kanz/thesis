@@ -80,7 +80,7 @@ const Requests = () => {
           <Grid container justify="center" alignContent="center" alignItems="center" spacing={2}>
              <Grid item xs={12} align="center">
                <Container>
-                 <Typography>Sie haben keine Mietantäge.</Typography>
+                 <Typography>Sie haben keine Mietanträge.</Typography>
                </Container>
              </Grid>
            </Grid>

@@ -16,15 +16,18 @@ import {
   ADD_AGREEMENT
 } from '../types';
 
+import {PROVIDER} from '../../constants.js';
+
 import RENTAL_CONTRACT_ABI from './RentalProvider.js'
-export const RENTAL_CONTRACT_ADDR = '0xC58627f5EA824690d5f952B56ECbaaBCEE988ffE';
+export const RENTAL_CONTRACT_ADDR = '0xb683f856cc86E64A35E2F6B9987b1A7f0aFfbe34';
+
 
 
 const RentalState = props => {
   const initialState = {
     account: localStorage.getItem('account') || null,
-    web3: new Web3(window.web3.currentProvider),
-    rentalContract: new (new Web3(window.web3.currentProvider)).eth.Contract(RENTAL_CONTRACT_ABI, RENTAL_CONTRACT_ADDR),
+    web3: new Web3(PROVIDER),
+    rentalContract: new (new Web3(PROVIDER)).eth.Contract(RENTAL_CONTRACT_ABI, RENTAL_CONTRACT_ADDR),
     rentalAgreements: [],
     requests: [],
     numRequests: 0,
@@ -123,7 +126,6 @@ const RentalState = props => {
   const getRentableDevices = async (controller) => {
     try {
       let rentableDevices = await state.rentalContract.methods.getRentableDevices().call();
-
       if(!controller.cancelled) {
         dispatch({
           type: GET_RENTABLE_DEVICES,
@@ -149,6 +151,7 @@ const RentalState = props => {
     try {
       let agreementHash = await state.web3.utils.soliditySha3(tenant,lessor,device,usageFee,contractTerm);
       // let agreementHash = await this.web3.utils.soliditySha3("0xFF3904784BeF847991C7705Eef89164A32F31A19","0x6Aa031Ecb47018c081ae968FE157cB9f74a584fD","0xbB8f0d80e1B66e71629D47AB547042E5004F39Df",'10000000000000000','1589255236');
+      // let signature = await state.web3.eth.personal.sign(agreementHash, state.account);
       let signature = await state.web3.eth.personal.sign(agreementHash, state.account);
       await state.rentalContract.methods.accept(id, signature).send({from: state.account, value: 100});
 
@@ -179,6 +182,7 @@ const RentalState = props => {
       // let hash2 = state.web3.utils.soliditySha3(tenant1,lessor,device2,fee,term);
       // let hash3 = state.web3.utils.soliditySha3(tenant2,lessor,device3,fee,term);
       // let hash4 = state.web3.utils.soliditySha3(tenant2,lessor,device4,fee,term);
+      // let signature1 = await state.web3.eth.personal.sign(hash1, state.account);
       let signature1 = await state.web3.eth.personal.sign(hash1, state.account);
       // let signature2 = await state.web3.eth.personal.sign(hash2, state.account);
       // let signature3 = await state.web3.eth.personal.sign(hash3, state.account);
@@ -281,6 +285,7 @@ const RentalState = props => {
         payload: device
       });
     } catch (err) {
+      console.log(err);
       dispatch({
         type: RENTAL_ERROR,
         payload: err
@@ -293,6 +298,7 @@ const RentalState = props => {
     try {
       usageFee = usageFee * 1000000000000000000;
       let hash = await state.web3.utils.soliditySha3(tenant, state.account, device, usageFee.toString(), contractTerm);
+      // let signature = await state.web3.eth.personal.sign(hash,state.account);
       let signature = await state.web3.eth.personal.sign(hash,state.account);
       await state.rentalContract.methods.createRenting(tenant, signature, device, usageFee.toString(), contractTerm).send({from: state.account});
       dispatch({
@@ -300,6 +306,7 @@ const RentalState = props => {
         payload: device
       });
     } catch (err) {
+      console.log(err);
       dispatch({
         type: RENTAL_ERROR,
         payload: err

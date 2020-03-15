@@ -115,6 +115,9 @@ export default function Bar() {
 
 
   const ethereum = window.ethereum;
+  if (!window.ethereum) {
+    console.log("Install Metamask!");
+  }
   if (typeof window.ethereum !== 'undefined' || (typeof window.web3 !== 'undefined')) {
     ethereum.autoRefreshOnNetworkChange = false;
     ethereum.on('chainChanged', chainId => {

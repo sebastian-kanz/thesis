@@ -15,6 +15,23 @@ import About from './components/pages/About';
 import Welcome from './components/pages/Welcome';
 import Profile from './components/pages/Profile';
 
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+import green from '@material-ui/core/colors/green';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#128687',
+    },
+    secondary: {
+      main: '#f8f7f6',
+    },
+    // tertiary: {
+    //   main: '#0db9ba',
+    // },
+  },
+});
 
 export default function App() {
   // window.web3.currentProvider.setMaxListeners(0);
@@ -25,17 +42,19 @@ export default function App() {
         <PaymentState>
           <Router>
             <Fragment>
-              <NavBar/>
-              <Container>
-                <Alerts />
-                <Switch>
-                  <PrivateRoute exact path='/overview' component={Overview} />
-                  <PrivateRoute exact path='/profile' component={Profile} />
-                  <Route exact path='/about' component={About} />
-                  <Route exact path='/' component={Welcome} />
-                  <Route path="*" component={Welcome}/>
-                </Switch>
-              </Container>
+              <ThemeProvider theme={theme}>
+                <NavBar/>
+                <Container>
+                  <Alerts />
+                  <Switch>
+                    <PrivateRoute exact path='/overview' component={Overview} />
+                    <PrivateRoute exact path='/profile' component={Profile} />
+                    <Route exact path='/about' component={About} />
+                    <Route exact path='/' component={Welcome} />
+                    <Route path="*" component={Welcome}/>
+                  </Switch>
+                </Container>
+              </ThemeProvider>
             </Fragment>
           </Router>
         </PaymentState>

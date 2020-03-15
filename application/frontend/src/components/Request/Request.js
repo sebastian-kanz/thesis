@@ -86,7 +86,10 @@ const Request = ({request}) => {
                <br/>
                <br/>
                <Typography variant="h5">
-                Vertragsbeginn: <Moment unix format="DD.MM.YYYY HH:mm:ss">{term}</Moment>
+                Vertragsbeginn: - ab sofort -
+               </Typography>
+               <Typography variant="h5">
+                Vertragsende: <Moment unix format="DD.MM.YYYY HH:mm:ss">{term}</Moment>
                </Typography>
              </Container>
            </Grid>

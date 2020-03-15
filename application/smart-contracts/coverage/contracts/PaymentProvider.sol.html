@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts\PaymentProvider.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> PaymentProvider.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">93.55% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>58/62</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">43.33% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>13/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">86.67% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>13/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">93.75% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>60/64</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-yes">13×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-yes">6×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity &gt;= 0.5.0 &lt; 0.7.0;
+import "./Ownable.sol";
+&nbsp;
+/// @notice https://programtheblockchain.com/posts/2018/02/23/writing-a-simple-payment-channel/
+&nbsp;
+contract PaymentProvider is Ownable {
+&nbsp;
+  struct PaymentAgreement {
+    address payable sender;
+    address payable receiver;
+    address device;
+    uint256 balance;
+    uint256 numPayments;
+    mapping(bytes32 =&gt; bool) usedSignatures;
+    mapping(uint256 =&gt; Usage) history;
+  }
+&nbsp;
+  struct Usage {
+    uint256 timestampStart;
+    uint256 timestampEnd;
+    uint256 units;
+    uint256 cost;
+  }
+&nbsp;
+  mapping(bytes32 =&gt; PaymentAgreement) public paymentAgreements;
+&nbsp;
+  address private rentalProvider;
+&nbsp;
+  /// @notice sets the rentalProvider address
+  /// @dev only callable by owner
+  /// @param _addr the address of the rentalProvider
+  function registerRentalProvider(address _addr) public onlyOwner {
+    rentalProvider = _addr;
+  }
+&nbsp;
+  function addPaymentAgreement(bytes32 _hash, address payable _receiver, address payable _sender, address _device) public {
+    PaymentAgreement memory tmp;
+    tmp.sender = _sender;
+    tmp.receiver = _receiver;
+    tmp.device = _device;
+    tmp.balance = 0;
+    tmp.numPayments = 0;
+    paymentAgreements[_hash] = tmp;
+  }
+&nbsp;
+  // The sender can charge the channel
+  function charge(bytes32 _hash) public payable {
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(msg.sender == paymentAgreements[_hash].sender || msg.sender == rentalProvider);
+    paymentAgreements[_hash].balance = paymentAgreements[_hash].balance + msg.value;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function getSender(bytes32 _hash) public returns (address) </span>{
+<span class="cstat-no" title="statement not covered" >    require(msg.sender == paymentAgreements[_hash].sender || msg.sender == paymentAgreements[_hash].receiver)</span>;
+<span class="cstat-no" title="statement not covered" >    return paymentAgreements[_hash].sender;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function getReceiver(bytes32 _hash) public returns (address) </span>{
+<span class="cstat-no" title="statement not covered" >    require(msg.sender == paymentAgreements[_hash].sender || msg.sender == paymentAgreements[_hash].receiver)</span>;
+<span class="cstat-no" title="statement not covered" >    return paymentAgreements[_hash].receiver;</span>
+  }
+&nbsp;
+  function getDevice(bytes32 _hash) public returns (address) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(msg.sender == paymentAgreements[_hash].sender || msg.sender == paymentAgreements[_hash].receiver);
+    return paymentAgreements[_hash].device;
+  }
+&nbsp;
+  function getBalance(bytes32 _hash) public returns (uint256) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(msg.sender == paymentAgreements[_hash].sender || msg.sender == paymentAgreements[_hash].receiver);
+    return paymentAgreements[_hash].balance;
+  }
+&nbsp;
+  function getPaymentHistory(bytes32 _hash) public view returns(uint256[] memory, uint256[] memory, uint256[] memory, uint256[] memory) {
+    uint count = paymentAgreements[_hash].numPayments;
+    uint256[] memory timestampsStart = new uint256[](count);
+    uint256[] memory timestampEnd = new uint256[](count);
+    uint256[] memory units = new uint256[](count);
+    uint256[] memory costs = new uint256[](count);
+    for (uint i = 0; i&lt;count; i++){
+        timestampsStart[i] = paymentAgreements[_hash].history[i].timestampStart;
+        timestampEnd[i] = paymentAgreements[_hash].history[i].timestampEnd;
+        units[i] = paymentAgreements[_hash].history[i].units;
+        costs[i] = paymentAgreements[_hash].history[i].cost;
+    }
+    return (timestampsStart, timestampEnd, units, costs);
+  }
+&nbsp;
+&nbsp;
+  function empty(bytes32 _hash) public {
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(msg.sender == paymentAgreements[_hash].receiver || msg.sender == rentalProvider);
+    paymentAgreements[_hash].sender.transfer(paymentAgreements[_hash].balance);
+    paymentAgreements[_hash].balance = 0;
+  }
+&nbsp;
+  // The receiver can pay out his balance by presenting a signed
+  // amount from the sender. The receiver will be sent that amount but the channel will stay open.
+  // The rest of the balance is kept in the channel and not payed out back to the sender.
+  function redeem(bytes32 _hash, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, bytes memory _signature, address _device) public {
+    bytes32 paymentHash = keccak256(abi.encodePacked(_hash, _timestampStart, _timestampEnd, _units, _cost, _signature, _device));
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(paymentAgreements[_hash].usedSignatures[paymentHash] == false, "Signature already used!");
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(_timestampStart &lt; _timestampEnd, "timestampStart lower than timestampEnd!");
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(_device == paymentAgreements[_hash].device, "Device invalid!");
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(_cost &lt;= paymentAgreements[_hash].balance, "Not enough money!");
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(msg.sender == paymentAgreements[_hash].receiver, "You must be the receiver in order to redeem a payment!");
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(isValidSignature(paymentAgreements[_hash].sender, _timestampStart, _timestampEnd, _units, _cost, _device, _signature), "Signature invalid!");
+    uint256 num = paymentAgreements[_hash].numPayments;
+    paymentAgreements[_hash].history[num] = Usage(_timestampStart, _timestampEnd, _units, _cost);
+    paymentAgreements[_hash].numPayments++;
+&nbsp;
+    uint256 totalCosts = _cost * _units;
+&nbsp;
+    paymentAgreements[_hash].receiver.transfer(totalCosts);
+    paymentAgreements[_hash].usedSignatures[paymentHash] = true;
+    paymentAgreements[_hash].balance = paymentAgreements[_hash].balance - totalCosts;
+  }
+&nbsp;
+  // The sender can extend the expiration at any time.
+  // function extend(uint256 newExpiration) public {
+  //   require(msg.sender == sender);
+  //   require(newExpiration &gt; expiration);
+  //
+  //   expiration = newExpiration;
+  // }
+&nbsp;
+  // If the timeout is reached without the receiver closing the channel, then
+  // the ether is released back to the sender.
+  // function claimTimeout() public {
+  //   require(now &gt;= expiration);
+  //   selfdestruct(sender);
+  // }
+&nbsp;
+  //##################Helper###################
+&nbsp;
+&nbsp;
+  /// @notice gets the address of this contract
+  function getAddress() public view returns (address) {
+    return address(this);
+  }
+&nbsp;
+  function isValidSignature(address _sender, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, address _device, bytes memory _signature) public view returns (bool) {
+    bytes32 message = prefixed(keccak256(abi.encodePacked(this, _timestampStart, _timestampEnd, _units, _cost, _device)));
+&nbsp;
+    // Check that the signature is from the payment sender.
+    return recoverSigner(message, _signature) == _sender;
+  }
+&nbsp;
+  function splitSignature(bytes memory sig) public pure returns (uint8, bytes32, bytes32) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(sig.length == 65);
+&nbsp;
+    bytes32 r;
+    bytes32 s;
+    uint8 v;
+&nbsp;
+    assembly {
+      // first 32 bytes, after the length prefix
+      r := mload(add(sig, 32))
+      // second 32 bytes
+      s := mload(add(sig, 64))
+      // final byte (first byte of the next 32 bytes)
+      v := byte(0, mload(add(sig, 96)))
+    }
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (v &lt; 27) {
+      v += 27;
+    }
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>require (v == 27 || v == 28);
+&nbsp;
+    return (v, r, s);
+  }
+&nbsp;
+  function recoverSigner(bytes32 message, bytes memory sig) public pure returns (address) {
+    uint8 v;
+    bytes32 r;
+    bytes32 s;
+&nbsp;
+    (v, r, s) = splitSignature(sig);
+&nbsp;
+    return ecrecover(message, v, r, s);
+  }
+&nbsp;
+  // Builds a prefixed hash to mimic the behavior of eth_sign.
+  function prefixed(bytes32 hash) public pure returns (bytes32) {
+    return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Mar 15 2020 12:59:58 GMT+0100 (GMT+01:00)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

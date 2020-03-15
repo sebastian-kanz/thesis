@@ -96,19 +96,21 @@ contract PaymentProvider is Ownable {
   // The rest of the balance is kept in the channel and not payed out back to the sender.
   function redeem(bytes32 _hash, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, bytes memory _signature, address _device) public {
     bytes32 paymentHash = keccak256(abi.encodePacked(_hash, _timestampStart, _timestampEnd, _units, _cost, _signature, _device));
-    require(paymentAgreements[_hash].usedSignatures[paymentHash] == false);
-    require(_timestampStart < _timestampEnd);
-    require(_device == paymentAgreements[_hash].device);
-    require(_cost <= paymentAgreements[_hash].balance);
-    require(msg.sender == paymentAgreements[_hash].receiver);
-    require(isValidSignature(paymentAgreements[_hash].sender, _timestampStart, _timestampEnd, _units, _cost, _device, _signature));
+    require(paymentAgreements[_hash].usedSignatures[paymentHash] == false, "Signature already used!");
+    require(_timestampStart < _timestampEnd, "timestampStart lower than timestampEnd!");
+    require(_device == paymentAgreements[_hash].device, "Device invalid!");
+    require(_cost <= paymentAgreements[_hash].balance, "Not enough money!");
+    require(msg.sender == paymentAgreements[_hash].receiver, "You must be the receiver in order to redeem a payment!");
+    require(isValidSignature(paymentAgreements[_hash].sender, _timestampStart, _timestampEnd, _units, _cost, _device, _signature), "Signature invalid!");
     uint256 num = paymentAgreements[_hash].numPayments;
     paymentAgreements[_hash].history[num] = Usage(_timestampStart, _timestampEnd, _units, _cost);
     paymentAgreements[_hash].numPayments++;
 
-    paymentAgreements[_hash].receiver.transfer(_cost);
+    uint256 totalCosts = _cost * _units;
+
+    paymentAgreements[_hash].receiver.transfer(totalCosts);
     paymentAgreements[_hash].usedSignatures[paymentHash] = true;
-    paymentAgreements[_hash].balance = paymentAgreements[_hash].balance - _cost;
+    paymentAgreements[_hash].balance = paymentAgreements[_hash].balance - totalCosts;
   }
 
   // The sender can extend the expiration at any time.
@@ -134,14 +136,14 @@ contract PaymentProvider is Ownable {
     return address(this);
   }
 
-  function isValidSignature(address _sender, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, address _device, bytes memory _signature) internal view returns (bool) {
+  function isValidSignature(address _sender, uint256 _timestampStart, uint256 _timestampEnd, uint256 _units, uint256 _cost, address _device, bytes memory _signature) public view returns (bool) {
     bytes32 message = prefixed(keccak256(abi.encodePacked(this, _timestampStart, _timestampEnd, _units, _cost, _device)));
 
     // Check that the signature is from the payment sender.
     return recoverSigner(message, _signature) == _sender;
   }
 
-  function splitSignature(bytes memory sig) internal pure returns (uint8, bytes32, bytes32) {
+  function splitSignature(bytes memory sig) public pure returns (uint8, bytes32, bytes32) {
     require(sig.length == 65);
 
     bytes32 r;
@@ -165,7 +167,7 @@ contract PaymentProvider is Ownable {
     return (v, r, s);
   }
 
-  function recoverSigner(bytes32 message, bytes memory sig) internal pure returns (address) {
+  function recoverSigner(bytes32 message, bytes memory sig) public pure returns (address) {
     uint8 v;
     bytes32 r;
     bytes32 s;
@@ -176,7 +178,7 @@ contract PaymentProvider is Ownable {
   }
 
   // Builds a prefixed hash to mimic the behavior of eth_sign.
-  function prefixed(bytes32 hash) internal pure returns (bytes32) {
+  function prefixed(bytes32 hash) public pure returns (bytes32) {
     return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
   }
 }

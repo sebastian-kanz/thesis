@@ -13,8 +13,10 @@ import {
   GET_BALANCE_OF_PAYMENT_AGREEMENT
 } from '../types';
 
+import {PROVIDER} from '../../constants.js';
+
 import PAYMENTPROVIDER_CONTRACT_ABI from './PaymentProvider.js'
-export const PAYMENTPROVIDER_CONTRACT_ADDR = '0xB2Feb2cf59438683A3d7FCfCdE68cbdD1Eb4De1a';
+export const PAYMENTPROVIDER_CONTRACT_ADDR = '0x3BE0C37e881EA08D99e1acb017A68028e410B3Af';
 
 
 // address payable sender;
@@ -26,8 +28,8 @@ export const PAYMENTPROVIDER_CONTRACT_ADDR = '0xB2Feb2cf59438683A3d7FCfCdE68cbdD
 const PaymentState = props => {
   const initialState = {
     account: localStorage.getItem('account') || null,
-    web3: new Web3(window.web3.currentProvider),
-    paymentProviderContract: new (new Web3(window.web3.currentProvider)).eth.Contract(PAYMENTPROVIDER_CONTRACT_ABI, PAYMENTPROVIDER_CONTRACT_ADDR),
+    web3: new Web3(PROVIDER),
+    paymentProviderContract: new (new Web3(PROVIDER)).eth.Contract(PAYMENTPROVIDER_CONTRACT_ABI, PAYMENTPROVIDER_CONTRACT_ADDR),
     paymentAgreements: [],
     paymentHashes: [],
     loading: false,
@@ -130,6 +132,7 @@ const PaymentState = props => {
     try {
       let costs = units * usageFee;
       let hash = await state.web3.utils.soliditySha3(PAYMENTPROVIDER_CONTRACT_ADDR, timestampStart, timestampEnd, units, costs, device);
+      // let signature = await state.web3.eth.personal.sign(hash,state.account);
       let signature = await state.web3.eth.personal.sign(hash,state.account);
       let payment = {
         'timestampStart': timestampStart,

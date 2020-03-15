@@ -100,9 +100,10 @@ const RentalAgreement = ({ agreement }) => {
   }
 
   const onPay = async() => {
-    let units = 10;
+    let units = 1;
     let timestampStart = Math.floor(Date.now() / 1000);
     let timestampEnd = timestampStart + 60*60*24*10;
+    console.log(paymentHash, timestampStart, timestampEnd, units, usageFee, device, controller);
     await getSignedPaymentJSON(paymentHash, timestampStart, timestampEnd, units, usageFee, device, controller);
   }
 
@@ -173,8 +174,9 @@ const RentalAgreement = ({ agreement }) => {
           newHistory.push(tmp);
         }
         setHistory(newHistory);
-        setTotalCosts(history.reduce((sum,record) => sum + parseInt(record['costs']), 0));
         setTotalUnits(history.reduce((sum,record) => sum + parseInt(record['units']), 0));
+        // setTotalCosts(history.reduce((sum,record) => sum + parseInt(record['costs']), 0));
+        setTotalCosts(totalUnits * costs[0]);
       }
 
 
@@ -287,7 +289,7 @@ const RentalAgreement = ({ agreement }) => {
                {parseInt(state) === 1 &&
                  <Fragment>
                    <Typography variant="caption" color="textSecondary">
-                     <p>Kosten Gesamt:<br/>~{(totalCosts/1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(totalCosts/1000000000000000000).toFixed(4)}<br/>ETH)</p>
+                     <p>Kosten Gesamt:<br/>~{(totalCosts /1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(totalCosts /1000000000000000000).toFixed(4)}<br/>ETH)</p>
                    </Typography>
                    <Typography variant="caption" color="textSecondary">
                      <p>Einheiten Gesamt:<br/>{paymentAgreement && totalUnits}</p>
@@ -321,7 +323,7 @@ const RentalAgreement = ({ agreement }) => {
                      <Fragment>
                        <Button onClick={onPay} size="large" variant="outlined" color="primary">
                          <Typography variant="body2" style={{ cursor: 'pointer' }}>
-                          10 Kaffee Bezahlen
+                          1 Kaffee Bezahlen
                          </Typography>
                        </Button>
                        <Button onClick={onCharge} size="large" variant="outlined" color="primary">
@@ -379,7 +381,7 @@ const RentalAgreement = ({ agreement }) => {
                               <TableCell size="small" align="left"><Moment unix format="DD.MM.YYYY HH:mm:ss">{elem['timestampStart']}</Moment></TableCell>
                               <TableCell size="small" align="left"><Moment unix format="DD.MM.YYYY HH:mm:ss">{elem['timestampEnd']}</Moment></TableCell>
                               <TableCell size="small" align="left">{elem['units']}</TableCell>
-                              <TableCell size="small" align="right">~{(elem['costs']/ 1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(elem['costs'] / 1000000000000000000).toFixed(4)}<br/>ETH)</TableCell>
+                              <TableCell size="small" align="right">~{(elem['costs'] * elem['units'] / 1000000000000000000 * ETH_EUR).toFixed(2)}€<br/>({(elem['costs'] * elem['units'] / 1000000000000000000).toFixed(4)}<br/>ETH)</TableCell>
                             </TableRow>
                           )
                         })

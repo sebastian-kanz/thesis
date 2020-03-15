@@ -18,6 +18,8 @@ import {
   GET_BALANCE
 } from '../types';
 
+import {PROVIDER} from '../../constants.js';
+
 import IDENTITY_CONTRACT_ABI from './IdentityProvider'
 export const IDENTITY_CONTRACT_ADDR = '0xA17351BfA16dAE1FD285e11AcC00882Eb459C7cb';
 
@@ -38,8 +40,8 @@ Storage.prototype.removeObject = function(key) {
 const IdentityState = props => {
   const initialState = {
     account: localStorage.getItem('account') || IDENTITY_CONTRACT_ADDR,
-    web3: new Web3(window.web3.currentProvider),
-    identityContract: new (new Web3(window.web3.currentProvider)).eth.Contract(IDENTITY_CONTRACT_ABI, IDENTITY_CONTRACT_ADDR),
+    web3: new Web3(PROVIDER),
+    identityContract: new (new Web3(PROVIDER)).eth.Contract(IDENTITY_CONTRACT_ABI, IDENTITY_CONTRACT_ADDR),
     ownIdentity: localStorage.getObject('ownIdentity') || null,
     balance: localStorage.getItem('balance') || 0,
     authenticated: localStorage.getItem('authenticated') || false,

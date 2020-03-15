@@ -1,0 +1,1457 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts\RentalProvider.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> RentalProvider.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/149</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/102</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/26</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/156</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">pragma solidity &gt;= 0.5.0 &lt; 0.7.0;
+&nbsp;
+import "./IdentityProvider.sol";
+import "./PaymentProvider.sol";
+import "./Ownable.sol";
+&nbsp;
+contract RentalProvider is Ownable {
+  //possible states of an agreement
+  enum AgreementState {
+    Pending,
+    Active,
+    Terminated
+  }
+&nbsp;
+  RentalRequest[] public requests;
+  RentalAgreement[] public agreements;
+  address[] public rentableDevices;
+&nbsp;
+  struct RentalRequest {
+    address tenant;
+    address lessor;
+    address device;
+    uint256 contractTerm;
+  }
+&nbsp;
+  struct RentalAgreement {
+    address payable tenant;
+    bytes tenantSignature;
+    address payable lessor;
+    bytes lessorSignature;
+    address device;
+    uint usageFee;        //
+    uint contractTerm;    //unix timestamp
+    uint creation;        //unix timestamp
+    AgreementState state;
+    bytes32 paymentAgreementHash;
+  }
+&nbsp;
+&nbsp;
+  address public oracle_addr;
+  address public paymentProvider_addr;
+&nbsp;
+<span class="fstat-no" title="function not covered" >  constructor () public </span>{
+<span class="cstat-no" title="statement not covered" >    owner = msg.sender</span>;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function init() public onlyOwner </span>{
+<span class="cstat-no" title="statement not covered" >    IdentityProvider oracle = IdentityProvider(oracle_addr);</span>
+<span class="cstat-no" title="statement not covered" >    rentableDevices = oracle.getKnownDevices()</span>;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function destroy() public </span>{
+<span class="cstat-no" title="statement not covered" >    require(msg.sender == owner, "Only owner can call this function.")</span>;
+<span class="cstat-no" title="statement not covered" >    selfdestruct(owner)</span>;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function getRentableDevices() public view returns (address[] memory)</span>{
+<span class="cstat-no" title="statement not covered" >    return rentableDevices;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function deviceIsRentable(address _device) public view returns (bool) </span>{
+<span class="cstat-no" title="statement not covered" >    bool found = false;</span>
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; rentableDevices.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(_device == rentableDevices[i]) {</span>
+<span class="cstat-no" title="statement not covered" >        found = true</span>;
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return found;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function createRequest(address _device, address _lessor, uint256 _term) public </span>{
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(msg.sender, 2))</span>;
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(_device, 5))</span>;
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(_lessor, 1))</span>;
+<span class="cstat-no" title="statement not covered" >    require(deviceIsRentable(_device))</span>;
+<span class="cstat-no" title="statement not covered" >    IdentityProvider oracle = IdentityProvider(oracle_addr);</span>
+<span class="cstat-no" title="statement not covered" >    require(_lessor == oracle.getIdentityOwner(_device))</span>;
+<span class="cstat-no" title="statement not covered" >    require(!agreementExists(msg.sender, _device))</span>;
+<span class="cstat-no" title="statement not covered" >    require(!requestExists(msg.sender, _lessor, _device, _term))</span>;
+<span class="cstat-no" title="statement not covered" >    requests.push(RentalRequest(msg.sender, _lessor, _device, _term))</span>;
+<span class="cstat-no" title="statement not covered" >    removeDeviceFromRentableList(getRentableDeviceListIndex(_device))</span>;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function removeRequest(address _tenant, address _lessor, address _device, uint256 _term) public </span>{
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(msg.sender, 1))</span>;
+<span class="cstat-no" title="statement not covered" >    require(msg.sender == _lessor)</span>;
+<span class="cstat-no" title="statement not covered" >    require(requestExists(_tenant, _lessor, _device, _term))</span>;
+<span class="cstat-no" title="statement not covered" >    uint index = 0;</span>
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; requests.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(requests[i].tenant == _tenant &amp;&amp; requests[i].lessor == _lessor &amp;&amp; requests[i].device == _device &amp;&amp; requests[i].contractTerm == _term) {</span>
+<span class="cstat-no" title="statement not covered" >        index = i</span>;
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    for (uint i = index; i&lt;requests.length-1; i++){</span>
+<span class="cstat-no" title="statement not covered" >        requests[i] = requests[i+1]</span>;
+    }
+<span class="cstat-no" title="statement not covered" >    requests.pop()</span>;
+    //delete requests[requests.length-1];
+    //requests.length--;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function getRequestsAsLessor() public view returns(address[] memory, address[] memory, address[] memory, uint256[] memory) </span>{
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(msg.sender, 1))</span>;
+<span class="cstat-no" title="statement not covered" >    uint count = 0;</span>
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; requests.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(requests[i].lessor == msg.sender) {</span>
+        count++;
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    address[] memory tenants = new address[](count);</span>
+<span class="cstat-no" title="statement not covered" >    address[] memory lessors = new address[](count);</span>
+<span class="cstat-no" title="statement not covered" >    address[] memory devices = new address[](count);</span>
+<span class="cstat-no" title="statement not covered" >    uint256[] memory terms = new uint256[](count);</span>
+<span class="cstat-no" title="statement not covered" >    uint index = 0;</span>
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; requests.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(requests[i].lessor == msg.sender) {</span>
+<span class="cstat-no" title="statement not covered" >        tenants[index] = requests[i].tenant</span>;
+<span class="cstat-no" title="statement not covered" >        lessors[index] = requests[i].lessor</span>;
+<span class="cstat-no" title="statement not covered" >        devices[index] = requests[i].device</span>;
+<span class="cstat-no" title="statement not covered" >        terms[index] = requests[i].contractTerm</span>;
+        index++;
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return (tenants, lessors, devices, terms);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function getRequestsAsTenant() public view returns(address[] memory, address[] memory, address[] memory, uint256[] memory) </span>{
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(msg.sender, 2))</span>;
+<span class="cstat-no" title="statement not covered" >    uint count = 0;</span>
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; requests.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(requests[i].tenant == msg.sender) {</span>
+        count++;
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    address[] memory tenants = new address[](count);</span>
+<span class="cstat-no" title="statement not covered" >    address[] memory lessors = new address[](count);</span>
+<span class="cstat-no" title="statement not covered" >    address[] memory devices = new address[](count);</span>
+<span class="cstat-no" title="statement not covered" >    uint256[] memory terms = new uint256[](count);</span>
+<span class="cstat-no" title="statement not covered" >    uint index = 0;</span>
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; requests.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(requests[i].tenant == msg.sender) {</span>
+<span class="cstat-no" title="statement not covered" >        tenants[index] = requests[i].tenant</span>;
+<span class="cstat-no" title="statement not covered" >        lessors[index] = requests[i].lessor</span>;
+<span class="cstat-no" title="statement not covered" >        devices[index] = requests[i].device</span>;
+<span class="cstat-no" title="statement not covered" >        terms[index] = requests[i].contractTerm</span>;
+        index++;
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return (tenants, lessors, devices, terms);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function requestExists(address _tenant, address _lessor, address _device, uint256 _term) public view returns (bool)</span>{
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; requests.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(requests[i].tenant == _tenant &amp;&amp; requests[i].lessor == _lessor &amp;&amp; requests[i].device == _device &amp;&amp; requests[i].contractTerm == _term ) {</span>
+<span class="cstat-no" title="statement not covered" >        return true;</span>
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function removeDeviceFromRentableList(uint index) public </span>{
+<span class="cstat-no" title="statement not covered" >    require(index &lt; rentableDevices.length)</span>;
+<span class="cstat-no" title="statement not covered" >    require(index &gt;= 0)</span>;
+<span class="cstat-no" title="statement not covered" >    for (uint i = index; i&lt;rentableDevices.length-1; i++){</span>
+<span class="cstat-no" title="statement not covered" >        rentableDevices[i] = rentableDevices[i+1]</span>;
+    }
+<span class="cstat-no" title="statement not covered" >    rentableDevices.pop()</span>;
+    //delete rentableDevices[rentableDevices.length-1];
+    //rentableDevices.length--;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function getRentableDeviceListIndex(address _device) public view returns (uint) </span>{
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; rentableDevices.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(_device == rentableDevices[i]) {</span>
+<span class="cstat-no" title="statement not covered" >        return i;</span>
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    revert()</span>;
+  }
+&nbsp;
+  /// @notice asks registered oracle whether the identity is known or not
+  /// @param _addr the address of the identity address
+  /// @param _roleID the role of the identity
+  /// @return a boolean whether or not the identity is known
+<span class="fstat-no" title="function not covered" >  function isKnownParticipant(address _addr, uint _roleID) public view returns(bool) </span>{
+<span class="cstat-no" title="statement not covered" >      IdentityProvider oracle = IdentityProvider(oracle_addr);</span>
+<span class="cstat-no" title="statement not covered" >      if(oracle.identityExists(_addr) &amp;&amp; oracle.getIdentityRole(_addr) == _roleID) {</span>
+<span class="cstat-no" title="statement not covered" >        return true;</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        return false;</span>
+      }
+  }
+&nbsp;
+  /// @notice sets the oracle address
+  /// @dev only callable by owner
+  /// @param _addr the address of the orcle
+<span class="fstat-no" title="function not covered" >  function registerIdentityProvider(address _addr) public onlyOwner </span>{
+<span class="cstat-no" title="statement not covered" >    oracle_addr = _addr</span>;
+  }
+&nbsp;
+  /// @notice sets the PaymentProvider address
+  /// @dev only callable by owner
+  /// @param _addr the address of the PaymentProvider
+<span class="fstat-no" title="function not covered" >  function registerPaymentProvider(address _addr) public onlyOwner </span>{
+<span class="cstat-no" title="statement not covered" >    paymentProvider_addr = _addr</span>;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function verify(address _tenant, address _lessor, address _device, uint256 _fee, uint256 _term, bytes memory _sig, address _signer) public pure returns (bool) </span>{
+<span class="cstat-no" title="statement not covered" >    (uint8 v, bytes32 r, bytes32 s) = splitSignature(_sig);</span>
+<span class="cstat-no" title="statement not covered" >    bytes32 hashCalc = keccak256(abi.encodePacked(_tenant,_lessor,_device,_fee,_term));</span>
+<span class="cstat-no" title="statement not covered" >    bytes memory prefix = "\x19Ethereum Signed Message:\n32";</span>
+<span class="cstat-no" title="statement not covered" >    return ecrecover(keccak256(abi.encodePacked(prefix, hashCalc)), v, r, s) == _signer;</span>
+  }
+&nbsp;
+  /// @notice creates a rentalAgreement
+  /// @param _tenant address of the tenant
+  /// @param _lessorSignature signature of lessor of rentalAgreement
+  /// @param _device address of device
+  /// @param _usageFee fee for usage in wei
+  /// @param _contractTerm timestamp, when rentalAgreement times out
+<span class="fstat-no" title="function not covered" >  function createRenting(address _tenant, bytes memory _lessorSignature, address _device, uint _usageFee, uint _contractTerm) public </span>{
+<span class="cstat-no" title="statement not covered" >    require(verify(_tenant, msg.sender, _device, _usageFee, _contractTerm, _lessorSignature, msg.sender))</span>;
+    //check if sender is Manufacturer, tenant is Customer and device is Device
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(msg.sender, 1))</span>;
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(_tenant, 2))</span>;
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(_device, 5))</span>;
+    //check contractTerm to be in future!
+<span class="cstat-no" title="statement not covered" >    require(_contractTerm &gt; now)</span>;
+    //check that no rentalAgreement with same parameters exists
+<span class="cstat-no" title="statement not covered" >    require(!agreementExists(_lessorSignature))</span>;
+&nbsp;
+    //already removed by request!
+    //removeDeviceFromRentableList(getRentableDeviceListIndex(_device));
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    removeRequest(_tenant, msg.sender, _device, _contractTerm)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    bytes32 paymentAgreementHash = keccak256(abi.encodePacked(now, _tenant, msg.sender));</span>
+<span class="cstat-no" title="statement not covered" >    PaymentProvider paymentProvider = PaymentProvider(paymentProvider_addr);</span>
+<span class="cstat-no" title="statement not covered" >    paymentProvider.addPaymentAgreement(paymentAgreementHash, msg.sender, address(uint160(_tenant)), _device)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    agreements.push(RentalAgreement(address(uint160(_tenant)), new bytes(65), msg.sender, _lessorSignature, _device, _usageFee, _contractTerm, now, AgreementState.Pending, paymentAgreementHash))</span>;
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function agreementExists(bytes memory _lessorSignature) public view returns (bool) </span>{
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; agreements.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(keccak256(agreements[i].lessorSignature) == keccak256(_lessorSignature)) {</span>
+<span class="cstat-no" title="statement not covered" >        return true;</span>
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function agreementExists(address _tenant, address _device) public view returns (bool) </span>{
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(_tenant, 2))</span>;
+<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(_device, 5))</span>;
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; agreements.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if(agreements[i].device == _device &amp;&amp; (agreements[i].state == AgreementState.Pending || agreements[i].state == AgreementState.Active)) {</span>
+<span class="cstat-no" title="statement not covered" >        return true;</span>
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return false;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function getIDs(uint _stateID) public view returns (uint[] memory) </span>{
+<span class="cstat-no" title="statement not covered" >    uint count = 0;</span>
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; agreements.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if((agreements[i].tenant == msg.sender || agreements[i].lessor == msg.sender) &amp;&amp; agreements[i].state == AgreementState(_stateID) ) {</span>
+        count++;
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    uint[] memory rentalAgreementIDs = new uint[](count);</span>
+<span class="cstat-no" title="statement not covered" >    uint index = 0;</span>
+<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; agreements.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      if((agreements[i].tenant == msg.sender || agreements[i].lessor == msg.sender) &amp;&amp; agreements[i].state == AgreementState(_stateID) ) {</span>
+<span class="cstat-no" title="statement not covered" >        rentalAgreementIDs[index] = i</span>;
+        index++;
+      }
+    }
+<span class="cstat-no" title="statement not covered" >    return rentalAgreementIDs;</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function getByID(uint _id) public view returns (address, bytes memory, address, bytes memory, address, uint, uint, uint, uint, bytes32) </span>{
+<span class="cstat-no" title="statement not covered" >    require(_id &lt; agreements.length)</span>;
+<span class="cstat-no" title="statement not covered" >    RentalAgreement memory agreement = agreements[_id];</span>
+<span class="cstat-no" title="statement not covered" >    require(msg.sender == agreement.tenant || msg.sender == agreement.lessor)</span>;
+<span class="cstat-no" title="statement not covered" >    return (agreement.tenant, agreement.tenantSignature, agreement.lessor, agreement.lessorSignature, agreement.device, agreement.usageFee, agreement.contractTerm, agreement.creation, uint256(agreement.state), agreement.paymentAgreementHash);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function accept(uint _id, bytes memory _signature) public payable </span>{
+<span class="cstat-no" title="statement not covered" >    require(_id &lt; agreements.length)</span>;
+<span class="cstat-no" title="statement not covered" >    require(now &lt; agreements[_id].contractTerm)</span>;
+<span class="cstat-no" title="statement not covered" >    require(agreements[_id].state == AgreementState.Pending)</span>;
+<span class="cstat-no" title="statement not covered" >    require(agreements[_id].tenant == msg.sender)</span>;
+<span class="cstat-no" title="statement not covered" >    require(recoverSigner(getRentalAgreementHash(_id), _signature) == msg.sender)</span>;
+<span class="cstat-no" title="statement not covered" >    require(msg.value &gt; 0)</span>;
+<span class="cstat-no" title="statement not covered" >    agreements[_id].tenantSignature = _signature</span>;
+<span class="cstat-no" title="statement not covered" >    agreements[_id].state = AgreementState(1)</span>;
+<span class="cstat-no" title="statement not covered" >    PaymentProvider paymentProvider = PaymentProvider(paymentProvider_addr);</span>
+<span class="cstat-no" title="statement not covered" >    paymentProvider.charge.value(msg.value)</span>(agreements[_id].paymentAgreementHash);
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function splitSignature(bytes memory _sig) internal pure returns (uint8 v, bytes32 r, bytes32 s) </span>{
+<span class="cstat-no" title="statement not covered" >    require(_sig.length == 65)</span>;
+    assembly {
+        // first 32 bytes, after the length prefix.
+        r := mload(add(_sig, 32))
+        // second 32 bytes.
+        s := mload(add(_sig, 64))
+        // final byte (first byte of the next 32 bytes).
+        v := byte(0, mload(add(_sig, 96)))
+    }
+<span class="cstat-no" title="statement not covered" >    if (v &lt; 27) {</span>
+<span class="cstat-no" title="statement not covered" >      v += 27</span>;
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    require (v == 27 || v == 28)</span>;
+<span class="cstat-no" title="statement not covered" >    return (v, r, s);</span>
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function recoverSigner(bytes32 _message, bytes memory _sig) internal pure returns (address) </span>{
+<span class="cstat-no" title="statement not covered" >    (uint8 v, bytes32 r, bytes32 s) = splitSignature(_sig);</span>
+<span class="cstat-no" title="statement not covered" >    return ecrecover(_message, v, r, s);</span>
+  }
+&nbsp;
+  // function payForUsage(uint _id, uint _timestamp) payable public {
+  //   require(_id &lt; agreements.length);
+  //   //payment must be in the past
+  //   require(_timestamp &lt;= now);
+  //   // the contract must not be outdated
+  //   require(now &lt; agreements[_id].contractTerm);
+  //   RentalAgreement memory rentalAgreement = agreements[_id];
+  //   //rentalAgreement must be accepted (and therefore signed) by sender
+  //   require(recoverSigner(getRentalAgreementHash(_id), rentalAgreement.tenantSignature) == msg.sender);
+  //   require(msg.sender == rentalAgreement.tenant);
+  //   require(msg.value == rentalAgreement.usageFee);
+  //   require(rentalAgreement.state == AgreementState.Active);
+  //   rentalAgreement.lessor.transfer(msg.value);
+  //   bytes32 agreementHash = getRentalAgreementHash(_id);
+  //   bytes32 paymentHash = getPaymentHash(_timestamp, rentalAgreement.device, msg.sender, rentalAgreement.lessor, msg.value, agreementHash);
+  //   payments[paymentHash] = Payment(_timestamp, rentalAgreement.device, msg.sender, rentalAgreement.lessor, msg.value, agreementHash);
+  //   paymentsByPayer[msg.sender].push(paymentHash);
+  //   paymentsByReceiver[rentalAgreement.lessor].push(paymentHash);
+  // }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function getRentalAgreementHash(uint _id) public view returns (bytes32) </span>{
+<span class="cstat-no" title="statement not covered" >    require(_id &lt; agreements.length)</span>;
+<span class="cstat-no" title="statement not covered" >    bytes32 message = keccak256(abi.encodePacked(agreements[_id].tenant, agreements[_id].lessor, agreements[_id].device, agreements[_id].usageFee, agreements[_id].contractTerm));</span>
+<span class="cstat-no" title="statement not covered" >    bytes memory prefix = "\x19Ethereum Signed Message:\n32";</span>
+<span class="cstat-no" title="statement not covered" >    return keccak256(abi.encodePacked(prefix, message));</span>
+  }
+&nbsp;
+  // function getPaymentHash(uint _timestamp, address _device, address _payer, address _receiver, uint _amount, bytes32 _agreementHash) public view returns (bytes32) {
+  //   bytes32 message = keccak256(abi.encodePacked(_timestamp, _device, _payer, _receiver, _amount, _agreementHash));
+  //   // bytes memory prefix = "\x19Ethereum Signed Message:\n32";
+  //   // return keccak256(abi.encodePacked(prefix, message));
+  //   return message;
+  // }
+&nbsp;
+  // function getPayment(bytes32 _paymentHash) public view returns (uint256, address, address, address, uint256, bytes32){
+  //   require(msg.sender == payments[_paymentHash].device || msg.sender == payments[_paymentHash].payer || msg.sender == payments[_paymentHash].receiver);
+  //   return (payments[_paymentHash].timestamp, payments[_paymentHash].device, payments[_paymentHash].payer, payments[_paymentHash].receiver, payments[_paymentHash].amount, payments[_paymentHash].agreementHash);
+  // }
+&nbsp;
+  // function getIncomingPaymentHashes() public view returns (bytes32[] memory) {
+  //   return paymentsByReceiver[msg.sender];
+  // }
+  //
+  // function getOutgoingPaymentHashes() public view returns (bytes32[] memory) {
+  //   return paymentsByPayer[msg.sender];
+  // }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function terminate(uint _agreementID) public </span>{
+<span class="cstat-no" title="statement not covered" >    require(_agreementID &lt; agreements.length)</span>;
+<span class="cstat-no" title="statement not covered" >    RentalAgreement memory rentalAgreement = agreements[_agreementID];</span>
+<span class="cstat-no" title="statement not covered" >    require(rentalAgreement.state == AgreementState.Active)</span>;
+<span class="cstat-no" title="statement not covered" >    require(msg.sender == rentalAgreement.tenant || msg.sender == rentalAgreement.lessor)</span>;
+<span class="cstat-no" title="statement not covered" >    agreements[_agreementID].state = AgreementState.Terminated</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    PaymentProvider paymentProvider = PaymentProvider(paymentProvider_addr);</span>
+<span class="cstat-no" title="statement not covered" >    paymentProvider.empty(agreements[_agreementID].paymentAgreementHash)</span>;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    rentableDevices.push(rentalAgreement.device)</span>;
+  }
+&nbsp;
+}
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+  // struct EIP712Domain {
+  //     string  name;
+  //     string  version;
+  //     uint256 chainId;
+  //     address verifyingContract;
+  //     bytes32 salt;
+  // }
+  //
+  // struct RentalSignatureObject {
+  //     address tenant;
+  //     address lessor;
+  //     address device;
+  //     uint256 fee;
+  //     uint256 term;
+  // }
+  //
+  // bytes32 constant public EIP712DOMAIN_TYPEHASH = keccak256(
+  //     "EIP712Domain(string name,string version,uint256 chainId,address verifyingContract,bytes32 salt)"
+  // );
+  //
+  // bytes32 constant public RENTALSIGNATUREOBJECT_TYPEHASH = keccak256(
+  //     "RentalSignatureObject(address tenant,address lessor,address device,uint256 fee,uint256 term)"
+  // );
+  //
+  // bytes32 public DOMAIN_SEPARATOR;
+&nbsp;
+  // constructor () public {
+    // DOMAIN_SEPARATOR = hash(EIP712Domain({
+    //     name: "Device Rental",
+    //     version: '1',
+    //     chainId: 1579447585291,
+    //     // verifyingContract: this
+    //     verifyingContract: address(this),
+    //     salt: bytes32(0xf2d857f4a3edcb9b78b4d503bfe733db1e3f6cdc2b7971ee739626c97e86a558)
+    // }));
+  // }
+  //
+  // function hash(EIP712Domain memory eip712Domain) internal pure returns (bytes32) {
+  //     return keccak256(abi.encode(
+  //         EIP712DOMAIN_TYPEHASH,
+  //         keccak256(abi.encodePacked(eip712Domain.name)),
+  //         keccak256(abi.encodePacked(eip712Domain.version)),
+  //         eip712Domain.chainId,
+  //         eip712Domain.verifyingContract,
+  //         eip712Domain.salt
+  //     ));
+  // }
+  //
+  // function hash(RentalSignatureObject memory _sigObj) internal pure returns (bytes32) {
+  //     return keccak256(abi.encode(
+  //         RENTALSIGNATUREOBJECT_TYPEHASH,
+  //         keccak256(abi.encode(_sigObj.tenant)),
+  //         keccak256(abi.encode(_sigObj.lessor)),
+  //         keccak256(abi.encode(_sigObj.device)),
+  //         keccak256(abi.encode(_sigObj.fee)),
+  //         keccak256(abi.encode(_sigObj.term))
+  //         // keccak256(bytes(mail.contents))
+  //     ));
+  // }
+&nbsp;
+  //
+  // function verify(address _tenant, address _lessor, address _device, uint256 _fee, uint256 _term, bytes memory _sig, address _signer) public view returns (bool) {
+  //   (uint8 v, bytes32 r, bytes32 s) = splitSignature(_sig);
+  //   // Note: we need to use `encodePacked` here instead of `encode`.
+  //   RentalSignatureObject memory sigObj = RentalSignatureObject(_tenant, _lessor, _device, _fee, _term);
+  //   bytes32 digest = keccak256(abi.encodePacked(
+  //       "\x19\x01",
+  //       DOMAIN_SEPARATOR,
+  //       hash(sigObj)
+  //   ));
+  //   return ecrecover(digest, v, r, s) == _signer;
+  // }
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Mar 10 2020 17:37:09 GMT+0100 (GMT+01:00)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

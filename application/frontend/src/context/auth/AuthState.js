@@ -9,6 +9,8 @@ import {
   AUTH_ERROR
 } from '../types';
 
+import {PROVIDER} from '../../constants.js';
+
 import IDENTITY_CONTRACT_ADDR from '../identity/IdentityState'
 
 // this.loggedin = false;
@@ -17,7 +19,7 @@ import IDENTITY_CONTRACT_ADDR from '../identity/IdentityState'
 const AuthState = props => {
   const initialState = {
     account: localStorage.getItem('account') || IDENTITY_CONTRACT_ADDR,
-    web3: new Web3(window.ethereum || Web3.givenProvider),
+    web3: new Web3(PROVIDER),
     balance: localStorage.getItem('balance') || 0,
     authenticated: localStorage.getItem('authenticated') || false,
     loading: null,

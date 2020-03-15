@@ -229,6 +229,7 @@ contract RentalProvider is Ownable {
     //check that no rentalAgreement with same parameters exists
     require(!agreementExists(_lessorSignature));
 
+
     //already removed by request!
     //removeDeviceFromRentableList(getRentableDeviceListIndex(_device));
 

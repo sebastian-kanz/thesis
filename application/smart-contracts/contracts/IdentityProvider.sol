@@ -1,7 +1,7 @@
 pragma solidity >= 0.5.0 < 0.7.0;
 
 import "./Ownable.sol";
-import "./DateLib.sol";
+// import "./DateLib.sol";
 
 /// @title IdentityProvider
 /// @author Sebastian Kanz
@@ -15,7 +15,7 @@ contract IdentityProvider is Ownable {
     address[] knownServiceProviders;
     address[] knownSuppliers;
 
-    using DateLib for DateLib.DateTime;
+    // using DateLib for DateLib.DateTime;
 
     //defines an identity
     struct Identity {
@@ -144,12 +144,7 @@ contract IdentityProvider is Ownable {
   function deleteIdentity(address _identity) onlyOwner public returns (bool) {
     if(identityExists(_identity)) {
       identities[_identity] = Identity("", 0, Role.None, address(0x0), false);
-      if(identityExists(_identity)) {
-        return false;
-      } else {
       return true;
-
-      }
     } else {
       return false;
     }
