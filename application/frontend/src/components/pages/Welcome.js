@@ -13,6 +13,13 @@ const Welcome = () => {
           <Grid item xs align="center" style={{padding: 20}}>
             <img src={WelcomeImage} alt="Welcome Image" width="100%"/>
           </Grid>
+          <Grid item xs align="center" style={{padding: 20}}>
+            <Typography variant="h5">Test Profile</Typography>
+          </Grid>
+          <Grid item xs align="left" style={{padding: 20}}>
+            <Typography variant="body1">Hersteller: 7948B42D530C006BA9394F84945E0A816ABE55720690182A29313A5FB026C78D</Typography>
+            <Typography variant="body1">Kunde: F1AAB763D40CB301BD17966EB96250C37A0716A1E88DE64CB60BA183F64A480A</Typography>
+          </Grid>
         </Grid>
       </Paper>
     </Container>
