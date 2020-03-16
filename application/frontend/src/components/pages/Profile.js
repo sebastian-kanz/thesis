@@ -17,7 +17,7 @@ const Profile = () => {
           <Grid container justify="center" alignContent="center" alignItems="center" spacing={2}>
             <Grid item xs={12} align="center">
               <Typography variant="h5">
-                Profileseite
+                Profil-Seite
               </Typography>
               <br/>
             </Grid>

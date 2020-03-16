@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.91% </span>
+        <span class="strong">96.64% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>128/149</span>
+        <span class='fraction'>144/149</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">53.92% </span>
+        <span class="strong">56.86% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>55/102</span>
+        <span class='fraction'>58/102</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">92.31% </span>
+        <span class="strong">96.15% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>24/26</span>
+        <span class='fraction'>25/26</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">85.26% </span>
+        <span class="strong">96.79% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>133/156</span>
+        <span class='fraction'>151/156</span>
       </div>
     </div>
   </div>
@@ -635,28 +635,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -693,9 +693,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">87×</span>
-<span class="cline-any cline-yes">87×</span>
-<span class="cline-any cline-yes">85×</span>
+<span class="cline-any cline-yes">88×</span>
+<span class="cline-any cline-yes">88×</span>
+<span class="cline-any cline-yes">86×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1099,29 +1099,29 @@ contract RentalProvider is Ownable {
     return (tenants, lessors, devices, terms);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  function getRequestsAsTenant() public view returns(address[] memory, address[] memory, address[] memory, uint256[] memory) </span>{
-<span class="cstat-no" title="statement not covered" >    require(isKnownParticipant(msg.sender, 2))</span>;
-<span class="cstat-no" title="statement not covered" >    uint count = 0;</span>
-<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; requests.length; i++) {</span>
-<span class="cstat-no" title="statement not covered" >      if(requests[i].tenant == msg.sender) {</span>
+  function getRequestsAsTenant() public view returns(address[] memory, address[] memory, address[] memory, uint256[] memory) {
+    <span class="missing-if-branch" title="else path not taken" >E</span>require(isKnownParticipant(msg.sender, 2));
+    uint count = 0;
+    for(uint i = 0; i &lt; requests.length; i++) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if(requests[i].tenant == msg.sender) {
         count++;
       }
     }
-<span class="cstat-no" title="statement not covered" >    address[] memory tenants = new address[](count);</span>
-<span class="cstat-no" title="statement not covered" >    address[] memory lessors = new address[](count);</span>
-<span class="cstat-no" title="statement not covered" >    address[] memory devices = new address[](count);</span>
-<span class="cstat-no" title="statement not covered" >    uint256[] memory terms = new uint256[](count);</span>
-<span class="cstat-no" title="statement not covered" >    uint index = 0;</span>
-<span class="cstat-no" title="statement not covered" >    for(uint i = 0; i &lt; requests.length; i++) {</span>
-<span class="cstat-no" title="statement not covered" >      if(requests[i].tenant == msg.sender) {</span>
-<span class="cstat-no" title="statement not covered" >        tenants[index] = requests[i].tenant</span>;
-<span class="cstat-no" title="statement not covered" >        lessors[index] = requests[i].lessor</span>;
-<span class="cstat-no" title="statement not covered" >        devices[index] = requests[i].device</span>;
-<span class="cstat-no" title="statement not covered" >        terms[index] = requests[i].contractTerm</span>;
+    address[] memory tenants = new address[](count);
+    address[] memory lessors = new address[](count);
+    address[] memory devices = new address[](count);
+    uint256[] memory terms = new uint256[](count);
+    uint index = 0;
+    for(uint i = 0; i &lt; requests.length; i++) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if(requests[i].tenant == msg.sender) {
+        tenants[index] = requests[i].tenant;
+        lessors[index] = requests[i].lessor;
+        devices[index] = requests[i].device;
+        terms[index] = requests[i].contractTerm;
         index++;
       }
     }
-<span class="cstat-no" title="statement not covered" >    return (tenants, lessors, devices, terms);</span>
+    return (tenants, lessors, devices, terms);
   }
 &nbsp;
   function requestExists(address _tenant, address _lessor, address _device, uint256 _term) public view returns (bool){
@@ -1444,7 +1444,7 @@ contract RentalProvider is Ownable {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Mar 15 2020 12:59:58 GMT+0100 (GMT+01:00)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Mar 15 2020 13:11:47 GMT+0100 (GMT+01:00)
 </div>
 </div>
 <script src="../prettify.js"></script>

@@ -308,6 +308,7 @@ contract("RentalProvider", function() {
       await rentalProvider.createRequest(device, lessor, contractTerm, {from: tenant});
       // await rentalProvider.createRequest(device2, lessor, contractTerm, {from: tenant});
       const requests = await rentalProvider.getRequestsAsLessor.call({from: lessor});
+      const requests2 = await rentalProvider.getRequestsAsTenant.call({from: tenant});
       // console.log(requests);
     });
 });

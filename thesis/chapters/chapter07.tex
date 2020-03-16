@@ -30,12 +30,38 @@ Smart-Contracts für Mietverträge, Zahlungsabwicklung und Identitätsmanagement
 Kaffeemaschine simuliert mittels Raspberry-Pi, angeschlossenes NFC-Entwicklungsboard
 Smartphone als Wallet und zum Kommunizieren mit der Kaffeemaschine
 
+\subsection{Deployment}
+\label{subsec:implementation:poc:deployment}
+
+\begin{table}[]
+\begin{tabular}{@{}cl@{}}
+\toprule
+\textbf{Smart-Contract} & \multicolumn{1}{c}{\textbf{Testnet-Adresse}} \\ \midrule
+Rental-Provider & 0xf25F1F12630158d963a9609950C3e379c65617dA \\
+Identity-Provider & 0xA17351BfA16dAE1FD285e11AcC00882Eb459C7cb \\
+Payment-Provider & 0x7d17DA28604A7bB2E121D634012C086A6BbF6E2e \\ \bottomrule
+\end{tabular}
+\caption{Adressen der Smart-Contracts auf dem öffentlichen Kovan Testnet}
+\label{tab:addresses}
+\end{table}
+
 
 \section{Testaufbau}
 \label{subsec:implementation:poc:testing}
-Die Vertragslogiken der Mietverträge wurden als Smart-Contracts in der Programmiersprache Solidity auf der Ethereum-Blockchain entwickelt. Für Smart-Contracts auf Ethereum-Basis existiert die Truffle-Suite, die ein umfangreiches Toolset für die Entwicklung und das Testen von Smart-Contracts bereitstellt. Mittels Unit-Tests wurde sichergestellt, dass die Funktionalität gemäß den Anforderungen gegeben ist.
+Die Vertragslogiken der Mietverträge wurden als Smart-Contracts in der Programmiersprache Solidity auf der Ethereum-Blockchain entwickelt. Für Smart-Contracts auf Ethereum-Basis existiert die Truffle-Suite, die ein umfangreiches Toolset für die Entwicklung und das Testen von Smart-Contracts bereitstellt. Der Entwicklungsprozess wird durch eine lokale Blockchain-Umgebung vereinfacht, die das Deployment und Testing beschleunigt. Mittels Unit-Tests wurde sichergestellt, dass die Funktionalität gemäß den Anforderungen gegeben ist. Die Testabdeckung wurde durch das Tool solidity-coverage überprüft, die Ergebnisse werden in Abbildung \ref{fig:chapter07:coverage} dargestellt. Die Grafik zeigt die prozentuale und absolute Abdeckung von Statements, Funktionen und Code-Zeilen an.
 
-Test-Coverage mit solidity-coverage
+\begin{figure}[h]
+ \centering
+ \includegraphics[width=1.0\textwidth]{gfx/coverage.png}
+ \caption{Testabdeckung der Solidity Smart-Contracts}
+ \label{fig:chapter07:coverage}
+\end{figure}
+
+\ac{E2E}-Tests wurden manuell durchgeführt. Dafür wurden die Smart-Contracts auf ein öffentliches Ethereum-Testnet deployed, die
+
 
 Hochrechnung Skalierungsansatz
+
+\section{Datenschutz \& Privatsphäre}
+\label{subsec:implementation:poc:privacy}
 Untersuchung Datenschutz und Privatsphäre

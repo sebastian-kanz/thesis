@@ -19,7 +19,7 @@ import {
 import {PROVIDER} from '../../constants.js';
 
 import RENTAL_CONTRACT_ABI from './RentalProvider.js'
-export const RENTAL_CONTRACT_ADDR = '0xb683f856cc86E64A35E2F6B9987b1A7f0aFfbe34';
+export const RENTAL_CONTRACT_ADDR = '0xf25F1F12630158d963a9609950C3e379c65617dA';
 
 
 

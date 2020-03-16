@@ -18,15 +18,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.bouncycastle.util.encoders.Hex;
+import org.w3c.dom.Text;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.Hash;
 import org.web3j.crypto.Sign;
+import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.RemoteFunctionCall;
+import org.web3j.protocol.core.methods.request.Transaction;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.protocol.http.HttpService;
+import org.web3j.tuples.generated.Tuple3;
+import org.web3j.tuples.generated.Tuple4;
+import org.web3j.tx.ChainId;
+import org.web3j.tx.RawTransactionManager;
+import org.web3j.tx.TransactionManager;
+import org.web3j.tx.gas.ContractGasProvider;
+import org.web3j.tx.gas.DefaultGasProvider;
 import org.web3j.utils.Bytes;
+import org.web3j.utils.Convert;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -34,7 +50,10 @@ import java.math.BigInteger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author Alex Suzuki, Classy Code GmbH, 2017
@@ -49,8 +68,14 @@ public class HttpTunnelActivity extends AppCompatActivity implements SetKeyDialo
     private TextView vContentUnits;
     private TextView vContentFee;
     private TextView vContentTotal;
+    private Button bSolidity;
+    private TextView vBalancePayment;
+    private TextView vBalanceTotal;
+    private ListView lHistory;
     private LocalBroadcastManager lbm;
     private boolean dataReceived;
+
+    private String[] history = {"empty"};;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,8 +90,24 @@ public class HttpTunnelActivity extends AppCompatActivity implements SetKeyDialo
         vContentFee = (TextView) findViewById(R.id.vContentFee);
         vContentTotal = (TextView) findViewById(R.id.vContentTotal);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        lbm = LocalBroadcastManager.getInstance(this);
+        bSolidity = (Button) findViewById(R.id.bSolidity);
+        vBalancePayment = (TextView) findViewById(R.id.vBalancePayment);
+        vBalanceTotal = (TextView) findViewById(R.id.vBalanceTotal);
+        lHistory = (ListView) findViewById(R.id.lHistory);
 
+
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.history_listview,history);
+        lHistory.setAdapter(adapter);
+
+        bSolidity.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                updateEth();
+            }
+        });
+
+
+        lbm = LocalBroadcastManager.getInstance(this);
+        updateEth();
        /* ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             baos.write(stringTo32ByteHex("1583938660"));
@@ -103,6 +144,45 @@ public class HttpTunnelActivity extends AppCompatActivity implements SetKeyDialo
 
         Log.i(TAG, "########SIGNATURE: " + Hex.toHexString(result));*/
 
+    }
+
+    private void updateEth() {
+        try {
+            Tuple3<String, String, Tuple4<List<BigInteger>, List<BigInteger>,List<BigInteger>, List<BigInteger>>> data = new ReceiveBlockchainDataTask().execute("test123").get();
+
+            String balanceETHPayment = data.component1();
+            String balanceETHTotal = data.component2();
+            vBalancePayment.setText(String.format("%.2f",Float.valueOf(balanceETHPayment)) + " ETH (" + String.format("%.2f",Float.valueOf(balanceETHPayment) * 196.04) + "€)");
+            vBalanceTotal.setText(String.format("%.2f",Float.valueOf(balanceETHTotal)) + " ETH (" + String.format("%.2f",Float.valueOf(balanceETHTotal) * 196.04) + "€)");
+
+            Tuple4<List<BigInteger>, List<BigInteger>,List<BigInteger>, List<BigInteger>> newHistory = data.component3();
+            List<BigInteger> timestampsStart = newHistory.component1();
+            List<BigInteger> timestampsEnd = newHistory.component2();
+            List<BigInteger> units = newHistory.component3();
+            List<BigInteger> costs = newHistory.component4();
+
+            ArrayList<String> tmp = new ArrayList<String>();
+
+            if(units.size() == 0){
+                tmp.add("empty");
+            } else {
+                for (int i = 0; i < units.size(); i++) {
+                    Double total = Double.parseDouble(costs.get(i).toString()) * Double.parseDouble(units.get(i).toString());
+                    String eth = Convert.fromWei(String.valueOf(total), Convert.Unit.ETHER).toString();
+                    tmp.add(units.get(i).toString() + " Kaffee für " + String.format("%.3f",Float.valueOf(eth)) + " ETH (" + String.format("%.2f",Float.valueOf(eth) * 196.04) + "€)");
+                }
+            }
+
+
+            ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.history_listview,tmp);
+            lHistory.setAdapter(adapter);
+
+
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public byte[] getEthereumMessagePrefix(int messageLength) {
@@ -224,6 +304,7 @@ public class HttpTunnelActivity extends AppCompatActivity implements SetKeyDialo
             Double etherTotal = Double.parseDouble(units) * ether;
             Double euroTotal = 196.04 * etherTotal;
             vContentTotal.setText(etherTotal.toString() + "ETH (" + String.format("%.2f", euroTotal) + "€)");
+            updateEth();
         }
     };
 

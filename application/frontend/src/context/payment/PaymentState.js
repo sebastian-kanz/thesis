@@ -16,7 +16,7 @@ import {
 import {PROVIDER} from '../../constants.js';
 
 import PAYMENTPROVIDER_CONTRACT_ABI from './PaymentProvider.js'
-export const PAYMENTPROVIDER_CONTRACT_ADDR = '0x3BE0C37e881EA08D99e1acb017A68028e410B3Af';
+export const PAYMENTPROVIDER_CONTRACT_ADDR = '0x7d17DA28604A7bB2E121D634012C086A6BbF6E2e';
 
 
 // address payable sender;

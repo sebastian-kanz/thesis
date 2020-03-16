@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.nfc.Tag;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -99,7 +100,7 @@ public class TunnelApduService extends HostApduService {
 
 
     private String privateKey = "0xF1AAB763D40CB301BD17966EB96250C37A0716A1E88DE64CB60BA183F64A480A";
-    private String contractAddress = "0x3BE0C37e881EA08D99e1acb017A68028e410B3Af";
+    private String contractAddress = "0x7d17DA28604A7bB2E121D634012C086A6BbF6E2e";
     private Credentials credentials;
 
 
@@ -307,7 +308,7 @@ public class TunnelApduService extends HostApduService {
 
     private void notifyLinkEstablished() {
         Vibrator v = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-        v.vibrate(200);
+        v.vibrate(VibrationEffect.createOneShot(200,100));
 
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(new Intent(BROADCAST_INTENT_LINK_ESTABLISHED));
     }

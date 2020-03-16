@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import WelcomeImage from '../../assets/images/Welcome.png';
 
 const Welcome = () => {
   return (
@@ -10,9 +11,7 @@ const Welcome = () => {
       <Paper>
         <Grid container justify="center" alignContent="center" alignItems="center" spacing={2}>
           <Grid item xs align="center" style={{padding: 20}}>
-            <Typography variant="h4">
-              Willkommen. Bitte melde dich an, um auf deine Mietgeräte, Verträge und Abrechnungen zugreifen zu können.
-            </Typography>
+            <img src={WelcomeImage} alt="Welcome Image" width="100%"/>
           </Grid>
         </Grid>
       </Paper>
