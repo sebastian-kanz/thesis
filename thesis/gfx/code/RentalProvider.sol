@@ -5,7 +5,7 @@ import "./PaymentProvider.sol";
 import "./Ownable.sol";
 
 contract RentalProvider is Ownable {
-  //possible states of an agreement
+
   enum AgreementState {
     Pending,
     Active,
@@ -323,52 +323,12 @@ contract RentalProvider is Ownable {
     return ecrecover(_message, v, r, s);
   }
 
-  // function payForUsage(uint _id, uint _timestamp) payable public {
-  //   require(_id < agreements.length);
-  //   //payment must be in the past
-  //   require(_timestamp <= now);
-  //   // the contract must not be outdated
-  //   require(now < agreements[_id].contractTerm);
-  //   RentalAgreement memory rentalAgreement = agreements[_id];
-  //   //rentalAgreement must be accepted (and therefore signed) by sender
-  //   require(recoverSigner(getRentalAgreementHash(_id), rentalAgreement.tenantSignature) == msg.sender);
-  //   require(msg.sender == rentalAgreement.tenant);
-  //   require(msg.value == rentalAgreement.usageFee);
-  //   require(rentalAgreement.state == AgreementState.Active);
-  //   rentalAgreement.lessor.transfer(msg.value);
-  //   bytes32 agreementHash = getRentalAgreementHash(_id);
-  //   bytes32 paymentHash = getPaymentHash(_timestamp, rentalAgreement.device, msg.sender, rentalAgreement.lessor, msg.value, agreementHash);
-  //   payments[paymentHash] = Payment(_timestamp, rentalAgreement.device, msg.sender, rentalAgreement.lessor, msg.value, agreementHash);
-  //   paymentsByPayer[msg.sender].push(paymentHash);
-  //   paymentsByReceiver[rentalAgreement.lessor].push(paymentHash);
-  // }
-
   function getRentalAgreementHash(uint _id) public view returns (bytes32) {
     require(_id < agreements.length);
     bytes32 message = keccak256(abi.encodePacked(agreements[_id].tenant, agreements[_id].lessor, agreements[_id].device, agreements[_id].usageFee, agreements[_id].contractTerm));
     bytes memory prefix = "\x19Ethereum Signed Message:\n32";
     return keccak256(abi.encodePacked(prefix, message));
   }
-
-  // function getPaymentHash(uint _timestamp, address _device, address _payer, address _receiver, uint _amount, bytes32 _agreementHash) public view returns (bytes32) {
-  //   bytes32 message = keccak256(abi.encodePacked(_timestamp, _device, _payer, _receiver, _amount, _agreementHash));
-  //   // bytes memory prefix = "\x19Ethereum Signed Message:\n32";
-  //   // return keccak256(abi.encodePacked(prefix, message));
-  //   return message;
-  // }
-
-  // function getPayment(bytes32 _paymentHash) public view returns (uint256, address, address, address, uint256, bytes32){
-  //   require(msg.sender == payments[_paymentHash].device || msg.sender == payments[_paymentHash].payer || msg.sender == payments[_paymentHash].receiver);
-  //   return (payments[_paymentHash].timestamp, payments[_paymentHash].device, payments[_paymentHash].payer, payments[_paymentHash].receiver, payments[_paymentHash].amount, payments[_paymentHash].agreementHash);
-  // }
-
-  // function getIncomingPaymentHashes() public view returns (bytes32[] memory) {
-  //   return paymentsByReceiver[msg.sender];
-  // }
-  //
-  // function getOutgoingPaymentHashes() public view returns (bytes32[] memory) {
-  //   return paymentsByPayer[msg.sender];
-  // }
 
   function terminate(uint _agreementID) public {
     require(_agreementID < agreements.length);
@@ -384,10 +344,6 @@ contract RentalProvider is Ownable {
   }
 
 }
-
-
-
-
 
 
 

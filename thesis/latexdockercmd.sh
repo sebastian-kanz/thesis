@@ -15,7 +15,7 @@ else
 	path=$(pwd -W)
 fi
 
-#docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" latexmk -C
+docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" latexmk -C
 docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" pdflatex "$@".tex
 docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" bibtex "$@".aux
 docker run --rm -i --user="$(id -u):$(id -g)" --net=none -v "${path}":/data "$IMAGE" pdflatex "$@".tex

@@ -32,7 +32,7 @@ contract PaymentProvider is Ownable {
   function registerRentalProvider(address _addr) public onlyOwner {
     rentalProvider = _addr;
   }
-
+  
   function addPaymentAgreement(bytes32 _hash, address payable _receiver, address payable _sender, address _device) public {
     PaymentAgreement memory tmp;
     tmp.sender = _sender;
