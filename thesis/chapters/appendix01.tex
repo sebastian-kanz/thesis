@@ -100,7 +100,7 @@ XensorXSR & \$3.58M & \$0.01008 & \$5,971,333 & -38.27\% \\
 ArtfinityAT & \$3.03M & \$0.02406 & \$8,018,680 & -0.54\% \\
 SDChainSDA & \$2.23M & \$0.00149 & \$12,165 & -12.22\% \\ \bottomrule
 \end{tabular}
-\caption{IOT-Relevanz, Stand: 30.12.19 10:00 Uhr, Quelle: \url{https://cryptoslate.com/cryptos/iot}}
+\caption[IOT-Relevanz]{IOT-Relevanz, \url{https://cryptoslate.com/cryptos/iot} (Stand: 30.12.19 10:00 Uhr)}
 \label{tab:_iot}
 \end{table}
 
@@ -122,7 +122,7 @@ NANO & 592,744Op & 663,973Op & 1,007,236Op & \$ 0.090 B & 2,072 \\
 ETH & 509,869Op & 566,058Op & 1,372,918Op & \$ 15 B & 11 \\
 BSV & 443,946Op & 479,188Op & 900,436Op & \$ 1.8 B & 77 \\ \bottomrule
 \end{tabular}
-\caption{Blocktivity, Stand: 31.12.19 10:00 Uhr, Quelle: \url{https://blocktivity.info/}}
+\caption[Blocktivity]{Blocktivity, \url{https://blocktivity.info/} (Stand: 31.12.19 10:00 Uhr)}
 \label{tab:_blocktivity}
 \end{table}
 
@@ -142,7 +142,7 @@ WAVES (WAVES) & 18262 & 2367 & 32 & 163 & 17 \\
 EOS (EOS) & 12230 & 17557 & 81 & 134 & 16 \\
 IOTA (MIOTA) & 10316 & 7759 & 79 & 145 & 15 \\ \bottomrule
 \end{tabular}
-\caption{Coincodecap, Stand: 29.12.2019, 14:30, Quelle: \url{https://coincodecap.com/coins}}
+\caption[Coincodecap]{Coincodecap, \url{https://coincodecap.com/coins} (Stand: 29.12.2019 14:30 Uhr)}
 \label{tab:_coincodecap}
 \end{table}
 
@@ -164,7 +164,7 @@ Syscoin & 2388 & 100 & 108 \\
 Particl & 2146 & 100 & 91 \\
 BitcoinCash & 1277 & 100 & 872 \\ \bottomrule
 \end{tabular}
-\caption{Github Commits past 12 months, Stand: 29.12.2019, 14:30, Quelle: \url{https://www.cryptomiso.com/}}
+\caption[Github Commits past 12 months]{Github Commits past 12 months, \url{https://www.cryptomiso.com/} (Stand: 29.12.2019 14:30 Uhr)}
 \label{tab:_cryptomiso}
 \end{table}
 
@@ -197,8 +197,7 @@ UBS & Samsung &  \\
 Visa & Siemens &  \\
 Walmart & UBS &  \\ \bottomrule
 \end{tabular}
-\caption{Blockchain Projekte in großen internationalen Unternehmen (Teil 1), Stand: 29.12.19 17:00 Uhr
-, Quelle: \cite{forbes2018}}
+\caption[Blockchain Projekte in großen internationalen Unternehmen (Teil 1)]{Blockchain Projekte in großen internationalen Unternehmen (Teil 1), \cite{forbes2018} (Stand: 29.12.19 17:00 Uhr)}
 \label{tab:_forbes}
 \end{table}
 
@@ -218,8 +217,7 @@ SAP SE &  &  &  \\
 State Farm &  &  &  \\
 UBS &  &  &  \\ \bottomrule
 \end{tabular}
-\caption{Blockchain Projekte in großen internationalen Unternehmen (Teil 2), Stand: 29.12.19 17:00 Uhr
-, Quelle: \cite{forbes2018}}
+\caption[Blockchain Projekte in großen internationalen Unternehmen (Teil 2)]{Blockchain Projekte in großen internationalen Unternehmen (Teil 2), \cite{forbes2018} (Stand: 29.12.19 17:00 Uhr)}
 \label{tab:_forbes2}
 \end{table}
 \newpage
@@ -238,7 +236,7 @@ Der vorliegende IOT-Anwendungsfall beinhaltet verschiedene Benutzerinteraktionen
  \caption{UML-Sequenzdiagramm zur Vertragserzeugung}
  \label{fig:chapter07:creation}
 \end{figure}
-Die Vertragserzeugung kann grob in drei Schritte untergliedert werden und wird initial durch den Benutzer ausgelöst. Im ersten Schritt hat der Benutzer über das Web-Frontend Zugriff auf die verfügbaren Miet-Geräte. Aus diesen Geräten wählt er eines aus und erzeugt eine Mietanfrage, die per API-Call an den RentalProvider Smart-Contract gesendet wird. Dieser führt Überprüfungen aus wie die Kontrolle der Identitäten, Inhalte der Mietanfrage und markiert nach erfolgreicher Prüfung das Gerät als reserviert, sodass es kein anderer Benutzer anmieten kann. Der zweite Schritt wird durch den Hersteller des Gerätes gestartet: Dieser kann die Mietanfrage prüfen und anschließend akzeptieren, indem er einen von ihm signierten Mietvertrag an den RentalProvider sendet. Lehnt er die Anfrage ab, so wird die Mietanfrage gelöscht und das Gerät als wieder verfügbar markiert. Stimmen die Daten des Mietvertrages und sind ist die Signatur valide wird der Mietvertrag gespeichert und ein dazugehöriger Payment-Channel eröffnet. Der letzte Schritt wird wieder durch den Benutzer ausgeführt: Den vom Hersteller erzeugten Mietvertrag kann geprüft und die Vertragsbedingungen (Vertragslaufzeiten, Kosten, etc.) eingesehen werden. Akzeptiert der Benutzer durch seine Signatur den Mietvertrag, wechselt dieser in den Status aktiv. Gleichzeitig transferiert der Benutzer ein Startguthaben von seinem Wallet auf den zum Mietvertrag angelegten Payment-Channel. Die Benutzung kann anschließend sofort erfolgen.
+Die Vertragserzeugung kann grob in drei Schritte untergliedert werden und wird initial durch den Benutzer ausgelöst. Im ersten Schritt hat der Benutzer über das Web-Frontend Zugriff auf die verfügbaren Miet-Geräte. Aus diesen Geräten wählt er eines aus und erzeugt eine Mietanfrage, die per API-Call an den RentalProvider Smart-Contract gesendet wird. Dieser führt Überprüfungen aus wie die Kontrolle der Identitäten, Inhalte der Mietanfrage und markiert nach erfolgreicher Prüfung das Gerät als reserviert, sodass es kein anderer Benutzer anmieten kann. Der zweite Schritt wird durch den Hersteller des Gerätes gestartet: Dieser kann die Mietanfrage prüfen und anschließend akzeptieren, indem er einen von ihm signierten Mietvertrag an den RentalProvider sendet. Lehnt er die Anfrage ab, so wird die Mietanfrage gelöscht und das Gerät als wieder verfügbar markiert. Stimmen die Daten des Mietvertrages und ist die Signatur valide, wird der Mietvertrag gespeichert und ein dazugehöriger Payment-Channel eröffnet. Der letzte Schritt wird wieder durch den Benutzer ausgeführt: Der vom Hersteller erzeugte Mietvertrag kann geprüft und die Vertragsbedingungen (Vertragslaufzeiten, Kosten, etc.) eingesehen werden. Akzeptiert der Benutzer den Mietvertrag durch seine Signatur, wechselt dieser in den Status aktiv. Gleichzeitig transferiert der Benutzer ein Startguthaben von seinem Wallet auf den zum Mietvertrag angelegten Payment-Channel. Die Benutzung kann anschließend sofort erfolgen.
 
 \begin{figure}[h]
  \centering
@@ -343,7 +341,6 @@ Kunde & Prepaid aufladen & 28.805 & 144.025 & 0,000144 & 0,03 \\ \bottomrule
 \end{adjustwidth}
 \end{table}
 
-
 \begin{figure}[h]
  \centering
  \includegraphics[width=1.0\textwidth]{gfx/screenshots/request_contract.PNG}
@@ -379,7 +376,8 @@ Kunde & Prepaid aufladen & 28.805 & 144.025 & 0,000144 & 0,03 \\ \bottomrule
  \label{fig:appendix:costs:reddeem}
 \end{figure}
 
-\newpage
+
+\clearpage
 
 \section{UI}
 \label{sec:appendix:implementation:ui}
