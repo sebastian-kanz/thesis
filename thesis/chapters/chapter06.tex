@@ -1,6 +1,6 @@
 \chapter{Auswahl relevanter DLTs}
 \label{ch:dlt_selection}
-In den vorherigen Kapiteln wurden der beispielhafte Anwendungsfall sowie dessen \ac{DLT}-relevante Anforderungen aufgezeigt. In diesem Kapitel wird darauf aufbauend eine Marktübersicht möglicher \ac{DLT}s gegeben und auf die Erfüllung der Anforderungen überprüft.
+In den vorherigen Kapiteln wurden der beispielhafte Anwendungsfall sowie dessen \ac{DLT}-relevante Anforderungen aufgezeigt. In diesem Kapitel wird darauf aufbauend eine Marktübersicht möglicher \acp{DLT} gegeben und auf die Erfüllung der Anforderungen überprüft.
 
 %
 % Section: Vorgehen
@@ -22,50 +22,8 @@ Darüber hinaus fokussiert sich diese Arbeit auf eine Auswahl eigenständiger Bl
 \section{Marktübersicht DLTs}
 \label{sec:dlt_selection:market}
 Nach den im vorherigen Abschnitt vorgestellten Kriterien wurden 30 Blockchain-Lösungen identifiziert. Eine detaillierte Übersicht der Einzelnachweise ist im Anhang zu finden. Die Kriterien wurden folgendermaßen gewichtet: Die Business-Relevanz wird als wichtigstes Kriterium bewertet. Die IOT-Zugehörigkeit wird wichtiger als die Aktualität aber etwas geringer als die Business-Relevanz bewertet. Die Aktualität der Blockchain unterteilt sich in Blockchain-Aktivität und Github-Aktivität; diese werden gleich, allerdings geringer als die IOT-Zugehörigkeit gewichtet.\\
-Alle Lösungen werden überprüft, ob sie eine oder mehrere Kiterien erfüllen. Für jedes erfüllte Kriterium wurden der Lösung entsprechend der Gewichtungen Punkte angerechnet. Die Tabelle \ref{tab:dlt_preselection} listet die Erstauswahl gemäß der genannten Kriterien auf.\\
-Die Blockchain-Lösung Ethereum führt die Rangliste mit vier Punkten an; das Schlusslicht stellt unter Anderem Zcash mit einem Punkt dar. Um für die weitere Betrachtung von Interesse zu sein, muss eine Lösung zu den Top10 (nach Punkten) gehören; dies entspricht 2 Punkten. Dadurch ergeben sich 11 mögliche Kandidaten (mit mind. 2 Punkten) für die Untersuchung, inwieweit diese die \ac{DLT}-relevanten Anforderungen (vgl. Tabelle \ref{tab:dlt_relevant}) erfüllen.
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-\begin{table}[]
-\begin{tabular}{lccccr}
-\hline
-\textbf{} & \textbf{\begin{tabular}[c]{@{}c@{}}Business\\ Relevance\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Github\\ Activity\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Blockchain\\ Activity\end{tabular}} & \textbf{IOT} & \textbf{TOTAL} \\
- & 2 & 1 & 1 & 1,5 &  \\ \hline
-Bitcoin & x & x &  &  & 3 \\
-Bitcoin SV &  &  & x &  & 1 \\
-BitcoinCash & x & x &  &  & 3 \\
-Cardano &  & x &  &  & 1 \\
-Corda & x &  &  &  & 2 \\
-Cosmos &  & x &  &  & 1 \\
-EOS &  & x & x &  & 2 \\
-Ethereum & x & x & x &  & 4 \\
-Hyperledger & x &  &  &  & 2 \\
-INT Chain &  &  &  & x & 1,5 \\
-IOST &  &  & x &  & 1 \\
-IoT Chain &  &  &  & x & 1,5 \\
-IOTA &  & x &  & x & 2,5 \\
-KIN &  &  & x &  & 1 \\
-LBRY Credits &  & x &  &  & 1 \\
-Lisk &  & x &  &  & 1 \\
-Monero &  & x &  &  & 1 \\
-Nano &  &  & x &  & 1 \\
-Particl &  & x &  &  & 1 \\
-Quorum & x &  &  &  & 2 \\
-Ripple & x &  &  &  & 2 \\
-Ruff &  &  &  & x & 1,5 \\
-SDChain &  &  &  & x & 1,5 \\
-Steem &  &  & x &  & 1 \\
-Stellar &  & x & x &  & 2 \\
-Syscoin &  & x &  &  & 1 \\
-Telos &  &  & x &  & 1 \\
-Tron &  & x & x &  & 2 \\
-WAVES &  & x &  &  & 1 \\
-Zcash &  & x &  &  & 1 \\ \hline
-\end{tabular}
-\caption{Erstauswahl von DLT-Lösungen}
-\label{tab:dlt_preselection}
-\end{table}
+Alle Lösungen werden überprüft, ob sie eine oder mehrere Kiterien erfüllen. Für jedes erfüllte Kriterium wurden der Lösung entsprechend der Gewichtungen Punkte angerechnet. Die im Anhang (Kap. \ref{ch:appendix:dlt_selection}) befindliche Tabelle \ref{tab:dlt_preselection} listet die Erstauswahl gemäß der genannten Kriterien auf.\\
+Die Blockchain-Lösung Ethereum führt die Rangliste mit vier Punkten an. Um für die weitere Betrachtung von Interesse zu sein, muss eine Lösung zu den Top10 (nach Punkten) gehören; dies entspricht 2 Punkten. Dadurch ergeben sich 11 mögliche Kandidaten (mit mind. 2 Punkten) für die Untersuchung, inwieweit diese die \ac{DLT}-relevanten Anforderungen (vgl. Tabelle \ref{tab:dlt_relevant}) erfüllen.
 
 %
 % Section: Anforderungserfüllung
@@ -76,24 +34,24 @@ In Kapitel \ref{sec:requirements:transfer} wurden die zurvor als \ac{DLT}-releva
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
-\begin{table}[]
+\begin{table}[htbp]
+\caption{Erfüllung der DLT-relevanten Anforderungen}
+\label{tab:dlt_detailed_selection}
 \begin{tabular}{@{}lllllll@{}}
 \toprule
 \multicolumn{1}{c}{\textbf{}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Smart-\\ Contracts\end{tabular}}} & \multicolumn{1}{c}{\textbf{Payment}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Oracle-\\ Services\end{tabular}}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Perf\\ (TPS)\end{tabular}}} & \multicolumn{1}{c}{\textbf{Async.}} & \multicolumn{1}{c}{\textbf{\begin{tabular}[c]{@{}c@{}}Tx\\ Encrypt.\end{tabular}}} \\ \midrule
 Bitcoin & (yes) & yes & (yes) & \textless 10 & yes & no \\
 BitcoinCash & (yes) & yes & (yes) & \textless 100 & no & no \\
-Corda & yes & (yes) & yes & $\sim$1000 & yes & yes \\
-EOS & yes & yes & yes & \textgreater 1000 & yes & no \\
+Corda & yes & (yes) & yes & $\sim$1.000 & yes & yes \\
+EOS & yes & yes & yes & \textgreater 1.000 & yes & no \\
 Ethereum & yes & yes & yes & \textgreater 10 & yes & yes \\
 Hyperledger & yes & (yes) & yes & - & yes & yes \\
 IOTA & no & yes & no & \textgreater 100 & yes & yes \\
-Quorum & yes & yes & yes & \textless 1000 & yes & yes \\
-Ripple & no & yes & no & \textgreater 1000 & yes & no \\
-Stellar & yes & yes & (yes) & \textgreater 1000 & yes & no \\
-Tron & yes & yes & yes & \textless 1000 & yes & no \\ \bottomrule
+Quorum & yes & yes & yes & \textless 1.000 & yes & yes \\
+Ripple & no & yes & no & \textgreater 1.000 & yes & no \\
+Stellar & yes & yes & (yes) & \textgreater 1.000 & yes & no \\
+Tron & yes & yes & yes & \textless 1.000 & yes & no \\ \bottomrule
 \end{tabular}
-\caption{Erfüllung der DLT-relevanten Anforderungen}
-\label{tab:dlt_detailed_selection}
 \end{table}
 
 Die Performanz bei privaten Blockchains (vgl. Kapitel \ref{subsec:fundamentals:dlt:classification}) wurde ausgeklammert oder nicht angegeben, da diese sehr stark von der zugrundeliegenden Hardware abhängig ist. Darüber hinaus handelt es sich bei den Performanz-Werten um grobe Richtwerte, die teilweise nur unter Laborbedingungen erreicht werden können. Die tatsächlichen Tageswerte weichen zum Teil deutlich davon ab, daher sind diese Werte als Richtwerte zu verstehen und in der folgenden Bewertung als solche zu handhaben.
@@ -104,4 +62,4 @@ Die Performanz bei privaten Blockchains (vgl. Kapitel \ref{subsec:fundamentals:d
 \section{Bewertung, Ranking \& Auswahl}
 \label{sec:dlt_selection:rating}
 Tabelle \ref{tab:dlt_detailed_selection} zeigt mögliche \ac{DLT}-Kandidaten und deren Erfüllung der übersetzten, \ac{DLT}-relevanten Anforderungen auf. Die zentrale Anforderung ist die Ermöglichung von asynchronen Transaktionen bei Verbindungsverlust von Endgeräten. Lediglich Bitcoin-Cash bietet diese Funktionalität nicht, womit es als möglicher Kandidat ausscheidet. Eine weitere, entscheidende Anforderung ist die Bereitstellung von Smart-Contract Funktionalität. Dies ist sowohl bei IOTA als auch bei Ripple nicht gegeben, wodurch beide im weiteren Verlauf nicht mehr betrachtet werden. Die Möglichkeit, Transaktionen oder Smart-Contracts zu verschlüsseln, sodass nur beteiligte Parteien den Inhalt einsehen können, ist bei Bitcoin, Bitcoin-Cash, EOS, Ripple, Stellar und Tron nicht gegeben, weshalb diese im weiteren Verlauf vernachlässigt werden. Übrig bleiben Corda, Ethereum, Hyperledger und Quorum. Corda und Hyperledger bieten beide keine native Währung an; es besteht allerdings die Möglichkeit, beispielsweise mittels Smart-Contracts eine Token-Lösung umzusetzen. Corda, Quorum und Hyperledger sind für den Einsatz in privaten Blockchains vorgesehen, Ethereum kann darüber hinaus auch als Public-Blockchain zum Einsatz kommen. Bezüglich der Performanz steht Ethereum mit etwa 20 Transaktionen pro Sekunde vergleichsweise schlecht dar.\\
-Es zeichnet sich ab, dass die vier Lösungen Corda, Hyperledger, Ethereum und Quorum mögliche Kandidaten für eine prototypische Verprobung des vorliegenden Anwendungsfalls sind. Quorum ist in der Lage, sämtliche Anforderungen zu erfüllen. Es handelt sich um eine von der US-Bank JPMorgan entwickelte Blockchain basierend auf Ethereum. Dabei werden neue Ethereum-Releases mit Mechanismen für erhöhte Privätsphäre, alternativen Konsensmechanismen und als private oder permissioned Blockchain bereitgestellt. Hierbei liegt allerdings auch die Problematik, die ebenfalls Corda und Hyperledger betreffen: Die zentrale Trustless-Eigenschaft geht in privaten und zugangsbeschränkten Blockchains verloren und die Transparenz wird veringert. Darüber hinaus werden die Eintrittshürden für die Teilnahme am Blockchain-Netzwerk stark erhöht. Aufgrund dessen und der Tatsache, dass Quorum zum größten Teil aus Ethereum-Quellcode besteht, fällt für die praktische Verprobung in dieser Arbeit die Wahl der Blockchain-Lösung auf Ethereum. Die nicht optimalen Transaktionsraten werden an dieser Stelle vernachlässigt; aktuelle Entwicklungen bezüglich der Skalierungsansätze von Blockchains (vgl. Kapitel \ref{subsec:fundamentals:dlt:scaling}) lassen darauf hoffen, mittelfristig eine deutlich verbesserte Performanz erzielen zu können.
+Es zeichnet sich ab, dass die vier Lösungen Corda, Hyperledger, Ethereum und Quorum mögliche Kandidaten für eine prototypische Verprobung des vorliegenden Anwendungsfalls sind. Quorum ist in der Lage, sämtliche Anforderungen zu erfüllen. Es handelt sich um eine von der US-Bank JPMorgan entwickelte Blockchain basierend auf Ethereum. Dabei werden neue Ethereum-Releases mit Mechanismen für erhöhte Privätsphäre, alternativen Konsensmechanismen und als private oder permissioned Blockchain bereitgestellt. Hierbei ergibt sich allerdings auch die Problematik, die ebenfalls Corda und Hyperledger betreffen: Die zentrale Trustless-Eigenschaft geht in privaten und zugangsbeschränkten Blockchains verloren und die Transparenz wird veringert. Darüber hinaus werden die Eintrittshürden für die Teilnahme am Blockchain-Netzwerk stark erhöht. Aufgrund dessen und der Tatsache, dass Quorum zum größten Teil aus Ethereum-Quellcode besteht, fällt für die praktische Verprobung in dieser Arbeit die Wahl der Blockchain-Lösung auf Ethereum. Die nicht optimalen Transaktionsraten werden an dieser Stelle vernachlässigt; aktuelle Entwicklungen bezüglich der Skalierungsansätze von Blockchains (vgl. Kapitel \ref{subsec:fundamentals:dlt:scaling}) lassen darauf hoffen, mittelfristig eine deutlich verbesserte Performanz erzielen zu können.
