@@ -16,7 +16,7 @@ Die Begriffe Blockchain und Distributed Ledger Technology (kurz: \ac{DLT}) werde
  \label{fig:chapter02:overview-dlt}
 \end{figure}
 
-Abbildung \ref{fig:chapter02:overview-dlt} zeigt die Bestandteile einer \ac{DLT} auf. Diese werden im Folgenden detailliert beschrieben und erklärt.\\
+Abbildung \ref{fig:chapter02:overview-dlt} zeigt die Bestandteile einer \ac{DLT} auf, deren Zusammenhänge im Folgenden beschrieben und anschließend einzeln detailliert erklärt werden.\\
 Es handelt sich bei \acp{DLT} um dezentrale \ac{P2P}-Netzwerke, in denen Knoten (engl.: Nodes) Daten dezentral speichern, einen Konsens-Mechanismus zur Synchronisierung einsetzen und asymmetrische Verschlüsselungsverfahren zur Integrität und Absicherung des Systems nutzen. \cite{DLT2016}\\
 Hauptbestandteil eines Distributed Ledgers ist der Ledger selbst (deutsch: Kassenbuch), der eine Historie aller erfolgten Transaktionen speichert. Eine Transaktion stellt eine Wert- oder Informationsübertragung zwischen Entitäten dar. Sie beinhaltet einen Sender, einen Empfänger und eine Anzahl Einheiten, die versendet werden sollen. Je nach Implementierung können weitere Inhalte wie zum Beispiel Nutzdaten oder Software-Code dazukommen. Dieser Code, auch Smart-Contract genannt, wird in einer separierten Laufzeitumgebung (Virtual Machine) ausgeführt. Durch das Zusammenspiel mehrerer Smart-Contracts ist man in der Lage, ganze Anwendungen onchain auszuführen; hierbei spricht man von sogenannten \acp{DApp}.\\
 Smart-Contracts können nur auf den internen (onchain) State des Ledgers zuzugreifen. Werden darüber hinaus weitere (offchain) Informationen benötigt\footnote{Beispiele hierfür können Wetterdaten, Aktien- und Wechselkurse oder Lottozahlen sein}, so können diese durch sogenannte Oracles an den Smart-Contract übermittelt werden. Diese handeln als 'Trusted Data Provider', da die bereitgestellten Informationen nicht validiert werden können. \cite{ORACLE2019}\\
@@ -98,6 +98,8 @@ Multisignatur-Wallets können entweder Teil des Blockchain-Protokolls sein und d
 \label{subsec:fundamentals:dlt:did}
 Eine Identität zeichnet sich durch eine Menge von Informationen, Daten und Eigenschaften aus, die diese eindeutig identifizieren. Nur der Inhaber einer Identität kann mit dieser auch agieren, da er der einzige ist, der Zugriff auf die geschützten Informationen hat, die die Identität des Inhabers bestätigen. Diese können zum Beispiel ein Passwort, eine Geburtsurkunde, ein Fingerabdruck oder Ähnliches sein.\\
 Eine dezentrale Identität ist laut \cite{DID2007} eine neuartige Technologie, die es dem Inhaber einer solchen erlaubt, seine Identität digital, dezentral und sicher durch den Einsatz asymmetrischer Verschlüsselung selbst zu verwalten. Sie ist kryptografisch verifizierbar und der Inhaber entscheidet selbst, welche Informationen er teilen möchte und welche nicht. Das \ac{W3C} entwickelt aktuell (Stand: Dezember 2019) einen Industrie-Standard, der zur Verifizierung und Authentifizierung persönlicher Informationen vor Dritten im Web 3.0 eingesetzt werden soll und sich derzeit in der Version 1.0 befindet \cite{did2019}. Eine dezentrale Identität besteht aus einer \ac{DID}, welche weltweit einzigartig ist, und einem dazugehörigen DID-Dokument, welches Informationen über den beschriebenen Gegenstand enthält. Die folgenden Beispiele zeigen eine \ac{DID} und ein dazugehöriges DID-Dokument (entnommen aus \cite{did2019}).
+
+\newpage
 
 \begin{lstlisting}[caption=Beispiel einer DID,label=listing:did]
 did:example:123456789abcdefghi
