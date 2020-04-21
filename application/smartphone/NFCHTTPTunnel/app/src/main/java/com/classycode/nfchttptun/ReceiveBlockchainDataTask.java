@@ -38,13 +38,14 @@ class ReceiveBlockchainDataTask extends AsyncTask<String, Void, Tuple3<String, S
         PaymentProvider contract = PaymentProvider.load(contractAddress, web3j, credentials, gasProvider);
         try {
 
-            BigInteger balance = contract.getBalance(Hex.decode("2bde45781dc6be1e79094d13ce48a6689922ba3ab9cc745f9368424c8fed5e79")).send();
+            BigInteger balance = contract.getBalance(Hex.decode("d8c82608d7353429872ad6f6f0ec529e5a1d37b2041bdbec91d1f63288c72708")).send();
             String balanceETHPayment = Convert.fromWei(balance.toString(), Convert.Unit.ETHER).toString();
 
             EthGetBalance ethGetBalance = web3j.ethGetBalance(credentials.getAddress(), DefaultBlockParameterName.LATEST).sendAsync().get();
             String balanceETHTotal = Convert.fromWei(ethGetBalance.getBalance().toString(), Convert.Unit.ETHER).toString();
 
-            Tuple4<List<BigInteger>, List<BigInteger>,List<BigInteger>, List<BigInteger>> history = contract.getPaymentHistory(Hex.decode("2bde45781dc6be1e79094d13ce48a6689922ba3ab9cc745f9368424c8fed5e79")).send();
+            //0xd8c82608d7353429872ad6f6f0ec529e5a1d37b2041bdbec91d1f63288c72708
+            Tuple4<List<BigInteger>, List<BigInteger>,List<BigInteger>, List<BigInteger>> history = contract.getPaymentHistory(Hex.decode("d8c82608d7353429872ad6f6f0ec529e5a1d37b2041bdbec91d1f63288c72708")).send();
 
             Tuple3<String, String, Tuple4<List<BigInteger>, List<BigInteger>,List<BigInteger>, List<BigInteger>>> data = new Tuple3<String, String, Tuple4<List<BigInteger>, List<BigInteger>,List<BigInteger>, List<BigInteger>>>(balanceETHPayment, balanceETHTotal, history);
             return data;
